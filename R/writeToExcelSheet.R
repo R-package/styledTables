@@ -55,7 +55,7 @@ setMethod(
                 function(x) identical(x$style, styleVal)
             ))]
             if (length(candidates) == 0) {
-                cs <- getCellStyle(wb, styleVal)
+                cs <- getXlsxCellStyle(wb, styleVal)
                 createdCellStyles[[length(createdCellStyles) + 1L]] <<- list(cs = cs, style = styleVal)
             } else
                 cs <- candidates[[1]]$cs
@@ -115,7 +115,7 @@ setMethod(
                     value <- object@data[[i]][[j]]
                 }
                 # Preprocess the value
-                preProcess <- getStyle(object@styles[[i]][[j]], "excelPreProcess")
+                preProcess <- getSTCellStyle(object@styles[[i]][[j]], "excelPreProcess")
                 tryCatch({
                         value <- preProcess(value)
                     },

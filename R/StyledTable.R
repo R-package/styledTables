@@ -108,7 +108,7 @@ setMethod("initialize", signature(.Object = "StyledTable"), function(.Object, ..
                         "NULL or an object of class 'Style'."
                     ))
             for (style in l)
-                if (!is.null(style) && !"Style" %in% class(style))
+                if (!is.null(style) && !"STCellStyle" %in% class(style))
                     errHandler(paste0(
                             "The argument 'styles'",
                             "must be list of length 'nrow(data)' of lists of",
@@ -375,32 +375,26 @@ setMethod(
     function(object, value, styleName = "", rows = NULL, cols = NULL, appendMode = "replace") {
         for (i in rows) {
             for (j in cols) {
-                currStyle <- object@styles[[i]][[j]]
+                cellStyle <- object@styles[[i]][[j]]
                 if (appendMode == "replace") {
                     currValue <- value
                 } else {
-                    currValue <- getStyle(currStyle, styleName)
-                    if (styleName %in% c("latexPreProcess", "excelPreProcess")) {
-                        if (!is.function(value))
-                            value <- function(x) x
-                        if (!is.function(currValue))
-                            currValue <- function(x) x
-                    }
+                    v1 <- getSTCellStyle(cellStyle, styleName)
                     if (appendMode == "appendBehind") {
-                        if (is.function(value)) {
-                            currValue <- concatFunctions(currValue, value)
-                        } else {
-                            currValue <- c(currValue, value)
-                        }
+                        v2 <- value
                     } else {
-                        if (is.function(currValue)) {
-                            currValue <- concatFunctions(value, currValue)
-                        } else {
-                            currValue <- c(value, currValue)
-                        }
+                        v2 <- v1
+                        v1 <- value
+                    }
+                    if (styleName %in% c("latexPreProcess", "excelPreProcess")) {
+                        currValue <- concatFunctions(v1, v2)
+                    } else if (styleName == "dataFormat") {
+                        currValue <- paste0(v1, v2)
+                    } else {
+                        currValue <- c(v1, v2)
                     }
                 }
-                object@styles[[i]][[j]] <- setStyle(currStyle, currValue, styleName)
+                object@styles[[i]][[j]] <- setSTCellStyle(cellStyle, currValue, styleName)
             }
         }
         object

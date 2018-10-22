@@ -1,6 +1,6 @@
-#' Check Validity of Style class object and return an error description, if there is an error
+#' Check Validity of STCellStyle class object and return an error description, if there is an error
 #'
-#' @param object Style object
+#' @param object STCellStyle object
 #' @param styleName A character holding the name of the style that should be validated
 checkValidity <- function(object, styleName) {
     checkFn <- switch(
@@ -60,15 +60,15 @@ checkValidity <- function(object, styleName) {
 #' @exportClass MissingOrNull
 setClassUnion(name = "MissingOrNull", members = c("missing", "NULL"))
 
-#' Style class for single cells
+#' Style class for single cells in styled tables
 #' 
 #' This class holds all style settings for a single excel cell. The values are 
 #' filled in by the user.
-#' @name Style-class
-#' @rdname Style-class
-#' @exportClass Style
+#' @name STCellStyle-class
+#' @rdname STCellStyle-class
+#' @exportClass STCellStyle
 setClass(
-    "Style",
+    "STCellStyle",
     representation(
         fontName = "character",
         fontHeight = "numeric",
@@ -141,12 +141,12 @@ setClass(
     }
 )
 
-#' Constructor method of Style Class.
+#' Constructor method of STCellStyle Class.
 #'
-#' @name Style 
-#' @rdname Style-class
-#' @aliases initialize,Style-method
-#' @param .Object A Style object
+#' @name STCellStyle 
+#' @rdname STCellStyle-class
+#' @aliases initialize,STCellStyle-method
+#' @param .Object A STCellStyle object
 #' @param fontName The name of the font that should be used
 #' @param fontHeight The font height
 #' @param fontColor The font color
@@ -173,7 +173,7 @@ setClass(
 #' @param excelPreProcess A function that can be used to pre process cell values for the Excel table generation
 #' @param latexPreProcess A function that can be used to pre process cell values for the LaTeX table generation
 #' @param latexFontSize The LaTeX command to set the font size
-setMethod("initialize", signature(.Object = "Style"), 
+setMethod("initialize", signature(.Object = "STCellStyle"), 
     function(
         .Object,
         fontName,
@@ -208,7 +208,7 @@ setMethod("initialize", signature(.Object = "Style"),
             description <- checkValidity(.Object, styleName)
             if (!is.null(description))
                 stop(paste0(
-                    "Error in the initialization of 'Style' ",
+                    "Error in the initialization of 'STCellStyle' ",
                     "the passed in value for slot '", styleName, ",' does not ",
                     "does not meet the class requirements: ",
                     description
@@ -322,20 +322,20 @@ setMethod("initialize", signature(.Object = "Style"),
 
 #' Set a single attribute in a style class
 #'
-#' @name setStyle
-#' @rdname Style-methods
-#' @exportMethod setStyle
+#' @name setSTCellStyle
+#' @rdname setSTCellStyle-methods
+#' @exportMethod setSTCellStyle
 setGeneric(
-    "setStyle",
-    function(object, value, styleName) standardGeneric("setStyle")
+    "setSTCellStyle",
+    function(object, value, styleName) standardGeneric("setSTCellStyle")
 )
 
-#' @rdname Style-methods
-#' @aliases setStyle,Style-method
-#' @param object A Style object
+#' @rdname setSTCellStyle-methods
+#' @aliases setSTCellStyle,STCellStyle-method
+#' @param object A STCellStyle object
 #' @param value The value that should be set
 #' @param styleName The name of the style setting that should be set
-setMethod("setStyle", signature(object = "Style", value = "ANY", styleName = "character"),
+setMethod("setSTCellStyle", signature(object = "STCellStyle", value = "ANY", styleName = "character"),
     function(object, value, styleName) {
         # Transform input values
         if (styleName %in% c(
@@ -358,7 +358,7 @@ setMethod("setStyle", signature(object = "Style", value = "ANY", styleName = "ch
         description <- checkValidity(object, styleName)
         if (!is.null(description))
             stop(paste0(
-                "Error in 'setStyle' ",
+                "Error in 'setSTCellStyle' ",
                 "the passed in value for style '", styleName, ",' does not ",
                 "does not meet the class requirements: ",
                 description
@@ -367,56 +367,56 @@ setMethod("setStyle", signature(object = "Style", value = "ANY", styleName = "ch
     }
 )
 
-#' @rdname Style-methods
-#' @aliases setStyle,Style-method
-setMethod("setStyle", signature(object = "MissingOrNull", value = "ANY", styleName = "character"),
+#' @rdname setSTCellStyle-methods
+#' @aliases setSTCellStyle,STCellStyle-method
+setMethod("setSTCellStyle", signature(object = "MissingOrNull", value = "ANY", styleName = "character"),
     function(object, value, styleName) {
-        setStyle(new("Style"), value, styleName)
+        setSTCellStyle(new("STCellStyle"), value, styleName)
     }
 )
 
 
-#' Method getStyle
+#' Method getSTCellStyle
 #'
-#' @name getStyle
-#' @rdname getStyle-methods
-#' @exportMethod getStyle
+#' @name getSTCellStyle
+#' @rdname getSTCellStyle-methods
+#' @exportMethod getSTCellStyle
 #' @param ... Various arguments
-setGeneric("getStyle", function(object, ...) standardGeneric("getStyle"))
+setGeneric("getSTCellStyle", function(object, ...) standardGeneric("getSTCellStyle"))
 
-#' @rdname getStyle-methods
-#' @aliases getStyle,Style-method
-#' @param object A Style object
+#' @rdname getSTCellStyle-methods
+#' @aliases getSTCellStyle,STCellStyle-method
+#' @param object A STCellStyle object
 #' @param styleName The name of the style setting that should be retrieved
-setMethod("getStyle", signature(object = "Style"),
+setMethod("getSTCellStyle", signature(object = "STCellStyle"),
     function(object, styleName) {
         slot(object, styleName)
     }
 )
 
-#' @rdname getStyle-methods
-#' @aliases getStyle,MissingOrNull-method
-setMethod("getStyle", signature(object = "MissingOrNull"),
+#' @rdname getSTCellStyle-methods
+#' @aliases getSTCellStyle,MissingOrNull-method
+setMethod("getSTCellStyle", signature(object = "MissingOrNull"),
     function(object, styleName) {
         NULL
     }
 )
 
-#' Method getFontCellStyle
+#' Method getXlsxFontCellStyle
 #'
-#' @name getFontCellStyle
-#' @rdname getFontCellStyle-methods
-#' @exportMethod getFontCellStyle
+#' @name getXlsxFontCellStyle
+#' @rdname getXlsxFontCellStyle-methods
+#' @exportMethod getXlsxFontCellStyle
 setGeneric(
-    "getFontCellStyle",
-    function(wb, object) standardGeneric("getFontCellStyle")
+    "getXlsxFontCellStyle",
+    function(wb, object) standardGeneric("getXlsxFontCellStyle")
 )
 
-#' @rdname getFontCellStyle-methods
-#' @aliases getFontCellStyle,Style-method
+#' @rdname getXlsxFontCellStyle-methods
+#' @aliases getXlsxFontCellStyle,STCellStyle-method
 #' @param wb An xlsx workbook object
 #' @param object A Style object
-setMethod("getFontCellStyle", signature(wb = "ANY", object = "Style"),
+setMethod("getXlsxFontCellStyle", signature(wb = "ANY", object = "STCellStyle"),
     function(wb, object) {
         font <- removeMissing(list(
             name = object@fontName,
@@ -441,20 +441,20 @@ setMethod("getFontCellStyle", signature(wb = "ANY", object = "Style"),
     }
 )
 
-#' Method getAlignmentCellStyle
+#' Method getXlsxAlignmentCellStyle
 #'
-#' @name getAlignmentCellStyle
-#' @rdname getAlignmentCellStyle-methods
-#' @exportMethod getAlignmentCellStyle
+#' @name getXlsxAlignmentCellStyle
+#' @rdname getXlsxAlignmentCellStyle-methods
+#' @exportMethod getXlsxAlignmentCellStyle
 setGeneric(
-    "getAlignmentCellStyle",
-    function(object) standardGeneric("getAlignmentCellStyle")
+    "getXlsxAlignmentCellStyle",
+    function(object) standardGeneric("getXlsxAlignmentCellStyle")
 )
 
-#' @rdname getAlignmentCellStyle-methods
-#' @aliases getAlignmentCellStyle,Style-method
+#' @rdname getXlsxAlignmentCellStyle-methods
+#' @aliases getXlsxAlignmentCellStyle,STCellStyle-method
 #' @param object A Style object
-setMethod("getAlignmentCellStyle", signature(object = "Style"),
+setMethod("getXlsxAlignmentCellStyle", signature(object = "STCellStyle"),
     function(object) {
         doCallWithoutMissing(Alignment, list(
             horizontal = object@horizontal,
@@ -466,20 +466,20 @@ setMethod("getAlignmentCellStyle", signature(object = "Style"),
     }
 )
 
-#' Method getBorderCellStyle
+#' Method getXlsxBorderCellStyle
 #'
-#' @name getBorderCellStyle
-#' @rdname getBorderCellStyle-methods
-#' @exportMethod getBorderCellStyle
+#' @name getXlsxBorderCellStyle
+#' @rdname getXlsxBorderCellStyle-methods
+#' @exportMethod getXlsxBorderCellStyle
 setGeneric(
-    "getBorderCellStyle",
-    function(object) standardGeneric("getBorderCellStyle")
+    "getXlsxBorderCellStyle",
+    function(object) standardGeneric("getXlsxBorderCellStyle")
 )
 
-#' @rdname getBorderCellStyle-methods
-#' @aliases getBorderCellStyle,Style-method
+#' @rdname getXlsxBorderCellStyle-methods
+#' @aliases getXlsxBorderCellStyle,STCellStyle-method
 #' @param object A Style object
-setMethod("getBorderCellStyle", signature(object = "Style"),
+setMethod("getXlsxBorderCellStyle", signature(object = "STCellStyle"),
     function(object) {
         doCallWithoutMissing(Border, list(
             position = object@borderPosition,
@@ -500,9 +500,9 @@ setGeneric(
 )
 
 #' @rdname getCellProtectionCellStyle-methods
-#' @aliases getCellProtectionCellStyle,Style-method
+#' @aliases getCellProtectionCellStyle,STCellStyle-method
 #' @param object A Style object
-setMethod("getCellProtectionCellStyle", signature(object = "Style"),
+setMethod("getCellProtectionCellStyle", signature(object = "STCellStyle"),
     function(object) {
         doCallWithoutMissing(CellProtection, list(
             locked = object@isLocked,
@@ -511,20 +511,20 @@ setMethod("getCellProtectionCellStyle", signature(object = "Style"),
     }
 )
 
-#' Method getFillCellStyle
+#' Method getXlsxFillCellStyle
 #'
-#' @name getFillCellStyle
-#' @rdname getFillCellStyle-methods
-#' @exportMethod getFillCellStyle
+#' @name getXlsxFillCellStyle
+#' @rdname getXlsxFillCellStyle-methods
+#' @exportMethod getXlsxFillCellStyle
 setGeneric(
-    "getFillCellStyle", 
-    function(object) standardGeneric("getFillCellStyle")
+    "getXlsxFillCellStyle", 
+    function(object) standardGeneric("getXlsxFillCellStyle")
 )
 
-#' @rdname getFillCellStyle-methods
-#' @aliases getFillCellStyle,Style-method
+#' @rdname getXlsxFillCellStyle-methods
+#' @aliases getXlsxFillCellStyle,STCellStyle-method
 #' @param object A Style object
-setMethod("getFillCellStyle", signature(object = "Style"),
+setMethod("getXlsxFillCellStyle", signature(object = "STCellStyle"),
     function(object) {
         doCallWithoutMissing(Fill, list(
             foregroundColor = object@foregroundColor,
@@ -534,20 +534,20 @@ setMethod("getFillCellStyle", signature(object = "Style"),
     }
 )
 
-#' Method getDataFormatCellStyle
+#' Method getXlsxDataFormatCellStyle
 #'
-#' @name getDataFormatCellStyle
-#' @rdname getDataFormatCellStyle-methods
-#' @exportMethod getDataFormatCellStyle
+#' @name getXlsxDataFormatCellStyle
+#' @rdname getXlsxDataFormatCellStyle-methods
+#' @exportMethod getXlsxDataFormatCellStyle
 setGeneric(
-    "getDataFormatCellStyle", 
-    function(object) standardGeneric("getDataFormatCellStyle")
+    "getXlsxDataFormatCellStyle", 
+    function(object) standardGeneric("getXlsxDataFormatCellStyle")
 )
 
-#' @rdname getDataFormatCellStyle-methods
-#' @aliases getDataFormatCellStyle,Style-method
+#' @rdname getXlsxDataFormatCellStyle-methods
+#' @aliases getXlsxDataFormatCellStyle,STCellStyle-method
 #' @param object A Style object
-setMethod("getDataFormatCellStyle", signature(object = "Style"),
+setMethod("getXlsxDataFormatCellStyle", signature(object = "STCellStyle"),
     function(object) {
         doCallWithoutMissing(DataFormat, list(
             x = object@dataFormat
@@ -555,27 +555,27 @@ setMethod("getDataFormatCellStyle", signature(object = "Style"),
     }
 )
 
-#' Method getCellStyle
+#' Method getXlsxCellStyle
 #'
-#' @name getCellStyle
-#' @rdname getCellStyle-methods
-#' @exportMethod getCellStyle
-setGeneric("getCellStyle", function(wb, object) standardGeneric("getCellStyle"))
+#' @name getXlsxCellStyle
+#' @rdname getXlsxCellStyle-methods
+#' @exportMethod getXlsxCellStyle
+setGeneric("getXlsxCellStyle", function(wb, object) standardGeneric("getXlsxCellStyle"))
 
-#' @rdname getCellStyle-methods
-#' @aliases getCellStyle,ANY,Style-method
+#' @rdname getXlsxCellStyle-methods
+#' @aliases getXlsxCellStyle,ANY,STCellStyle-method
 #' @param wb An xlsx workbook object
 #' @param object A Style object
-setMethod("getCellStyle", signature(wb = "ANY", object = "Style"),
+setMethod("getXlsxCellStyle", signature(wb = "ANY", object = "STCellStyle"),
     function(wb, object) {
         doCallWithoutMissing(CellStyle, list(
             wb = wb, 
-            font = getFontCellStyle(wb, object),
-            alignment = getAlignmentCellStyle(object),
-            border = getBorderCellStyle(object),
-            fill = getFillCellStyle(object),
+            font = getXlsxFontCellStyle(wb, object),
+            alignment = getXlsxAlignmentCellStyle(object),
+            border = getXlsxBorderCellStyle(object),
+            fill = getXlsxFillCellStyle(object),
             cellProtection = getCellProtectionCellStyle(object),
-            dataFormat = getDataFormatCellStyle(object)
+            dataFormat = getXlsxDataFormatCellStyle(object)
         ))
     }
 )

@@ -3,12 +3,12 @@
 \docType{methods}
 \name{getCellProtectionCellStyle}
 \alias{getCellProtectionCellStyle}
-\alias{getCellProtectionCellStyle,Style-method}
+\alias{getCellProtectionCellStyle,STCellStyle-method}
 \title{Method getCellProtectionCellStyle}
 \usage{
 getCellProtectionCellStyle(object)
 
-\S4method{getCellProtectionCellStyle}{Style}(object)
+\S4method{getCellProtectionCellStyle}{STCellStyle}(object)
 }
 \arguments{
 \item{object}{A Style object}

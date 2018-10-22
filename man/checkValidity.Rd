@@ -2,15 +2,15 @@
 % Please edit documentation in R/Style.R
 \name{checkValidity}
 \alias{checkValidity}
-\title{Check Validity of Style class object and return an error description, if there is an error}
+\title{Check Validity of STCellStyle class object and return an error description, if there is an error}
 \usage{
 checkValidity(object, styleName)
 }
 \arguments{
-\item{object}{Style object}
+\item{object}{STCellStyle object}
 
 \item{styleName}{A character holding the name of the style that should be validated}
 }
 \description{
-Check Validity of Style class object and return an error description, if there is an error
+Check Validity of STCellStyle class object and return an error description, if there is an error
 }

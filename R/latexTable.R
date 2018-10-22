@@ -126,13 +126,13 @@ setMethod(
             # ---- itarate through all cells in a row ----
             for (j in seq_len(nCol)) {
                 style <- object@styles[[i]][[j]]
-                styleBorderPosition <- getStyle(style, "borderPosition")
-                styleForegroundColor <- getStyle(style, "foregroundColor")
-                styleHorizontal <- getStyle(style, "horizontal")
-                styleFontColor <- getStyle(style, "fontColor")
-                styleLatexFontSize <- getStyle(style, "latexFontSize")
-                styleIndent <- getStyle(style, "indent")
-                styleLatexVerticalMove <- getStyle(style, "latexVerticalMove")
+                styleBorderPosition <- getSTCellStyle(style, "borderPosition")
+                styleForegroundColor <- getSTCellStyle(style, "foregroundColor")
+                styleHorizontal <- getSTCellStyle(style, "horizontal")
+                styleFontColor <- getSTCellStyle(style, "fontColor")
+                styleLatexFontSize <- getSTCellStyle(style, "latexFontSize")
+                styleIndent <- getSTCellStyle(style, "indent")
+                styleLatexVerticalMove <- getSTCellStyle(style, "latexVerticalMove")
                 # Look if current cell is part of a larger merged cell
                 merge <- list(rows = c(i, i), cols = c(j, j))
                 for (m in object@merges)
@@ -172,7 +172,7 @@ setMethod(
                     (is.null(merge) || i == merge$rows[2]) && (
                         "BOTTOM" %in% styleBorderPosition || (
                             i < nRow && 
-                            "TOP" %in% getStyle(object@styles[[i + 1L]][[j]], "borderPosition")
+                            "TOP" %in% getSTCellStyle(object@styles[[i + 1L]][[j]], "borderPosition")
                 ))) {
                     textHLine <- paste0(textHLine, "-")
                 } else {
@@ -197,7 +197,7 @@ setMethod(
                 # HHLINE RIGHT:
                 if ((j < nCol && j == merge$cols[2] &&
                         "LEFT" %in% 
-                        getStyle(object@styles[[i]][[j + 1L]], "borderPosition")) ||
+                        getSTCellStyle(object@styles[[i]][[j + 1L]], "borderPosition")) ||
                         "RIGHT" %in% styleBorderPosition) {
                     textHLine <- paste0(textHLine, "|") 
                     if (i == 1)
@@ -212,8 +212,8 @@ setMethod(
                     # USE latexVerticalMove instead
 #                     # vertical alignment and linebreaks parsing
 #                     textVAlignmentMultirow <- ""
-#                     if (length(getStyle(style, "vertical")) > 0)
-#                         textVAlignmentMultirow <- switch(getStyle(style, "vertical"),
+#                     if (length(getSTCellStyle(style, "vertical")) > 0)
+#                         textVAlignmentMultirow <- switch(getSTCellStyle(style, "vertical"),
 #                                 VERTICAL_TOP = "t",
 #                                 VERTICAL_CENTER = "c",
 #                                 VERTICAL_BOTTOM = "b"
@@ -287,7 +287,7 @@ setMethod(
                     # For all other cells only use border RIGHT, if needed
                     if ((j < nCol && j == merge$cols[2] &&
                             "LEFT" %in% 
-                            getStyle(object@styles[[i]][[j + 1L]], "borderPosition")) ||
+                            getSTCellStyle(object@styles[[i]][[j + 1L]], "borderPosition")) ||
                             "RIGHT" %in% styleBorderPosition) {
                         textHAlignmentMulticol <- paste0(textHAlignmentMulticol, "|")
                     }
@@ -326,7 +326,7 @@ setMethod(
                         # cell value
                         val <- object@data[[i]][[j]]
                         # pre process cell value if necessary
-                        preProcess <- getStyle(style, "latexPreProcess")
+                        preProcess <- getSTCellStyle(style, "latexPreProcess")
                         tryCatch({
                                 val <- preProcess(val)
                             },
@@ -345,10 +345,10 @@ setMethod(
                         # Split cell value into pieces if there are line breaks
                         val <- strsplit(as.character(val), "\\n")[[1]]
                         # bold
-                        if (any(getStyle(style, "isBold")))
+                        if (any(getSTCellStyle(style, "isBold")))
                             val <- paste0("\\textbf{",val,"}")
                         # italic
-                        if (any(getStyle(style, "isItalic")))
+                        if (any(getSTCellStyle(style, "isItalic")))
                             val <- paste0("\\textit{",val,"}")
                         # font color
                         if (length(styleFontColor) > 0)

@@ -1,3 +1,5 @@
+library(data.table)
+
 #' Set styles of multiple cells
 #' @name setSpecificStyle
 #' @rdname setSpecificStyle-methods
@@ -111,8 +113,12 @@ setMethod(
             tryCatch(
                 {
                     for (j in cols) {
-                        df[, X := df[, paste0("X", j)]]
-                        curr_rows <- rows[eval(condition, df)]
+                        df[, X := df[[paste0("X", j)]]]
+                        ind <- eval(condition, df)
+                        if (!is.logical(ind))
+                            stop("The condition does not evaluate to a logical result.")
+                        ind[is.na(ind)] <- FALSE
+                        curr_rows <- rows[ind]
                         object <- setStyles(object, value, styleName, curr_rows, j, appendMode)
                     }
                 },
