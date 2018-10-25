@@ -1,7 +1,7 @@
-wrap_stPreamble <- function(sTbl, resize_pdf) {
+wrapStPreamble <- function(sTbl, resizePdf) {
   paste(
     ifelse(
-      resize_pdf,
+      resizePdf,
       "\\documentclass[tightpage]{standalone}",
       "\\documentclass[a4paper]{article}"
     ),
@@ -26,24 +26,24 @@ wrap_stPreamble <- function(sTbl, resize_pdf) {
 #' 
 #' @param x a styledTable object to save.
 #' @param file the path to the output file.
-#' @param resize_pdf Should the pdf be resized to the dimensions of
+#' @param resizePdf Should the pdf be resized to the dimensions of
 #'                   the table? Default is `TRUE`.
 #' 
 #' @importFrom tools texi2pdf
 #' 
 #' @export
-write.pdf <- function(x, file = "table.pdf", resize_pdf = TRUE) {
+writePdf <- function(x, file = "table.pdf", resizePdf = TRUE) {
   dir.create(tmp <- tempfile())
-  old_wd <- setwd(tmp)
+  oldWd <- setwd(tmp)
   on.exit({
-    setwd(old_wd)
+    setwd(oldWd)
     unlink(tmp, recursive = TRUE)
   })
-  writeLines(wrap_stPreamble(x, resize_pdf), "table.tex") 
+  writeLines(wrapStPreamble(x, resizePdf), "table.tex") 
   ## compile LaTeX file
   texi2pdf("table.tex")
   ## change back wd so relative paths for file are handled properly
   ## when copying
-  setwd(old_wd)
+  setwd(oldWd)
   file.copy(file.path(tmp, "table.pdf"), file, overwrite = TRUE)
 }
