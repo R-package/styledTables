@@ -11,7 +11,8 @@ Imports:
     methods,
     stats,
     grDevices,
-    utils
+    utils,
+    tools
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -30,7 +31,10 @@ Collate:
     'latexTable.R'
     'removeRowsColumns.R'
     'utilities.R'
+    'write.pdf.R'
     'writeToExcelSheet.R'
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr
+Roxygen: list(markdown = TRUE)
+
