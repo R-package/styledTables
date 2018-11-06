@@ -53,7 +53,7 @@ table body into several sub tables, where each sub table has the current
 value in the column defined by 'subTableCols' as sub heading.
 The columns specified in 'yCols', 'xCols' and 'valueCols'
 will be used for the cross table calculation.
-If the table should not be a cross table, but a normal table then the 
+If the table should not be a cross table, but a normal table then the
 arguments 'xCols' and 'valueCols should be omitted.
 }
 \examples{

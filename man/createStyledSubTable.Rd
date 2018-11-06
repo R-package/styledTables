@@ -10,7 +10,7 @@ createStyledSubTable(data, subLevel, subTableCols, subHeadingStylings = NULL,
 \arguments{
 \item{data}{A data.frame that should be used for the creation of the cross table.}
 
-\item{subLevel}{This is the recursive counter that gives the deepness of the recursive function execution. It points to the current sub heading level. So subLevel == 1 means that we look at the sub headings given by the different values in the data.frame column that has the name given in 'subTableCols[1]'.}
+\item{subLevel}{This is the recursive counter that gives the deepness of the recursive function execution. It points to the current sub heading level. So subLevel == 1 means that we look at the sub headings given by the different values in the data.frame column that has the name given in 'subTableCols\link{1}'.}
 
 \item{subTableCols}{(optional) A vector of column names that should be used in order to separate the data.frame into several sub tables, that will be concatenated vertically. Each sub table will have a sub heading row above the sub table body. The sub heading text is just the corresponding value in the column defined by 'subTableCols'. If no sub heading should be introduced at all, the argument 'subTableCols' should be omitted. If the 'subTableCols' is vector with more than one column name, then a hirachy level is introduced for the sub headings, where the first column has the highest and the column given by the last entry in 'subTableCols' has the lowest hirachy level.}
 
@@ -24,14 +24,14 @@ createStyledSubTable(data, subLevel, subTableCols, subHeadingStylings = NULL,
 }
 \description{
 This function creates a styled cross table from a given data.frame that
-already has cross table format. 
+already has cross table format.
 It uses the columns specified in 'subTableCols' to separate the
 table body into several sub tables, where each sub table has the current
 value in the column defined by 'subTableCols' as sub heading.
 The columns specified in 'yCols', 'xCols' and 'valueCols'
 define the cross table structure.
 The data.frame given in 'data' has already s
-If the table should not be a cross table, but a normal table then the 
+If the table should not be a cross table, but a normal table then the
 arguments 'xCols' and 'valueCols should be omitted.
 The function is a recursive function that builds that subTables from inside out.
 }

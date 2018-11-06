@@ -52,7 +52,7 @@ setMethod(
             # new cellStyle element, but return the earlier created one
             candidates <- createdCellStyles[unlist(lapply(
                 createdCellStyles, 
-                function(x) identical(x$style, styleVal)
+                function(x) compareStyles(x$style, styleVal)
             ))]
             if (length(candidates) == 0) {
                 cs <- getXlsxCellStyle(wb, styleVal)

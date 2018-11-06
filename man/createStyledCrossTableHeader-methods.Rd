@@ -23,10 +23,10 @@ createStyledCrossTableHeader(yColHeadings, ...)
 Method createStyledCrossTableHeader
 
 This function creates a styled header for a cross table. It is best used
-together with 'createStyledCrossTableBody'. 
+together with 'createStyledCrossTableBody'.
 It assumes that the cross table consists of several Y columns that come first
 and has nested cross table part. That means that the cross table X columns
-can have more than one header level. 
+can have more than one header level.
 For example: Male > Positive | Male > Negative | Female > Positive | Female > Negative
 In this case the 'Male' and 'Female' headings will be in merged cells above the 'Positive' and 'Negative' cells.
 }

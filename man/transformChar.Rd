@@ -16,6 +16,6 @@ transformChar(var = NULL, pre = "", post = "", toUpper = TRUE)
 \item{toUpper}{(logical) Should the text be transformed to upper case?}
 }
 \description{
-Transform a text to upper case and maybe append some text at front of the 
+Transform a text to upper case and maybe append some text at front of the
 beginning or at the end
 }

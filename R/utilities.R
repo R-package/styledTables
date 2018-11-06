@@ -200,3 +200,39 @@ concatFunctions <- function(...) {
         x
     }
 }
+
+#' Compare Styles
+#'
+#' @param s1 First style object
+#' @param s2 First style object
+#' @export
+compareStyles <- function(s1, s2) {
+    all(sapply(c(
+            "fontName",
+            "fontHeight",
+            "fontColor",
+            "isBold",
+            "isItalic",
+            "isStrikeout",
+            "underline",
+            "boldweight",
+            "isWrapped",
+            "horizontal",
+            "vertical",
+            "rotation",
+            "indent",
+            "borderPosition",
+            "borderColor",
+            "borderPen",
+            "foregroundColor",
+            "backgroundColor",
+            "fillPattern",
+            "dataFormat",
+            "isLocked",
+            "isHidden",
+            "latexVerticalMove"
+        ), function(slotName)
+            identical(slot(s1, slotName), slot(s2, slotName))
+    ))
+}
+

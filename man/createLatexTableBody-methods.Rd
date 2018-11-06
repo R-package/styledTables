@@ -4,7 +4,7 @@
 \name{createLatexTableBody}
 \alias{createLatexTableBody}
 \alias{createLatexTableBody,StyledTable-method}
-\title{Generate the LaTeX code for a StyledTable without \\begin{tabular} and \\end{tabular}}
+\title{Generate the LaTeX code for a StyledTable without \begin{tabular} and \end{tabular}}
 \usage{
 createLatexTableBody(object)
 
@@ -14,5 +14,5 @@ createLatexTableBody(object)
 \item{object}{A StyledTable}
 }
 \description{
-Generate the LaTeX code for a StyledTable without \\begin{tabular} and \\end{tabular}
+Generate the LaTeX code for a StyledTable without \begin{tabular} and \end{tabular}
 }

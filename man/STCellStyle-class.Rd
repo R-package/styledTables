@@ -69,7 +69,7 @@
 \item{latexFontSize}{The LaTeX command to set the font size}
 }
 \description{
-This class holds all style settings for a single excel cell. The values are 
+This class holds all style settings for a single excel cell. The values are
 filled in by the user.
 
 Constructor method of STCellStyle Class.

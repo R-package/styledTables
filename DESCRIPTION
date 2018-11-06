@@ -31,10 +31,9 @@ Collate:
     'latexTable.R'
     'removeRowsColumns.R'
     'utilities.R'
-    'write.pdf.R'
+    'writePdf.R'
     'writeToExcelSheet.R'
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
-
