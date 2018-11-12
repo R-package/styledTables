@@ -398,6 +398,8 @@ setMethod("getSTCellStyle", signature(object = "STCellStyle"),
 #' @aliases getSTCellStyle,MissingOrNull-method
 setMethod("getSTCellStyle", signature(object = "MissingOrNull"),
     function(object, styleName) {
+        if (styleName %in% c("excelPreProcess", "latexPreProcess"))
+            return(function(x) x)
         NULL
     }
 )
