@@ -141,8 +141,7 @@ setMethod(
         cData <- object@data
         for (m in object@merges) {
             for (i in m$rows[1]:m$rows[2]) {
-                for (j in m$cols[1]:m$cols[2])
-                    cData[[i]][[j]] <- "%USEDINMERGE%"
+                cData[[i]][m$cols[1]:m$cols[2]] <- "%USEDINMERGE%"
             }
         }
         for (i in rows) {
@@ -155,27 +154,19 @@ setMethod(
                     while (flag) {
                         flag <- FALSE
                         if ((imax + 1) %in% rows && identical(cData[[imax + 1]][[jmax]], val)) {
-                            flag <- TRUE
-                            for (j1 in j:jmax)
-                                if (!identical(cData[[imax + 1]][[j]], val))
-                                    flag <- FALSE
+                            flag <- all(sapply(cData[[imax + 1]][j:jmax], function(x) identical(x, val)))
                             if (flag)
                                 imax <- imax + 1
                         }
                         if ((jmax + 1) %in% cols && identical(cData[[imax]][[jmax + 1]], val)) {
-                            flagJ <- TRUE
-                            for (i1 in i:imax)
-                                if (!identical(cData[[i1]][[jmax + 1]], val))
-                                    flagJ <- FALSE
-                            if (flagJ) {
+                            if (all(sapply(cData[i:imax], function(x) identical(x[[jmax + 1]], val)))) {
                                 jmax <- jmax + 1
                                 flag <- TRUE
                             }
                         }
                     }
                     for (i1 in i:imax) {
-                        for (j1 in j:jmax) 
-                            cData[[i1]][[j1]] <- "%USEDINMERGE%"
+                        cData[[i1]][j:jmax] <- "%USEDINMERGE%"
                     }
                     object <- addMerge(object, rows = i:imax, cols = j:jmax)
                 }
