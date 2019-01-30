@@ -8,8 +8,8 @@
 \usage{
 writeToExcelSheet(sheet, object, ...)
 
-\S4method{writeToExcelSheet}{ANY,StyledTable}(sheet, object, firstRow = NULL,
-  firstCol = NULL)
+\S4method{writeToExcelSheet}{ANY,StyledTable}(sheet, object,
+  firstRow = NULL, firstCol = NULL)
 }
 \arguments{
 \item{sheet}{An xlsx sheet object}

@@ -9,9 +9,9 @@
 \usage{
 setSpecificStyle(object, value, styleName, styleType, ...)
 
-\S4method{setSpecificStyle}{StyledTable,ANY,character,character}(object, value,
-  styleName, styleType, rows = NULL, cols = NULL, condition = NULL,
-  conditionText = NULL, appendMode = "replace")
+\S4method{setSpecificStyle}{StyledTable,ANY,character,character}(object,
+  value, styleName, styleType, rows = NULL, cols = NULL,
+  condition = NULL, conditionText = NULL, appendMode = "replace")
 }
 \arguments{
 \item{object}{A StyledTable}

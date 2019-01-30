@@ -9,7 +9,8 @@
 \usage{
 setLatexRowHeights(object, value, ...)
 
-\S4method{setLatexRowHeights}{StyledTable,numeric}(object, value, rows = NULL)
+\S4method{setLatexRowHeights}{StyledTable,numeric}(object, value,
+  rows = NULL)
 }
 \arguments{
 \item{object}{A StyledTable}

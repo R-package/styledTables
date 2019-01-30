@@ -8,7 +8,8 @@
 \usage{
 setExcelColWidths(object, value, ...)
 
-\S4method{setExcelColWidths}{StyledTable,numeric}(object, value, cols = NULL)
+\S4method{setExcelColWidths}{StyledTable,numeric}(object, value,
+  cols = NULL)
 }
 \arguments{
 \item{object}{A StyledTable}

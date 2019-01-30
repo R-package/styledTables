@@ -8,7 +8,8 @@
 \usage{
 formatStatAbsolute(object, ...)
 
-\S4method{formatStatAbsolute}{StyledTable}(object, rows = NULL, cols = NULL)
+\S4method{formatStatAbsolute}{StyledTable}(object, rows = NULL,
+  cols = NULL)
 }
 \arguments{
 \item{object}{A StyledTable}

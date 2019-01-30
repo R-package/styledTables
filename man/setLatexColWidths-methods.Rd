@@ -8,7 +8,8 @@
 \usage{
 setLatexColWidths(object, value, ...)
 
-\S4method{setLatexColWidths}{StyledTable,numeric}(object, value, cols = NULL)
+\S4method{setLatexColWidths}{StyledTable,numeric}(object, value,
+  cols = NULL)
 }
 \arguments{
 \item{object}{A StyledTable}

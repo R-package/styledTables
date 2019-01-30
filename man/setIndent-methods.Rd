@@ -9,8 +9,8 @@
 \usage{
 setIndent(object, value, ...)
 
-\S4method{setIndent}{StyledTable}(object, value, rows = NULL, cols = NULL,
-  condition = NULL, conditionText = NULL)
+\S4method{setIndent}{StyledTable}(object, value, rows = NULL,
+  cols = NULL, condition = NULL, conditionText = NULL)
 }
 \arguments{
 \item{object}{A StyledTable}

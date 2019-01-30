@@ -9,7 +9,8 @@
 \usage{
 setExcelRowHeights(object, value, ...)
 
-\S4method{setExcelRowHeights}{StyledTable,numeric}(object, value, rows = NULL)
+\S4method{setExcelRowHeights}{StyledTable,numeric}(object, value,
+  rows = NULL)
 }
 \arguments{
 \item{object}{A StyledTable}

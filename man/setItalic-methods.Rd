@@ -9,8 +9,8 @@
 \usage{
 setItalic(object, value, ...)
 
-\S4method{setItalic}{StyledTable}(object, value, rows = NULL, cols = NULL,
-  condition = NULL, conditionText = NULL)
+\S4method{setItalic}{StyledTable}(object, value, rows = NULL,
+  cols = NULL, condition = NULL, conditionText = NULL)
 }
 \arguments{
 \item{object}{A StyledTable}

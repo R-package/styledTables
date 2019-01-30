@@ -65,7 +65,7 @@ setMethod(
     }
 )
 
-#' Generate the LaTeX code for a StyledTable without \\begin{tabular} and \\end{tabular}
+#' Generate the LaTeX code for a StyledTable without begin{tabular} and end{tabular}
 #'
 #' @name createLatexTableBody
 #' @rdname createLatexTableBody-methods

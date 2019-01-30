@@ -20,8 +20,6 @@ createStyledCrossTableHeader(yColHeadings, ...)
 \item{crossTableHeading}{(optional) A single character string that is printed in a merged cell above the Y cross table cols.}
 }
 \description{
-Method createStyledCrossTableHeader
-
 This function creates a styled header for a cross table. It is best used
 together with 'createStyledCrossTableBody'.
 It assumes that the cross table consists of several Y columns that come first

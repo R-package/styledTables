@@ -4,13 +4,13 @@
 \alias{createStyledSubTable}
 \title{Helper function that creates a styled sub table}
 \usage{
-createStyledSubTable(data, subLevel, subTableCols, subHeadingStylings = NULL,
-  bodyStyling = NULL, yCols, xCols)
+createStyledSubTable(data, subLevel, subTableCols,
+  subHeadingStylings = NULL, bodyStyling = NULL, yCols, xCols)
 }
 \arguments{
 \item{data}{A data.frame that should be used for the creation of the cross table.}
 
-\item{subLevel}{This is the recursive counter that gives the deepness of the recursive function execution. It points to the current sub heading level. So subLevel == 1 means that we look at the sub headings given by the different values in the data.frame column that has the name given in 'subTableCols\link{1}'.}
+\item{subLevel}{This is the recursive counter that gives the deepness of the recursive function execution. It points to the current sub heading level. So subLevel == 1 means that we look at the sub headings given by the different values in the data.frame column that has the name given in 'subTableCols[1]'.}
 
 \item{subTableCols}{(optional) A vector of column names that should be used in order to separate the data.frame into several sub tables, that will be concatenated vertically. Each sub table will have a sub heading row above the sub table body. The sub heading text is just the corresponding value in the column defined by 'subTableCols'. If no sub heading should be introduced at all, the argument 'subTableCols' should be omitted. If the 'subTableCols' is vector with more than one column name, then a hirachy level is introduced for the sub headings, where the first column has the highest and the column given by the last entry in 'subTableCols' has the lowest hirachy level.}
 

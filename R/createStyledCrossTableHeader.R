@@ -81,7 +81,9 @@ setMethod(
         # All headings of the columns that are used for the cross table columns
         xColHeadings <- list(...)
         # Filter out all NULL entries
-        xColHeadings <- xColHeadings[which(sapply(xColHeadings, function(x) !is.null(x)))]
+        if (length(xColHeadings) > 0)
+            xColHeadings <- xColHeadings[which(sapply(xColHeadings, function(x) !is.null(x)))]
+        
         ### Check consistency of supplied arguments
         errHandler <- function(description) {
             stop(paste0(

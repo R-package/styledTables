@@ -8,11 +8,11 @@
 \usage{
 createStyledCrossTableBody(data, ...)
 
-\S4method{createStyledCrossTableBody}{data.frame}(data, subTableCols = NULL,
-  subHeadingStylings = NULL, bodyStyling = NULL, yCols, yColsRight = NULL,
-  xCols = NULL, valueCols = NULL, valueColStylings = NULL,
-  dropMissingRows = TRUE, dropMissingCols = FALSE, fun.aggregate = NULL,
-  fillValues = NULL)
+\S4method{createStyledCrossTableBody}{data.frame}(data,
+  subTableCols = NULL, subHeadingStylings = NULL, bodyStyling = NULL,
+  yCols, yColsRight = NULL, xCols = NULL, valueCols = NULL,
+  valueColStylings = NULL, dropMissingRows = TRUE,
+  dropMissingCols = FALSE, fun.aggregate = NULL, fillValues = NULL)
 }
 \arguments{
 \item{data}{A data.frame that should be used for the creation of the cross table.}
@@ -44,8 +44,6 @@ createStyledCrossTableBody(data, ...)
 \item{fillValues}{(optional) A list of values that is used to fill the missing values in the \code{value columns} in the calculated cross table. The first list value is used for the first \code{value column}, the second value for the second \code{value column}. Hence, the list given in \code{fillValues} should have the same length as the \code{valueCols} and the types of the \code{fill values} should be the same as the corresponding \code{value columns} in the \code{data} data.frame. If the argument is omitted, then only \code{NA} is filled in for the missing cross table values. Caution: If an Excel file is generated from this cross table, \code{NA} values will be replaced by empty strings.}
 }
 \description{
-Create a styled cross table body
-
 This function creates the styled cross table body from a given data.frame.
 This function works best in combination with the method 'createStyledCrossTableHeader'.
 For the the creation of the styled cross table body the columns specified in 'subTableCols' are used to separate the

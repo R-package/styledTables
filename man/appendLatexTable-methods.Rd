@@ -8,7 +8,8 @@
 \usage{
 appendLatexTable(tableText, object)
 
-\S4method{appendLatexTable}{character,StyledTable}(tableText = "", object)
+\S4method{appendLatexTable}{character,StyledTable}(tableText = "",
+  object)
 }
 \arguments{
 \item{tableText}{A string containing the LaTeX code of a table}

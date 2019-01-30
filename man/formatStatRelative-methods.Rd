@@ -8,7 +8,8 @@
 \usage{
 formatStatRelative(object, ...)
 
-\S4method{formatStatRelative}{StyledTable}(object, rows = NULL, cols = NULL)
+\S4method{formatStatRelative}{StyledTable}(object, rows = NULL,
+  cols = NULL)
 }
 \arguments{
 \item{object}{A StyledTable}

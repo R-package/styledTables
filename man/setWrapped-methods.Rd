@@ -9,8 +9,8 @@
 \usage{
 setWrapped(object, value, ...)
 
-\S4method{setWrapped}{StyledTable}(object, value, rows = NULL, cols = NULL,
-  condition = NULL, conditionText = NULL)
+\S4method{setWrapped}{StyledTable}(object, value, rows = NULL,
+  cols = NULL, condition = NULL, conditionText = NULL)
 }
 \arguments{
 \item{object}{A StyledTable}

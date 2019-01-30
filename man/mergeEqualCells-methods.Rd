@@ -9,7 +9,8 @@
 \usage{
 mergeEqualCells(object, ...)
 
-\S4method{mergeEqualCells}{StyledTable}(object, rows = NULL, cols = NULL)
+\S4method{mergeEqualCells}{StyledTable}(object, rows = NULL,
+  cols = NULL)
 }
 \arguments{
 \item{object}{A StyledTable}

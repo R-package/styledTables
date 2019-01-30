@@ -6,14 +6,15 @@
 \alias{setSTCellStyle,STCellStyle,ANY,character-method}
 \alias{setSTCellStyle,STCellStyle-method}
 \alias{setSTCellStyle,MissingOrNull,ANY,character-method}
-\alias{setSTCellStyle,STCellStyle-method}
 \title{Set a single attribute in a style class}
 \usage{
 setSTCellStyle(object, value, styleName)
 
-\S4method{setSTCellStyle}{STCellStyle,ANY,character}(object, value, styleName)
+\S4method{setSTCellStyle}{STCellStyle,ANY,character}(object, value,
+  styleName)
 
-\S4method{setSTCellStyle}{MissingOrNull,ANY,character}(object, value, styleName)
+\S4method{setSTCellStyle}{MissingOrNull,ANY,character}(object, value,
+  styleName)
 }
 \arguments{
 \item{object}{A STCellStyle object}
