@@ -425,19 +425,43 @@ setMethod(
                             textMultirowVerticalMove,
                             "]"
                         )
-                        val <- paste0(
-                                "\\multirow{", 
-                                textMultirowNRows, 
-                                "}{",
-                                textMultirowWidth,
-                                "}",
-                                textMultirowVerticalMove,
-                                "{", 
-                                textCellColor,
-                                textHAlignmentMultirowInner,
-                                val,
-                                "}"
-                            ) 
+                        if (min(merge$rows) != max(merge$rows)) {
+                            val <- paste0(
+                                    "\\multirow{", 
+                                    textMultirowNRows, 
+                                    "}{",
+                                    textMultirowWidth,
+                                    "}",
+                                    textMultirowVerticalMove,
+                                    "{", 
+                                    textCellColor,
+                                    textHAlignmentMultirowInner,
+                                    val,
+                                    "}"
+                                ) 
+                        } else {
+                            if (fixedCellWidth) {
+                                val <- paste0(
+                                        textHAlignmentMultirowInner,
+                                        "\\parbox{", 
+                                        textMultirowWidth,
+                                        "}{\\strut",
+                                        textCellColor,
+                                        textHAlignmentMultirowInner,
+                                        val,
+                                        "\\strut}"
+                                    ) 
+                            } else {
+                                val <- paste0(
+                                        textCellColor,
+                                        "\\begin{tabular}{", 
+                                        hAlignment,
+                                        "}",
+                                        val,
+                                        "\\end{tabular}"
+                                    ) 
+                            }
+                        }
                     } else {
                         # if the current position is not the first row of a merged
                         # cell, the value is not used

@@ -398,15 +398,19 @@ setMethod(
             for (i in seq_len(length(valueCols))) {
                 # calculate the column ids of the value column in the resulting
                 # cross table
-                valueColIds <- length(yCols) + i +
-                    length(valueCols) * (
-                        seq_len(prod(
-                            sapply(
-                                xCols, 
-                                function(x) 
-                                    length(levels(as.factor(data[[x]])))
-                            )
-                        )) - 1L)
+                if (!is.null(xCols)) {
+                    valueColIds <- length(yCols) + i +
+                        length(valueCols) * (
+                            seq_len(prod(
+                                sapply(
+                                    xCols, 
+                                    function(x) 
+                                        length(levels(as.factor(data[[x]])))
+                                )
+                            )) - 1L)
+                } else {
+                    valueColIds <- length(yCols) + i
+                }
                 # apply the value cell styling to the corresponding value columns
                 # chain the current valueColStyling function to the bodyStyling function
                 # and save it again as bodyStyling
@@ -425,6 +429,9 @@ setMethod(
                 environment(bodyStyling) <- env
             }
         }
+        if (is.null(xCols) && !is.null(valueCols))
+            yCols <- c(yCols, valueCols)
+
         ### generate styled cross table body
         createStyledSubTable(
             data = dataCross, 

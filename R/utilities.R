@@ -185,7 +185,7 @@ sanitize <- function(val) {
     val <- gsub("&", "\\&", val, fixed = TRUE)
     val <- gsub("\\$", "\\$", val, fixed = TRUE)
     val <- gsub("#", "\\#", val, fixed = TRUE)
-    val <- gsub("_", "\\_", val, fixed = TRUE)
+    val <- gsub("_", "\\textunderscore{}", val, fixed = TRUE)
     val <- gsub("\\~", "\\textasciitilde{}", val, fixed = TRUE)
     gsub("\\^", "\\textasciicircum{}", val, fixed = TRUE)
 }
