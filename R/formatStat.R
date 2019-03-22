@@ -100,10 +100,13 @@ setMethod(
         object <- setExcelFontSize(object, 7, rows = rows)
         object <- setExcelFontName(object, "Arial", rows = rows)
         object <- setExcelRowHeights(object, 12.75, rows = rows[1])
-        object <- setExcelRowHeights(object, 9.75, rows = rows[rows != rows[1]])
+        if (length(rows) > 1)
+          object <- setExcelRowHeights(object, 9.75, rows = rows[rows != rows[1]])
         object <- setExcelVertical(object, "bottom", rows = rows)
         object <- setHorizontal(object, "left", rows = rows, cols = cols[1])
-        setHorizontal(object, "right", rows = rows, cols = cols[cols != cols[1]])
+        if (length(cols) > 1)
+          setHorizontal(object, "right", rows = rows, cols = cols[cols != cols[1]])
+        object
     }
 )
 
@@ -218,8 +221,10 @@ setMethod(
             function(x) {
                 if (!is.na(x) && x != 0) {
                     format(round(x, 0), nsmall = 0, big.mark = ".", decimal.mark = ",")
-                } else {
+                } else if (!is.na(x) && x == 0) {
                     "-"
+                } else {
+                    "$\\cdot$"
                 }
             }, 
             rows = rows, 
@@ -286,8 +291,10 @@ setMethod(
             function(x) {
                 if (!is.na(x) && x != 0) {
                     format(round(x, 1), nsmall = 1, decimal.mark = ",") 
-                } else {
+                } else if (!is.na(x) && x == 0) {
                     "-"
+                } else {
+                    "$\\cdot$"
                 }
             },
             rows = rows, 

@@ -1,6 +1,6 @@
 Package: styledTables
 Title: Easy creation of beautiful Excel and LaTeX tables in R
-Version: 0.4.1
+Version: 0.4.2
 Authors@R: person("Adrian", "Maldet", email = "adrian.maldet@statistik.gv.at", role = c("aut", "cre"))
 Description: This package offers an easy to use frame work for creating beautiful tables in LaTeX and Excel. It offers the full spectrum of formatting possibilities. Generate LaTeX and Excel tables in one go.
 Depends: R (>= 3.4.0)
