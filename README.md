@@ -1,4 +1,4 @@
-styledTables
+styledTables <img src='man/figures/logo.png' align="right" height="138.5" />
 ============
 
 The creation of styled *Excel* or *LaTeX* tables in *R* has never been

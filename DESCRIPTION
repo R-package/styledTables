@@ -3,11 +3,13 @@ Title: Easy creation of beautiful Excel and LaTeX tables in R
 Version: 0.4.2
 Authors@R: person("Adrian", "Maldet", email = "adrian.maldet@statistik.gv.at", role = c("aut", "cre"))
 Description: This package offers an easy to use frame work for creating beautiful tables in LaTeX and Excel. It offers the full spectrum of formatting possibilities. Generate LaTeX and Excel tables in one go.
-Depends: R (>= 3.4.0)
+Depends:
+    R (>= 3.4.0)
 Imports:
     xlsx (>= 0.6.1),
     data.table (>= 1.11.4),
     dplyr (>= 0.7.6),
+    hexSticker,
     methods,
     stats,
     grDevices,
@@ -22,16 +24,19 @@ Collate:
     'Style.R'
     'StyledTable.R'
     'addMerge.R'
+    'createLogo.R'
     'createStyledCrossTableBody.R'
     'createStyledCrossTableHeader.R'
     'setHeightsWidths.R'
     'setCellStyles.R'
     'formatStat.R'
+    'ghostconvert.R'
     'imports.R'
     'latexTable.R'
     'removeRowsColumns.R'
     'utilities.R'
     'writePdf.R'
+    'writePng.R'
     'writeToExcelSheet.R'
 Suggests: knitr,
     rmarkdown

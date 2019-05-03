@@ -1,0 +1,19 @@
+#' Creates the logo of the styledTables package
+#'
+#' @importFrom hexSticker sticker
+createLogo <- function() {
+  sticker(
+    "man/figures/poodle.png",
+    package="styledTables", 
+    p_size=16,
+    p_y = 0.8,
+    s_x=1,
+    s_y=1.3,
+    h_fill = "#ff81ff",
+    p_color = "#fffafa",
+    h_color = "#fa61fa",
+    s_width=0.3,
+    s_height=0.3,
+    filename="man/figures/logo.png"
+  )
+}

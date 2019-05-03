@@ -4,7 +4,7 @@
 \alias{writePdf}
 \title{Write a styledTable object to pdf}
 \usage{
-writePdf(x, file = "table.pdf", resizePdf = TRUE)
+writePdf(x, file = "table.pdf", resizePdf = TRUE, useTinyTex = TRUE)
 }
 \arguments{
 \item{x}{a styledTable object to save.}
@@ -13,10 +13,12 @@ writePdf(x, file = "table.pdf", resizePdf = TRUE)
 
 \item{resizePdf}{Should the pdf be resized to the dimensions of
 the table? Default is \code{TRUE}.}
+
+\item{useTinyTex}{Should TinyTex be used to render the table as PDF?}
 }
 \description{
-Use \link[tools:texi2pdf]{tools::texi2pdf} to compile the output from \link{createLatexTable}
-to a pdf. This function works similat ro \link{write.csv} in the sense
+Use \code{tools::texi2pdf} to compile the output from \code{createLatexTable}
+to a pdf. This function works similat ro \code{write.csv} in the sense
 that the first argument is the table to write and the second
 argument is a local or global path.
 }
