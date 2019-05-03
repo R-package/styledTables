@@ -1,6 +1,14 @@
 styledTables <img src='man/figures/logo.png' align="right" height="138.5" />
 ============
 
+<!-- badges: start -->
+[![Travis build status](https://travis-ci.org/R-package/styledTables.svg?branch=master)](https://travis-ci.org/R-package/styledTables)
+[![GitHub last
+commit](https://img.shields.io/github/last-commit/R-package/styledTables.svg?logo=github)](https://github.com/R-package/styledTables/commits/master)
+[![GitHub code size in
+bytes](https://img.shields.io/github/languages/code-size/R-package/styledTables.svg?logo=github)](https://github.com/R-package/styledTables)
+<!-- badges: end -->
+
 The creation of styled *Excel* or *LaTeX* tables in *R* has never been
 easier.
 
