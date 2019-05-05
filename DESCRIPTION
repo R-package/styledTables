@@ -50,3 +50,5 @@ Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
+URL: https://github.com/R-package/styledTables
+BugReports: https://github.com/R-package/styledTables/issues
