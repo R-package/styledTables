@@ -10,5 +10,5 @@ apt_packages:
 
 deploy:
   provider: script
-  script: Rscript -e 'pkgdown::deploy_site_github()'
+  script: Rscript -e 'pkgdown::build_favicon(); pkgdown::deploy_site_github()'
   skip_cleanup: true
