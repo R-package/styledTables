@@ -2,7 +2,7 @@ styledTables <img src='man/figures/logo.png' align="right" height="138.5" />
 ============
 
 <!-- badges: start -->
-[![Travis build status](https://travis-ci.org/R-package/styledTables.svg?branch=master)](https://travis-ci.org/R-package/styledTables)
+[![Travis build status](https://img.shields.io/travis/R-package/styledTables.svg?logo=travis)](https://travis-ci.org/R-package/styledTables)
 [![GitHub last
 commit](https://img.shields.io/github/last-commit/R-package/styledTables.svg?logo=github)](https://github.com/R-package/styledTables/commits/master)
 [![GitHub code size in
