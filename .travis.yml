@@ -7,6 +7,7 @@ r_github_packages: r-lib/pkgdown
 
 apt_packages:
   - libmagick++-dev
+  - texlive-latex-extra
 
 deploy:
   provider: script
