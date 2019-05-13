@@ -215,6 +215,19 @@ sTbl %>%
 
 ![ExcelTableImage](../man/figures/readme_latex.jpg)
 
+### Rmarkdown printing
+
+StyledTable objects can be printed in RMarkdown documents with the
+`knit_print` generic
+
+```{r, include=FALSE}
+library(styledTables)
+```
+
+```{r, results='markup', out.width="100%"}
+styledTable(head(iris, 10))
+```
+
 ## Styling methods
 
 * `addMerge`: Merge cells
