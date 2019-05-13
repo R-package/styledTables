@@ -79,7 +79,7 @@
       <h1>styledTables</h1>
                         <h4 class="author">Adrian Maldet</h4>
             
-            <h4 class="date">2019-05-05</h4>
+            <h4 class="date">2019-05-13</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/R-package/styledTables/blob/master/vignettes/styledTables.Rmd"><code>vignettes/styledTables.Rmd</code></a></small>
       <div class="hidden name"><code>styledTables.Rmd</code></div>
@@ -275,6 +275,13 @@ sTbl %&gt;%
 <img src="../man/figures/readme_latex.jpg" alt="ExcelTableImage"><p class="caption">ExcelTableImage</p>
 </div>
 </div>
+</div>
+<div id="rmarkdown-printing" class="section level3">
+<h3 class="hasAnchor">
+<a href="#rmarkdown-printing" class="anchor"></a>Rmarkdown printing</h3>
+<p>StyledTable objects can be printed in RMarkdown documents with the <code>knit_print</code> generic</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="../reference/StyledTable-styledTable-method.html">styledTable</a></span>(<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(iris, <span class="dv">10</span>))</a></code></pre></div>
+<p><img src="styledTables_files/figure-html/StyledTable-e4f5d52a10.png" width="100%"></p>
 </div>
 </div>
 <div id="styling-methods" class="section level2">
@@ -515,7 +522,7 @@ sTbl %&gt;%
 </li>
 </ul>
 <p>In order to generate the following LaTeX table execute the following command</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">    knitr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/knitr/man/knit.html">knit</a></span>(<span class="st">"test3.Rnw"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">    knitr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/knitr/man/knit.html">knit</a></span>(<span class="st">"test3.Rnw"</span>)</a></code></pre></div>
 <p>Where the file <code>test3.Rnw</code> looks as follows</p>
 <pre><code>\documentclass[a4paper]{article}
 \usepackage{ragged2e}
