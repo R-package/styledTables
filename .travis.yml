@@ -8,6 +8,9 @@ r_github_packages: r-lib/pkgdown
 apt_packages:
   - libmagick++-dev
   - texlive-latex-extra
+  
+before_install:
+  - tlmgr install standalone
 
 deploy:
   provider: script
