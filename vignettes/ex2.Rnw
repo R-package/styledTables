@@ -14,7 +14,7 @@
 \begin{document}
 \maketitle
 
-<<results = 'asis', echo = FALSE, message = FALSE, warning = FALSE>>=
+<<results = tex, echo = FALSE, message = FALSE, warning = FALSE>>=
 library(styledTables)
 library(dplyr)
 
