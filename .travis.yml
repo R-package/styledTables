@@ -2,3 +2,17 @@
 
 language: R
 cache: packages
+
+r_github_packages: r-lib/pkgdown
+
+apt_packages:
+  - libmagick++-dev
+  - texlive-latex-extra
+  
+before_install:
+  - tlmgr install standalone
+
+deploy:
+  provider: script
+  script: Rscript -e 'pkgdown::build_favicon(); pkgdown::deploy_site_github()'
+  skip_cleanup: true

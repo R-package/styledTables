@@ -161,7 +161,6 @@ The function `create_latex_table()` returns the `LaTeX` code of the `StyledTable
 object. You can use this function to include your `StyledTable` inside of an `Rnw` file.
 Therefore you must load several `LaTeX` packages in the `LaTeX` preamble
 (before `\begin{document}`):
-
 ```{r, code=readLines("ex2.Rnw"), eval=FALSE}
 ```
 

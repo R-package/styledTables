@@ -1,8 +1,7 @@
 # create the poodle logo of the styledTables package
 # install.packages("hexSticker")
-library(hexSticker)
-sticker(
-    "poodle.png",
+hexSticker::sticker(
+    "man/figures/poodle.png",
     package="styledTables", 
     p_size=16,
     p_y = 0.8,
