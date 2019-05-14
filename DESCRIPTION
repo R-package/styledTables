@@ -16,8 +16,6 @@ Depends:
 Imports:
     xlsx (>= 0.6.1),
     data.table (>= 1.11.4),
-    dplyr (>= 0.7.6),
-    hexSticker,
     methods,
     stats,
     grDevices,
@@ -50,7 +48,9 @@ Collate:
     'writePng.R'
     'writeToExcelSheet.R'
 Suggests: 
-    rmarkdown
+    rmarkdown,
+    hexSticker,
+    dplyr (>= 0.7.6)
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
 URL: https://github.com/R-package/styledTables
