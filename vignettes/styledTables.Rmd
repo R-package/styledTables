@@ -119,7 +119,7 @@ write_excel(sheet, st2)
 # save the workbook
 saveWorkbook(wb, "test.xlsx")
 ```
-```{r, results = 'hide', echo = FALSE}
+```{r, results = 'hide', echo = FALSE, eval = FALSE}
 library(xlsx)
 
 # open new xlsx workbook and create a worksheet
@@ -130,10 +130,10 @@ sheet <- createSheet(wb, "iris_table")
 write_excel(sheet, st2)
 
 # save the workbook
-saveWorkbook(wb, "../docs/test.xlsx")
+saveWorkbook(wb, "test.xlsx")
 ```
 
-[Resulting Excel file](../test.xlsx)
+<!-- [Resulting Excel file](../test.xlsx) -->
 
 ## Export to PDF or PNG
 Use the function `write_pdf()` and `write_png()` to create `PDF` and `PNG`
@@ -156,7 +156,7 @@ Therefore you must load several `LaTeX` packages in the `LaTeX` preamble
 ```{r, code=readLines("ex2.Rnw"), eval=FALSE}
 ```
 
-```{r, include=FALSE}
+```{r, include=FALSE, eval = FALSE}
 system("cp ex2.Rnw ../docs/")
 dir.create(tmp <- tempdir())
 old_wd <- getwd()
@@ -179,7 +179,7 @@ system(paste("cp", file.path(tmp, "ex2.pdf"), "."))
 system("cp ex2.pdf ../docs/")
 ```
 
-[Rnw file](../ex2.Rnw) and [Resulting PDF file](../ex2.pdf)
+<!-- [Rnw file](../ex2.Rnw) and [Resulting PDF file](../ex2.pdf) -->
 
 [xlsx package]: https://cran.r-project.org/web/packages/xlsx/xlsx.pdf
 [pipe operator]: https://style.tidyverse.org/pipes.html
