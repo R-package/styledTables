@@ -31,4 +31,6 @@ temp/
 *.swp
 # xlsx files
 *.xlsx
-inst/doc
+# pkgdown results
+docs/
+

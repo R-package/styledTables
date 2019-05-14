@@ -1,0 +1,92 @@
+reference:
+- title: create and concatenate styled tables
+  contents:
+  - '`styled_table`'
+- title: export functions
+  contents:
+  - '`write_png`'
+  - '`write_pdf`'
+  - '`write_excel`'
+  - '`create_latex_table`'
+  - '`append_latex_table`'
+  - '`create_latex_table_body`'
+- title: change font styles
+  contents:
+  - '`set_excel_font_name`'
+  - '`set_latex_font_name`'
+  - '`set_excel_font_size`'
+  - '`set_latex_font_size`'
+  - '`set_font_color`'
+  - '`set_bold`'
+  - '`set_excel_boldweight`'
+    #  - '`set_latex_boldweight`'
+  - '`set_italic`'
+  - '`set_underline`'
+  - '`set_strikeout`'
+  - '`set_rotation`'
+  - '`set_indent`'
+  - '`set_fill_color`'
+- title: change cell alignment
+  contents:
+  - '`set_horizontal`'
+  - '`set_excel_vertical`'
+  - '`set_latex_vertical_move`'
+  - '`set_latex_vertical_move`'
+- title: change row height and column width
+  contents:
+  - '`set_excel_row_height`'
+  - '`set_latex_row_height`'
+  - '`set_excel_col_width`'
+  - '`set_latex_col_width`'
+- title: change table border
+  contents:
+  - '`set_border_position`'
+  - '`set_border_color`'
+  - '`set_excel_border_pen`'
+- title: change value display
+  contents:
+  - '`set_excel_data_format`'
+  - '`set_excel_pre_process`'
+  - '`set_latex_pre_process`'
+- title: various styling functions
+  contents:
+  - '`set_excel_wrapped`'
+  - '`set_excel_locked`'
+  - '`set_excel_hidden`'
+- title: merge cells
+  contents:
+  - '`merge_cells`'
+  - '`merge_equal_cells`'
+- title: remove columns and rows
+  contents:
+  - '`remove_col`'
+  - '`remove_row`'
+- title: predefined table styling functions
+  desc: >
+    The following functions style your table header and table body in the same
+    way that is used for the published tables of the 
+    Austrian national statistics institute 'Statistik Austria'.
+  contents:
+  - '`format_stat_header`'
+  - '`format_stat_body`'
+  - '`format_stat_sub_heading`'
+  - '`format_stat_absolute`'
+  - '`format_stat_relative`'
+- title: cross table creation 
+  desc: >
+    The following functions allow the easy creation of cross tables (pivot tables)
+    with multiple header levels and sub tables.
+  contents:
+  - '`create_cross_table_body`'
+  - '`create_cross_table_header`'
+- title: count rows/columns
+  contents:
+  - '`count_rows`'
+  - '`count_cols`'
+
+development:
+  mode: release
+
+template:
+  params:
+    bootswatch: cosmo

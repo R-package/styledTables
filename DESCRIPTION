@@ -1,15 +1,16 @@
 Package: styledTables
-Title: Easy creation of beautiful Excel and LaTeX tables in R
-Version: 0.4.2
-Authors@R: person("Adrian", "Maldet", email = "adrian.maldet@statistik.gv.at", role = c("aut", "cre"))
+Title: R package for easy export of beautifully styled tables to Excel, LaTeX, PNG and PDF.
+Version: 1.0.0
+Authors@R: c(
+    person("Adrian", "Maldet", email = "adrian.maldet@statistik.gv.at", role = c("aut", "cre")),
+    person("Gregor", "de Cillia", email = "gregor.decillia@statistik.gv.at", role = c("aut")))
 Description: This package offers an easy to use frame work for creating beautiful tables in LaTeX and Excel. It offers the full spectrum of formatting possibilities. Generate LaTeX and Excel tables in one go.
 Depends:
-    R (>= 3.4.0)
+    R (>= 3.6.0)
 Imports:
     xlsx (>= 0.6.1),
-    data.table (>= 1.11.4),
-    dplyr (>= 0.7.6),
-    hexSticker,
+    data.table (>= 1.12.2),
+    dplyr (>= 0.8.0),
     methods,
     stats,
     grDevices,
@@ -20,24 +21,24 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
 Collate:
-    'Alignment.R'
-    'Style.R'
-    'StyledTable.R'
-    'addMerge.R'
-    'createLogo.R'
-    'createStyledCrossTableBody.R'
-    'createStyledCrossTableHeader.R'
-    'setHeightsWidths.R'
-    'setCellStyles.R'
-    'formatStat.R'
+    'alignment.R'
+    'create_cross_table_body.R'
+    'create_cross_table_header.R'
+    'styled_cell.R'
+    'styled_table.R'
+    'create_latex_table.R'
+    'set_height_width.R'
+    'merge_cells.R'
+    'set_styled_table.R'
+    'format_stat.R'
+    'get_xlsx_cell_styles.R'
     'ghostconvert.R'
     'imports.R'
-    'latexTable.R'
-    'removeRowsColumns.R'
+    'remove_row_col.R'
     'utilities.R'
-    'writePdf.R'
-    'writePng.R'
-    'writeToExcelSheet.R'
+    'write_excel.R'
+    'write_pdf.R'
+    'write_png.R'
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr

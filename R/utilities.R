@@ -2,14 +2,14 @@
 #'
 #' @param var Variable whose type should be checked
 #' @param types (vector of strings) A vector of allowed type values
-#' @param varName (string) Name of the variable passed in in \code{var}. This
+#' @param var_name (string) Name of the variable passed in in \code{var}. This
 #' name is used for the error message if it has the wrong type.
-#' @param allowNA (logical) Is a missing value allowed?
-assertType <- function(var, types, varName, allowNA = TRUE) {
-    if ((!allowNA && is.na(var)) || (!is.na(var) && !typeof(var) %in% types))
+#' @param allow_na (logical) Is a missing value allowed?
+assert_type_ <- function(var, types, var_name, allow_na = TRUE) {
+    if ((!allow_na && is.na(var)) || (!is.na(var) && !typeof(var) %in% types))
         sprintf(
             "Argument '%s' must be of type '%s'.", 
-            varName, 
+            var_name, 
             paste(paste0("'", types, "'"), collapse = " oder ")
         )
 }
@@ -17,30 +17,30 @@ assertType <- function(var, types, varName, allowNA = TRUE) {
 #' Check if a variable is a character, if not throw an error (using non standard evaluation)
 #'
 #' @param var The value that should be checked
-AssertChar <- function(var) {
+assert_char <- function(var) {
     if (!is.null(var)) {
-        varName = deparse(substitute(var))
-        assertType(var, "character", varName)
+        var_name = deparse(substitute(var))
+        assert_type_(var, "character", var_name)
     }
 }
 
 #' Check if a variable is a number, if not throw an error (using non standard evaluation)
 #'
 #' @param var The value that should be checked
-AssertNumber <- function(var) {
+assert_number <- function(var) {
     if (!is.null(var)) {
-        varName = deparse(substitute(var))
-        assertType(var, c("integer", "double"), varName)
+        var_name = deparse(substitute(var))
+        assert_type_(var, c("integer", "double"), var_name)
     }
 }
 
 #' Check if a variable is a logical, if not throw an error (using non standard evaluation)
 #'
 #' @param var The value that should be checked
-AssertLogical <- function(var) {
+assert_logical <- function(var) {
     if (!is.null(var)) {
-        varName = deparse(substitute(var))
-        assertType(var, "logical", varName)
+        var_name = deparse(substitute(var))
+        assert_type_(var, "logical", var_name)
     }
 }
 
@@ -48,21 +48,21 @@ AssertLogical <- function(var) {
 #'
 #' @param var Variable whose value should be checked
 #' @param values (vector) A vector of allowed values
-AssertValue <- function(var, values) {
+assert_value <- function(var, values) {
     # Check if variable "var" has an allowed value (value list given by "values")
     # if not generate an error message and return it
     if (length(var) > 0) {
-        varName <- deparse(substitute(var))
-        assertValue_(var, varName, values)
+        var_name <- deparse(substitute(var))
+        assert_value_(var, var_name, values)
     }
 }
 
 #' Check if a variable holds an allowed value (without non standard evaluation)
 #'
 #' @param var Variable whose value should be checked
-#' @param varName name of the variable whose value should be checked
+#' @param var_name name of the variable whose value should be checked
 #' @param values (vector) A vector of allowed values
-assertValue_ <- function(var, varName, values) {
+assert_value_ <- function(var, var_name, values) {
     # Check if variable "var" has an allowed value (value list given by "values")
     # if not generate an error message and return it
     if (!all(var %in% values)) {
@@ -71,20 +71,20 @@ assertValue_ <- function(var, varName, values) {
         else
             strValues <- values
         strValues <- paste0(strValues, collapse = ", ")
-        sprintf("Argument '%s' must be in c(%s).", varName, strValues)
+        sprintf("Argument '%s' must be in c(%s).", var_name, strValues)
     }
 }
 
 #' Check if a variable holds a color value (using non standard evaluation)
 #'
 #' @param var Variable whose value should be checked
-AssertColorValue <- function(var) {
+asser_color_value <- function(var) {
     # Check if variable "var" has a color value
     # if not, throw an error
     if (length(var) > 0) {
-        varName <- deparse(substitute(var))
+        var_name <- deparse(substitute(var))
         if (!all(grepl("^#[0-9abcdefABCDEF]{6}$", var)))
-            assertValue_(var, varName, transformChar(grDevices::colors(), toUpper = TRUE))
+            assert_value_(var, var_name, transform_char(grDevices::colors(), toUpper = TRUE))
     }
 }
 
@@ -96,7 +96,7 @@ AssertColorValue <- function(var) {
 #' @param pre (string) Text that should be appended in front 
 #' @param post (string) Text that should be appended at the end 
 #' @param toUpper (logical) Should the text be transformed to upper case?
-transformChar <- function(var = NULL, pre = "", post = "", toUpper = TRUE) {
+transform_char <- function(var = NULL, pre = "", post = "", toUpper = TRUE) {
     if (!is.null(var) && is.character(var)) {
         if (toUpper)
             var <- toupper(var)
@@ -109,7 +109,7 @@ transformChar <- function(var = NULL, pre = "", post = "", toUpper = TRUE) {
 #'
 #' Remove all elements who are totally nested NULLs or elements of length == 0) in the first level of lists
 #' @param li A list
-removeMissing <- function(li) {
+remove_missing <- function(li) {
     Filter(function(x) length(unlist(x)) > 0, li)
 }
 
@@ -119,8 +119,8 @@ removeMissing <- function(li) {
 #' @param fn (function) Function that should be invoked
 #' @param args (named list) List of arguments (\code{NULL} arguments will be removed)
 #' @param skipIfAllMissing (logical) If \code{skipIfAllMissing = TRUE} and all arguments in \code{args} are \code{NULL}, then the function \code{fn} is not invoked and \code{NULL} is returned instead.
-doCallWithoutMissing <- function(fn, args, skipIfAllMissing = TRUE) {
-    rArgs <-removeMissing(args)
+do_call_without_missing <- function(fn, args, skipIfAllMissing = TRUE) {
+    rArgs <-remove_missing(args)
     if (!skipIfAllMissing || length(rArgs) > 0)
         do.call(fn, rArgs)
 }
@@ -131,7 +131,7 @@ doCallWithoutMissing <- function(fn, args, skipIfAllMissing = TRUE) {
 #' @param from First element in the sequence
 #' @param to Last element in the sequence
 #' @return The sequence
-seq.save <- function(
+seq_save <- function(
     from, 
     to 
 ) {
@@ -142,15 +142,15 @@ seq.save <- function(
 
 #' Improved \code{seq} command which allows an two element vector holding the sequence boundaries 
 #'
-#' The boundaries for the sequence command are given as two element vector and passed to the \code{seq.save} function.
+#' The boundaries for the sequence command are given as two element vector and passed to the \code{seq_save} function.
 #' @param bLU A two element vector. The first element is the lower boundary the second element the upper boundarie. If the lower boundary is greater than the upper boundary, then an empty vector is returned.
 #' @return The sequence
-seq.vec <- function(
+seq_vec <- function(
     bLU
 ) {
     if (length(bLU) != 2)
         return(integer(0))
-    seq.save(bLU[1], bLU[2])
+    seq_save(bLU[1], bLU[2])
 }
 
 #' Calculate the hex color value from a color name
@@ -158,7 +158,7 @@ seq.vec <- function(
 #' This little function takes a color name (e.g.: "red") and calculates the corresponding hex color value.
 #' @param col A string holding a color name (e.g.: "red") or a color value (e.g.: "#F00000")
 #' @return The hex color value as string without hashtag (e.g.: "F00000")
-colorToHex <- function(col) {
+calc_hex_color <- function(col) {
     if (!all(grepl("^#[0-9abcdefABCDEF]{6}$", col))) {
         colVec <- grDevices::col2rgb(col)
         col <- toupper(sprintf("#%02X%02X%02X", colVec[1], colVec[2], colVec[3]))
@@ -170,7 +170,7 @@ colorToHex <- function(col) {
 #'
 #' @param x A numeric value that should be between two other values
 #' @param vec A vector holding the upper and lower bound values
-betweenVec <- function(x, vec) {
+between_vec <- function(x, vec) {
     vec[1] <= x && x <= vec[2]
 }
 
@@ -193,7 +193,7 @@ sanitize <- function(val) {
 #' Concatenate functions
 #'
 #' @param ... Several functions that should be concatenated
-concatFunctions <- function(...) {
+concat_functions <- function(...) {
     fnList <- list(...)
     function(x) {
         for (fn in fnList) x <- fn(x)
@@ -203,36 +203,36 @@ concatFunctions <- function(...) {
 
 #' Compare Styles
 #'
-#' @param s1 First style object
-#' @param s2 First style object
+#' @param s1 First style st
+#' @param s2 First style st
 #' @export
-compareStyles <- function(s1, s2) {
+compare_styles <- function(s1, s2) {
     all(sapply(c(
-            "fontName",
-            "fontHeight",
-            "fontColor",
-            "isBold",
-            "isItalic",
-            "isStrikeout",
+            "excel_font_name",
+            "excel_font_size",
+            "font_color",
+            "bold",
+            "italic",
+            "strikeout",
             "underline",
-            "boldweight",
-            "isWrapped",
+            "excel_boldweight",
+            "excel_wrapped",
             "horizontal",
             "vertical",
             "rotation",
             "indent",
-            "borderPosition",
-            "borderColor",
-            "borderPen",
-            "foregroundColor",
-            "backgroundColor",
-            "fillPattern",
-            "dataFormat",
-            "isLocked",
-            "isHidden",
-            "latexVerticalMove"
-        ), function(slotName)
-            identical(slot(s1, slotName), slot(s2, slotName))
+            "border_position",
+            "border_color",
+            "excel_border_pen",
+            "fill_color",
+            "excel_background_color",
+            "excel_fill_pattern",
+            "excel_data_format",
+            "excel_locked",
+            "excel_hidden",
+            "latex_vertical_move"
+        ), function(slot_name)
+            identical(slot(s1, slot_name), slot(s2, slot_name))
     ))
 }
 

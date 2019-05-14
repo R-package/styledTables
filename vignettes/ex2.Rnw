@@ -1,0 +1,36 @@
+\documentclass[a4paper]{article}
+
+% --- Packages needed by styledTables ---
+\usepackage{ragged2e}
+\usepackage{multirow}
+\usepackage{pbox}
+\usepackage{hhline}
+\usepackage[table]{xcolor}
+% ---------------------------------------
+
+\title{Creation of LaTeX-Tables with the styledTables package}
+\author{Adrian Maldet \and Gregor de Cillia}
+
+\begin{document}
+\maketitle
+
+<<results = 'asis', echo = FALSE, message = FALSE, warning = FALSE>>=
+library(styledTables)
+library(dplyr)
+
+# Create the styled table
+st1 <- iris[sample(seq_len(nrow(iris)), 10),] %>%
+    styled_table(keep_header = TRUE)
+
+# Apply several styling functions
+st1 <- st1 %>%
+    set_border_position("all", row_id = 1) %>%
+    set_bold(row_id = 1) %>%
+    set_fill_color("#00FF00", col_id = 5, condition = X == "setosa")
+
+# Print latex code
+st1 %>%
+    create_latex_table %>%
+    cat
+@
+\end{document}
