@@ -1,7 +1,7 @@
 Package: styledTables
 Title: R package for easy export of beautifully styled tables to Excel, LaTeX, PNG and PDF.
 Version: 1.0.0
-Authors@R: c(
+Authors@R:
     c(person(given = "Adrian",
              family = "Maldet",
              role = c("aut", "cre"),
@@ -41,12 +41,12 @@ Collate:
     'get_xlsx_cell_styles.R'
     'ghostconvert.R'
     'imports.R'
+    'knit_print.R'
     'remove_row_col.R'
     'utilities.R'
     'write_excel.R'
     'write_pdf.R'
     'write_png.R'
-    'knit_print.R'
 Suggests: knitr,
     rmarkdown,
     hexSticker,

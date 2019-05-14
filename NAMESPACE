@@ -70,10 +70,7 @@ import(data.table)
 import(xlsx)
 importFrom(grDevices,col2rgb)
 importFrom(grDevices,colors)
-<<<<<<< HEAD
-=======
 importFrom(knitr,knit_print)
->>>>>>> 1ebfa5aeff950c8070291e1284feafc046ec311a
 importFrom(methods,"slot<-")
 importFrom(methods,is)
 importFrom(methods,new)

@@ -31,9 +31,10 @@ devtools::install_github('R-package/styledTables', build_vignettes = TRUE)
 Use the `styled_table()` function to turn a `data.frame` or `matrix` into a
 `StyledTable` class object.
 Then apply all the [styling functions] you want to by using the [pipe operator] `%>%`
-and save the styled table as a `PNG`.
+and return the `StyledTable` object at the end of your `Rmd` chunk so that `knitr` can
+do the printing (the `print()` function of `knitr` is overloaded by `styledTables`).
 
-```{r, results = 'hide'}
+```{r}
 library(styledTables)
 library(dplyr)
 
@@ -47,13 +48,9 @@ st1 <- st1 %>%
     set_bold(row_id = 1) %>%
     set_fill_color("#00FF00", col_id = 5, condition = X == "setosa")
 
-# Save as PNG
-st1 %>%
-    write_png("ex1.png")
+# Return the styled table at the end of the Rmd-chunk in order to print it
+st1
 ```
-<p>
-<img src="ex1.png" width="60%" height="60%">
-</p>
 
 ## Concat styled tables vertically
 The function `styled_table()` allows you to put in multiple 
@@ -63,7 +60,7 @@ adding a custimized table header to the table. With the functions `merge_cells()
 and `merge_equal_cells()` multiple cells of a `StyledTable` object can be 
 merged together.
 
-```{r, results = 'hide'}
+```{r}
 library(styledTables)
 library(dplyr)
 
@@ -100,14 +97,9 @@ st2 <- styled_table(
     st_body
 )
 
-# Save as PNG
-st2 %>%
-    write_png("ex2.png")
+# Return the styled table at the end of the Rmd-chunk in order to print it
+st2
 ```
-
-<p>
-<img src="ex2.png" width="60%" height="60%">
-</p>
 
 ## Export to Excel
 For the creation of Excel tables the [xlsx package] is used. Create a `xlsx` 
