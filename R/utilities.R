@@ -171,7 +171,7 @@ calc_hex_color <- function(col) {
 #' @param x A numeric value that should be between two other values
 #' @param vec A vector holding the upper and lower bound values
 between_vec <- function(x, vec) {
-    vec[1] <= x && x <= vec[2]
+    all(vec[1] <= x) && all(x <= vec[2])
 }
 
 #' Escape latex commands
