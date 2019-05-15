@@ -47,7 +47,7 @@ Collate:
     'write_excel.R'
     'write_pdf.R'
     'write_png.R'
-Suggests: knitr,
+Suggests:
     rmarkdown,
     hexSticker,
     dplyr (>= 0.7.6)
