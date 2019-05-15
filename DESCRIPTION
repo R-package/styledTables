@@ -1,5 +1,5 @@
 Package: styledTables
-Title: R package for easy export of beautifully styled tables to Excel, LaTeX, PNG and PDF.
+Title: R package for easy export of beautifully styled tables to Excel, LaTeX, PNG and PDF
 Version: 1.0.0
 Authors@R:
     c(person(given = "Adrian",
