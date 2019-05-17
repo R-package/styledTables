@@ -31,5 +31,5 @@ write_png <- function(st, file = "table.png", resize = TRUE) {
     ## change back wd so relative paths for file are handled properly
     ## when copying
     setwd(oldWd)
-    file.copy(file.path(tmp, "table.png"), file, overwrite = TRUE)
+    invisible(file.copy(file.path(tmp, "table.png"), file, overwrite = TRUE))
 }
