@@ -15,6 +15,14 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 fig_path <- function(file) {
   paste0(knitr::opts_chunk$get("fig.path"), file)
 }
+
+pkgdown_link <- function(text, file) {
+  url <- file.path(
+    "https://r-package.github.io/styledTables/articles/styledTables_files",
+    "figure-html", file
+  )
+  paste0("[", text, "](", url, ")")
+}
 ```
 
 `styledTables` is an **R** package that makes it possible to export a
@@ -136,7 +144,7 @@ write_excel(sheet, st2)
 saveWorkbook(wb, fig_path("ex2.xlsx"))
 ```
 
-[Resulting Excel file](`r fig_path("ex2.xlsx")`)
+`r pkgdown_link("Resulting Excel file", "ex2.xlsx")`
 
 ## Export to PDF or PNG
 
@@ -158,8 +166,8 @@ st2 %>% write_pdf(fig_path("test.pdf"))
 st2 %>% write_png(fig_path("test.png"))
 ```
 
-[Resulting pdf file](`r fig_path("test.pdf")`) and
-[Resulting png file](`r fig_path("test.png")`)
+`r pkgdown_link("Resulting pdf file", "test.pdf")` and
+`r pkgdown_link("Resulting png file", "test.png")`
 
 ## Include in Rnw
 The function `create_latex_table()` returns the `LaTeX` code of the `StyledTable` 
@@ -192,7 +200,8 @@ system(paste("cp", file.path(tmp, "ex2.pdf"), fig_path("ex2.pdf")))
 unlink(tmp, recursive = TRUE)
 ```
 
-[Rnw file](`r fig_path("ex2.Rnw")`) and [Resulting PDF file](`r fig_path("ex2.pdf")`)
+`r pkgdown_link("Rnw file", "ex2.Rnw")` and 
+`r pkgdown_link("Resulting PDF file", "ex2.pdf")`
 
 [xlsx package]: https://cran.r-project.org/web/packages/xlsx/xlsx.pdf
 [pipe operator]: https://style.tidyverse.org/pipes.html
