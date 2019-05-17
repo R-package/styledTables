@@ -34,11 +34,28 @@ inject_preamble <- function() {
 #' * make sure all LaTeX packages needed by styledTables are added to the preamble
 #' * create LaTeX code for the object and tell knit to print it "asis" 
 #' 
+#' `embed_latex_rmd` is a variation of `embed_latex` for rmd files. TODO: automatically detect
+#' render engine.
+#' 
 #' @param obj A styledTable object
 #' @export
 embed_latex <- function(obj) {
   stopifnot(inherits(obj, "StyledTable"))
   inject_preamble()
   knitr::asis_output(create_latex_table(obj))
+}
+
+#' @rdname embed_latex
+#' @export
+embed_latex_rmd <- function(obj) {
+  inject_preamble()
+  knitr::raw_block(type = "latex", create_latex_table(obj), meta = list(
+    rmarkdown::latex_dependency("ragged2e"),
+    rmarkdown::latex_dependency("multirow"),
+    rmarkdown::latex_dependency("pbox"),
+    rmarkdown::latex_dependency("hhline"),
+    rmarkdown::latex_dependency("xcolor", options = "table"),
+    rmarkdown::latex_dependency("geometry")
+  ))
 }
 

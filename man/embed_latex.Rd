@@ -2,9 +2,12 @@
 % Please edit documentation in R/knit_print.R
 \name{embed_latex}
 \alias{embed_latex}
+\alias{embed_latex_rmd}
 \title{Embed a styledTable object in a LaTeX (Rnw, Rmd) document}
 \usage{
 embed_latex(obj)
+
+embed_latex_rmd(obj)
 }
 \arguments{
 \item{obj}{A styledTable object}
@@ -15,4 +18,8 @@ Generate latex code and ebed it into a LaTex document. This function applies the
 \item make sure all LaTeX packages needed by styledTables are added to the preamble
 \item create LaTeX code for the object and tell knit to print it "asis"
 }
+}
+\details{
+\code{embed_latex_rmd} is a variation of \code{embed_latex} for rmd files. TODO: automatically detect
+render engine.
 }
