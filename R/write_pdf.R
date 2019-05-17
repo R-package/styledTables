@@ -10,7 +10,6 @@ wrap_latex_preamble <- function(st, resize) {
         "\\usepackage{pbox}",
         "\\usepackage{hhline}",
         "\\usepackage[table]{xcolor}",
-        "\\usepackage[ngerman]{babel}",
         "\\usepackage[utf8]{inputenc}",
         "\\usepackage[scaled]{helvet}",
         "\\renewcommand\\familydefault{\\sfdefault}",

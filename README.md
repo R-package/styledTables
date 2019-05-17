@@ -30,17 +30,17 @@ Transform a `data.frame` into a `StyledTable` class object. Use various styling 
 -   `Excel`: Create a styled Excel-Worksheet inside an \[xlsx\]-workbook.
 
 <p>
-<img src="man/figures/st_flowchart.png">
+<img src="man/figures/flow_st.png">
 </p>
 Further reading
 ---------------
 
 More information can be found on the [github-pages site](https://R-package.github.io/styledTables) for `styledTables`
 
--   A simple guide is given in the \[getting started vignette\].
+-   A simple guide is given in the [get started vignette](https://R-package.github.io/styledTables/articles/styledTables.html).
 -   A vast list of available styling functions is the [styling functions vignette](https://R-package.github.io/styledTables/articles/styling_functions.html).
--   The creation of `Excel` tables is described in the [excel export vignette](https://R-package.github.io/styledTables/articles/excel_export.html)
--   The creation of `LaTeX` inside of `Rnw` files is described in the [LaTeX inside Rnw vignette](https://R-package.github.io/styledTables/articles/latex_inside_rnw.html)
+-   The creation of `Excel` tables is described in the [get started vignette](https://R-package.github.io/styledTables/articles/styledTables.html)
+-   The creation of `LaTeX` inside of `Rnw` files is described in the \[get startedvignette\]
 -   The easy creation of cross tables is described in the \[cross table vignette\].
 
 License
