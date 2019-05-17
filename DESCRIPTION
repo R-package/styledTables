@@ -22,7 +22,8 @@ Imports:
     utils,
     tools,
     knitr,
-    digest
+    digest,
+    magrittr
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -44,6 +45,7 @@ Collate:
     'knit_print.R'
     'remove_row_col.R'
     'utilities.R'
+    'utils-pipe.R'
     'write_excel.R'
     'write_pdf.R'
     'write_png.R'
