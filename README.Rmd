@@ -45,9 +45,9 @@ When you are finished, you can export your `StyledTable` to:
 More information can be found on the [github-pages site] for `styledTables` 
 
 * A simple guide is given in the [get started vignette].
-* A vast list of available styling functions is the [styling functions vignette].
+* A vast list of available styling functions will soon be available through the [styling functions vignette].
 * The creation of `Excel` tables is described in the [get started vignette]
-* The creation of `LaTeX` inside of `Rnw` files is described in the [get startedvignette]
+* The creation of `LaTeX` inside of `Rnw` files is described in the [get started vignette]
 * The easy creation of cross tables is described in the [cross table vignette].
 
 ## License
@@ -56,9 +56,7 @@ More information can be found on the [github-pages site] for `styledTables`
   
 [get started vignette]:  https://R-package.github.io/styledTables/articles/styledTables.html
 [styling functions vignette]:  https://R-package.github.io/styledTables/articles/styling_functions.html
-[cross table creation vignette]: https://R-package.github.io/styledTables/articles/cross_table_creation.html
+[cross table vignette]: https://R-package.github.io/styledTables/articles/cross_table_creation.html
 [github-pages site]: https://R-package.github.io/styledTables
 [xlsx package]: https://cran.r-project.org/web/packages/xlsx/xlsx.pdf
 [GPL-3]: https://R-package.github.io/styledTables/LICENSE
-```
-

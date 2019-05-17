@@ -44,10 +44,12 @@ knit_print_rmd_latex <- function(obj) {
   ))
 }
 
+pandoc_to <- getFromNamespace("pandoc_to", "knitr")
+
 #' @importFrom knitr knit_print
 #' @export
 knit_print.StyledTable <- function(x, ...) {
-  pt <- knitr:::pandoc_to()
+  pt <- pandoc_to()
   if (is.null(pt))
     return(knit_print_rnw(x))
   switch(
