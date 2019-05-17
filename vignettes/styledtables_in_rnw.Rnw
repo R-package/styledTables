@@ -20,7 +20,6 @@ not with sweave.
 
 <<>>=
 library(styledTables)
-library(dplyr)
 set.seed(42)
 
 # Create the styled table

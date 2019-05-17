@@ -34,9 +34,8 @@ Then apply all the [styling functions] you want to by using the [pipe operator] 
 and return the `StyledTable` object at the end of your `Rmd` chunk so that `knitr` can
 do the printing (the `print()` function of `knitr` is overloaded by `styledTables`).
 
-```{r out.width = "8cm"}
+```{r, out.width = "100%"}
 library(styledTables)
-library(dplyr)
 
 # Create the styled table
 st1 <- iris[sample(seq_len(nrow(iris)), 10),] %>%
@@ -60,9 +59,8 @@ adding a custimized table header to the table. With the functions `merge_cells()
 and `merge_equal_cells()` multiple cells of a `StyledTable` object can be 
 merged together.
 
-```{r out.with = "6cm"}
+```{r, out.width = "70%"}
 library(styledTables)
-library(dplyr)
 
 # Create the styled table body
 st_body <- iris[sample(seq_len(nrow(iris)), 10),] %>%

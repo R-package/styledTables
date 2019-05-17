@@ -21,7 +21,6 @@ can be printed in the chunk.
 
 ```{r}
 library(styledTables)
-library(dplyr)
 set.seed(42)
 
 # Create the styled table
