@@ -34,7 +34,7 @@ Then apply all the [styling functions] you want to by using the [pipe operator] 
 and return the `StyledTable` object at the end of your `Rmd` chunk so that `knitr` can
 do the printing (the `print()` function of `knitr` is overloaded by `styledTables`).
 
-```{r}
+```{r out.width = "8cm"}
 library(styledTables)
 library(dplyr)
 
@@ -60,7 +60,7 @@ adding a custimized table header to the table. With the functions `merge_cells()
 and `merge_equal_cells()` multiple cells of a `StyledTable` object can be 
 merged together.
 
-```{r}
+```{r out.with = "6cm"}
 library(styledTables)
 library(dplyr)
 
@@ -119,7 +119,7 @@ write_excel(sheet, st2)
 # save the workbook
 saveWorkbook(wb, "test.xlsx")
 ```
-```{r, results = 'hide', echo = FALSE, eval = FALSE}
+```{r, results = 'hide', echo = FALSE}
 library(xlsx)
 
 # open new xlsx workbook and create a worksheet
@@ -130,10 +130,9 @@ sheet <- createSheet(wb, "iris_table")
 write_excel(sheet, st2)
 
 # save the workbook
-saveWorkbook(wb, "test.xlsx")
+saveWorkbook(wb, "../docs/ex2.xlsx")
 ```
-
-<!-- [Resulting Excel file](../test.xlsx) -->
+[Resulting Excel file](../ex2.xlsx)
 
 ## Export to PDF or PNG
 Use the function `write_pdf()` and `write_png()` to create `PDF` and `PNG`
@@ -178,7 +177,6 @@ system(
 system(paste("cp", file.path(tmp, "ex2.pdf"), "."))
 system("cp ex2.pdf ../docs/")
 ```
-
 [Rnw file](../ex2.Rnw) and [Resulting PDF file](../ex2.pdf)
 
 [xlsx package]: https://cran.r-project.org/web/packages/xlsx/xlsx.pdf
