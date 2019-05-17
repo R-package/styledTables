@@ -14,3 +14,31 @@ knit_print.StyledTable <- function(x, ...) {
   write_png(x, fig_name)
   knitr::include_graphics(fig_name)
 }
+
+inject_preamble <- function() {
+  knitr::set_header(
+    styledTables = paste(
+      "\\usepackage{ragged2e}",
+      "\\usepackage{multirow}",
+      "\\usepackage{pbox}",
+      "\\usepackage{hhline}",
+      "\\usepackage[table]{xcolor}",
+      sep = "\n"
+    )
+  )
+}
+
+#' Embed a styledTable object in a LaTeX (Rnw, Rmd) document
+#' 
+#' Generate latex code and ebed it into a LaTex document. This function applies the following steps
+#' * make sure all LaTeX packages needed by styledTables are added to the preamble
+#' * create LaTeX code for the object and tell knit to print it "asis" 
+#' 
+#' @param obj A styledTable object
+#' @export
+embed_latex <- function(obj) {
+  stopifnot(inherits(obj, "StyledTable"))
+  inject_preamble()
+  knitr::asis_output(create_latex_table(obj))
+}
+
