@@ -12,6 +12,9 @@ vignette: >
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+fig_path <- function(file) {
+  paste0(knitr::opts_chunk$get("fig.path"), file)
+}
 ```
 
 `styledTables` is an **R** package that makes it possible to export a
@@ -36,6 +39,7 @@ do the printing (the `print()` function of `knitr` is overloaded by `styledTable
 
 ```{r, out.width = "100%"}
 library(styledTables)
+set.seed(42)
 
 # Create the styled table
 st1 <- iris[sample(seq_len(nrow(iris)), 10),] %>%
@@ -59,7 +63,7 @@ adding a custimized table header to the table. With the functions `merge_cells()
 and `merge_equal_cells()` multiple cells of a `StyledTable` object can be 
 merged together.
 
-```{r, out.width = "70%"}
+```{r, out.width = "70%", fig.align="center"}
 library(styledTables)
 
 # Create the styled table body
@@ -117,7 +121,8 @@ write_excel(sheet, st2)
 # save the workbook
 saveWorkbook(wb, "test.xlsx")
 ```
-```{r, results = 'hide', echo = FALSE}
+
+```{r, include = FALSE}
 library(xlsx)
 
 # open new xlsx workbook and create a worksheet
@@ -128,13 +133,16 @@ sheet <- createSheet(wb, "iris_table")
 write_excel(sheet, st2)
 
 # save the workbook
-#saveWorkbook(wb, "../docs/ex2.xlsx")
+saveWorkbook(wb, fig_path("ex2.xlsx"))
 ```
-[Resulting Excel file](../ex2.xlsx)
+
+[Resulting Excel file](`r fig_path("ex2.xlsx")`)
 
 ## Export to PDF or PNG
+
 Use the function `write_pdf()` and `write_png()` to create `PDF` and `PNG`
 images of the styled table.
+
 ```{r, eval = FALSE}
 # Export to PDF
 st2 %>%
@@ -145,21 +153,29 @@ st2 %>%
     write_png("test.png")
 ```
 
+```{r, include = FALSE}
+st2 %>% write_pdf(fig_path("test.pdf"))
+st2 %>% write_png(fig_path("test.png"))
+```
+
+[Resulting pdf file](`r fig_path("test.pdf")`) and
+[Resulting png file](`r fig_path("test.png")`)
+
 ## Include in Rnw
 The function `create_latex_table()` returns the `LaTeX` code of the `StyledTable` 
 object. You can use this function to include your `StyledTable` inside of an `Rnw` file.
 Therefore you must load several `LaTeX` packages in the `LaTeX` preamble
 (before `\begin{document}`):
+
 ```{r, code=readLines("ex2.txt"), eval=FALSE}
 ```
 
-```{r, include=FALSE, eval=FALSE}
-system("cp ex2.txt ../docs/ex2.Rnw")
-dir.create(tmp <- tempdir())
+```{r, include=FALSE}
+file.copy("ex2.txt", fig_path("ex2.Rnw"))
+tmp <- tempfile(pattern = "dir")
+if (!dir.exists(tmp))
+  dir.create(tmp)
 old_wd <- getwd()
-# on.exit({
-#     unlink(tmp, recursive = TRUE)
-# })
 system(
     paste(
         "cp", file.path(old_wd, "ex2.txt"), file.path(tmp, "ex2.Rnw"),
@@ -172,11 +188,11 @@ system(
         "&& pdflatex ex2.tex"
     )
 )
-system(paste("cp", file.path(tmp, "ex2.pdf"), "."))
-system("cp ex2.pdf ../docs/")
-[Rnw file](../ex2.Rnw) and [Resulting PDF file](../ex2.pdf)
+system(paste("cp", file.path(tmp, "ex2.pdf"), fig_path("ex2.pdf")))
+unlink(tmp, recursive = TRUE)
 ```
 
+[Rnw file](`r fig_path("ex2.Rnw")`) and [Resulting PDF file](`r fig_path("ex2.pdf")`)
 
 [xlsx package]: https://cran.r-project.org/web/packages/xlsx/xlsx.pdf
 [pipe operator]: https://style.tidyverse.org/pipes.html
