@@ -156,8 +156,8 @@ Therefore you must load several `LaTeX` packages in the `LaTeX` preamble
 ```{r, code=readLines("ex2.txt"), eval=FALSE}
 ```
 
-```{r, include=FALSE, eval = FALSE}
-system("cp ex2.Rnw ../docs/")
+```{r, include=FALSE}
+system("cp ex2.txt ../docs/ex2.Rnw")
 dir.create(tmp <- tempdir())
 old_wd <- getwd()
 # on.exit({
@@ -165,7 +165,7 @@ old_wd <- getwd()
 # })
 system(
     paste(
-        "cp", file.path(old_wd, "ex2.Rnw"), tmp,
+        "cp", file.path(old_wd, "ex2.txt"), file.path(tmp, "ex2.Rnw"),
         "&& cd", tmp,
         paste0(
             "&& R --slave --no-init-file --no-save --no-restore -e \"setwd('",
@@ -179,7 +179,7 @@ system(paste("cp", file.path(tmp, "ex2.pdf"), "."))
 system("cp ex2.pdf ../docs/")
 ```
 
-<!-- [Rnw file](../ex2.Rnw) and [Resulting PDF file](../ex2.pdf) -->
+[Rnw file](../ex2.Rnw) and [Resulting PDF file](../ex2.pdf)
 
 [xlsx package]: https://cran.r-project.org/web/packages/xlsx/xlsx.pdf
 [pipe operator]: https://style.tidyverse.org/pipes.html
