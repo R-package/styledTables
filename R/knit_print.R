@@ -1,6 +1,4 @@
-#' @importFrom knitr knit_print
-#' @export
-knit_print.StyledTable <- function(x, ...) {
+knit_print_rmd_html <- function(x, ...) {
   fig_path <- knitr::opts_chunk$get("fig.path")
   fig_name <- paste0(
     fig_path, 
@@ -28,26 +26,13 @@ inject_preamble <- function() {
   )
 }
 
-#' Embed a styledTable object in a LaTeX (Rnw, Rmd) document
-#' 
-#' Generate latex code and ebed it into a LaTex document. This function applies the following steps
-#' * make sure all LaTeX packages needed by styledTables are added to the preamble
-#' * create LaTeX code for the object and tell knit to print it "asis" 
-#' 
-#' `embed_latex_rmd` is a variation of `embed_latex` for rmd files. TODO: automatically detect
-#' render engine.
-#' 
-#' @param obj A styledTable object
-#' @export
-embed_latex <- function(obj) {
+knit_print_rnw <- function(obj) {
   stopifnot(inherits(obj, "StyledTable"))
   inject_preamble()
   knitr::asis_output(create_latex_table(obj))
 }
 
-#' @rdname embed_latex
-#' @export
-embed_latex_rmd <- function(obj) {
+knit_print_rmd_latex <- function(obj) {
   inject_preamble()
   knitr::raw_block(type = "latex", create_latex_table(obj), meta = list(
     rmarkdown::latex_dependency("ragged2e"),
@@ -59,3 +44,15 @@ embed_latex_rmd <- function(obj) {
   ))
 }
 
+#' @importFrom knitr knit_print
+#' @export
+knit_print.StyledTable <- function(x, ...) {
+  pt <- knitr:::pandoc_to()
+  if (is.null(pt))
+    return(knit_print_rnw(x))
+  switch(
+    pt,
+    latex = knit_print_rmd_latex(x),
+    html = knit_print_rmd_html(x)
+  )
+}
