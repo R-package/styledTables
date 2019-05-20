@@ -26,6 +26,16 @@ to see `styledTables` in action.
 devtools::install_github('R-package/styledTables', build_vignettes = TRUE)
 ```
 
+styledTables needs certain LaTeX packages in order to support export to `tex`,
+`png` and `pdf`. To install those dependencies on ubuntu, the following terminal
+commands can be used:
+
+```bash
+apt install texlive-latex-extra
+tlmgr install standalone
+```
+
+
 ## Concept
 
 Transform a `data.frame` into a `StyledTable` class object. Use various
