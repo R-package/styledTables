@@ -110,7 +110,11 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Install development version from GitHub</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">'R-package/styledTables'</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">'R-package/styledTables'</span>, <span class="dt">build_opts =</span> <span class="ot">NULL</span>)</a></code></pre></div>
+<p>styledTables needs certain LaTeX packages in order to support export to <code>tex</code>, <code>png</code> and <code>pdf</code>. To install those dependencies on ubuntu, the following terminal commands can be used:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="ex">apt</span> install texlive-latex-extra</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="ex">tlmgr</span> install standalone</a></code></pre></div>
+<p>Windows users are advised to use binary releases of <code>texlive</code> and <code>tlmgr</code> instead.</p>
 </div>
 <div id="concept" class="section level2">
 <h2 class="hasAnchor">
