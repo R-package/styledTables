@@ -23,18 +23,20 @@ to see `styledTables` in action.
 
 ``` r
 # Install development version from GitHub
-devtools::install_github('R-package/styledTables', build_vignettes = TRUE)
+devtools::install_github('R-package/styledTables', build_opts = NULL)
 ```
 
-styledTables needs certain LaTeX packages in order to support export to `tex`,
-`png` and `pdf`. To install those dependencies on ubuntu, the following terminal
-commands can be used:
+styledTables needs certain LaTeX packages in order to support export to
+`tex`, `png` and `pdf`. To install those dependencies on ubuntu, the
+following terminal commands can be used:
 
-```bash
+``` bash
 apt install texlive-latex-extra
 tlmgr install standalone
 ```
 
+Windows users are advised to use binary releases of `texlive` and
+`tlmgr` instead.
 
 ## Concept
 
