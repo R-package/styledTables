@@ -132,7 +132,7 @@ setMethod(
                             
                     })
                 # write value to cell
-                if (!is.null(value))
+                if (!is.null(value) && !is.na(value))
                     setCellValue(cells[[i, j]], value)
                 # set cell style
                 style <- st@styles[[i]][[j]]
