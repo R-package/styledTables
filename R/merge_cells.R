@@ -15,7 +15,7 @@ setGeneric("merge_cells", function(st, ...) standardGeneric("merge_cells"))
 #' @seealso [merge_equal_cells()]
 #' @seealso [remove_col()], [remove_row()]
 setMethod(
-    "merge_cells", 
+    "merge_cells",
     signature(st = "StyledTable"),
     function(st, row_id = NULL, col_id = NULL) {
         errHandler <- function(description)
@@ -40,7 +40,7 @@ setMethod(
                 "The argument 'col_id' must be an unbroken numeric vector. ",
                 "(Number of cols may be replaced by 'n_col')."
             ))
-        # First check which merges are overlapping and 
+        # First check which merges are overlapping and
         # filter out the assimilated merged areas (entirely contained in new merge)
         st@merges <- st@merges[unlist(sapply(st@merges, function(m) {
             # Check if any existing merge area is overlapping
@@ -82,7 +82,7 @@ setGeneric("merge_equal_cells", function(st, ...) standardGeneric("merge_equal_c
 #' @seealso [merge_cells()]
 #' @seealso [remove_col()], [remove_row()]
 setMethod(
-    "merge_equal_cells", 
+    "merge_equal_cells",
     signature(st = "StyledTable"),
     function(st, row_id = NULL, col_id = NULL) {
         errHandler <- function(description)
@@ -107,7 +107,7 @@ setMethod(
                 "The argument 'col_id' must be an unbroken numeric vector. ",
                 "(Number of cols may be replaced by 'n_col')."
             ))
-        # First check which merges are overlapping and 
+        # First check which merges are overlapping and
         # filter out the assimilated merged areas (entirely contained in new merge)
         cData <- st@data
         for (m in st@merges) {

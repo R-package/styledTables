@@ -22,10 +22,10 @@ wrap_latex_preamble <- function(st, resize) {
 }
 
 #' Write a styledTable object to pdf
-#' 
-#' Use [tools::texi2pdf()] to compile the output from 
+#'
+#' Use [tools::texi2pdf()] to compile the output from
 #' [create_latex_table()] to a pdf and save the file.
-#' 
+#'
 #' @param st The styledTable object to save.
 #' @param file The path where the output file should be saved.
 #' @param resize Should the pdf be resized to the dimensions of
@@ -45,7 +45,7 @@ write_pdf <- function(st, file = "table.pdf", resize = TRUE) {
         setwd(oldWd)
         unlink(tmp, recursive = TRUE)
     })
-    writeLines(wrap_latex_preamble(st, resize), "table.tex") 
+    writeLines(wrap_latex_preamble(st, resize), "table.tex")
     ## compile LaTeX file
     system("pdflatex table.tex")
     ## change back wd so relative paths for file are handled properly

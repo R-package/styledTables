@@ -20,8 +20,8 @@ setMethod(
         genTable <- create_latex_table_body(st)
         paste0(
             genTable$color_definitions,
-            "\n\\begin{tabular}{", 
-            paste0(rep("c", count_cols(st)), collapse = ""), 
+            "\n\\begin{tabular}{",
+            paste0(rep("c", count_cols(st)), collapse = ""),
             "}\n",
             genTable$textBody,
             "\n\\end{tabular}\n"
@@ -36,7 +36,7 @@ setMethod(
 #' @exportMethod append_latex_table
 #' @include styled_table.R
 setGeneric(
-    "append_latex_table", 
+    "append_latex_table",
     function(table_text, st) standardGeneric("append_latex_table"))
 
 #' @rdname append_latex_table-methods
@@ -53,7 +53,7 @@ setMethod(
     ),
     function(table_text = "", st) {
         if (length(table_text) < 0 || any(table_text == "")) {
-            table_text <- create_latex_table(st) 
+            table_text <- create_latex_table(st)
         } else {
             genTable <- create_latex_table_body(st)
             textExistingTable <- gsub("\n\\\\end\\{tabular\\}\n$", "", table_text)
@@ -61,7 +61,7 @@ setMethod(
                     genTable$color_definitions,
                     textExistingTable,
                     genTable$textBody,
-                    "\\end{tabular}\n", 
+                    "\\end{tabular}\n",
                     sep = "\n"
                 )
         }
@@ -76,7 +76,7 @@ setMethod(
 #' @exportMethod create_latex_table_body
 #' @include styled_table.R
 setGeneric(
-    "create_latex_table_body", 
+    "create_latex_table_body",
     function(st) standardGeneric("create_latex_table_body")
 )
 
@@ -100,8 +100,8 @@ setMethod(
         nCol <- count_cols(st)
         # ---- hhline color definitions ----
         # hhline colors must have names and must therefore be defined
-        # before the \begin{tabular} 
-        # we collect all color names (random name generation (hopefully no overlapping)) 
+        # before the \begin{tabular}
+        # we collect all color names (random name generation (hopefully no overlapping))
         # and return a "color_definitions"
         styledTableColors <- list(html = c(), name = c())
         generateHLineColor <- function(html) {
@@ -113,9 +113,9 @@ setMethod(
                 styledTableColors$html <<- c(styledTableColors$html, html)
                 colorName <- paste0(
                         "styledTableColor",
-                        intToUtf8(sample(65:90, 10)) 
+                        intToUtf8(sample(65:90, 10))
                     )
-                styledTableColors$name <<- c(styledTableColors$name, colorName) 
+                styledTableColors$name <<- c(styledTableColors$name, colorName)
             }
             colorName
         }
@@ -153,7 +153,7 @@ setMethod(
 
                 # ---- text for HHLINE TOP (only first line) and BOTTOM ----
                 # The TOP and BOTTOM HHLINE is done by \hhline
-                # (\hhline is better than \cline since it also adds the line 
+                # (\hhline is better than \cline since it also adds the line
                 # space to the cell height (important for coloring))
                 # HHLINE LEFT: Only first column
                 if (j == 1 && "LEFT" %in% styleBorderPosition) {
@@ -177,13 +177,13 @@ setMethod(
                 if (
                     (is.null(merge) || i == merge$row_id[2]) && (
                         "BOTTOM" %in% styleBorderPosition || (
-                            i < nRow && 
+                            i < nRow &&
                             "TOP" %in% getStyledCell(st@styles[[i + 1L]][[j]], "border_position")
                 ))) {
                     textHLine <- paste0(textHLine, "-")
                 } else {
                     # If there is no border or the cell is a multirow cell, then
-                    # there are two cases: 
+                    # there are two cases:
                     #   - The upper cell is a colored cell => Use border of the same color
                     #   - The upper cell is not colored => Use no border
                     if (length(styleForegroundColor) > 0) {
@@ -202,12 +202,12 @@ setMethod(
                 }
                 # HHLINE RIGHT:
                 if ((j < nCol && j == merge$col_id[2] &&
-                        "LEFT" %in% 
+                        "LEFT" %in%
                         getStyledCell(st@styles[[i]][[j + 1L]], "border_position")) ||
                         "RIGHT" %in% styleBorderPosition) {
-                    textHLine <- paste0(textHLine, "|") 
+                    textHLine <- paste0(textHLine, "|")
                     if (i == 1)
-                        textHLineTop <- paste0(textHLineTop, "|") 
+                        textHLineTop <- paste0(textHLineTop, "|")
                 }
 
                 # ---- put together the alignment + border + cell value ----
@@ -235,7 +235,7 @@ setMethod(
                     # is the cell width of this cell fully given?
                     mergeCols <- merge$col_id[1]:merge$col_id[2]
                     fixedCellWidth <- all(mergeCols %in% st@latex_col_width$col_id)
-                    # if the cell width is fixed 
+                    # if the cell width is fixed
                     # then use "p{width}" alignment instead of "l","c" and "r"
                     if (fixedCellWidth) {
                         # calculate cell width
@@ -292,17 +292,17 @@ setMethod(
                     }
                     # For all other cells only use border RIGHT, if needed
                     if ((j < nCol && j == merge$col_id[2] &&
-                            "LEFT" %in% 
+                            "LEFT" %in%
                             getStyledCell(st@styles[[i]][[j + 1L]], "border_position")) ||
                             "RIGHT" %in% styleBorderPosition) {
                         textHAlignmentMulticol <- paste0(textHAlignmentMulticol, "|")
                     }
-                    
+
                     # Cell coloring
                     # If the cell content has fixed line breaks (\n) then
                     # use a tabular for the fixed line breaks
                     # But if the cell is a colored multirow cell
-                    # then you have to use a \pbox (tabular is not positioned 
+                    # then you have to use a \pbox (tabular is not positioned
                     # properly)
                     textCellColor <- ""
                     coloredMultirowCell <- FALSE
@@ -311,7 +311,7 @@ setMethod(
                     if (length(styleForegroundColor) > 0) {
                         textCellColor <- paste0(
                             "\\cellcolor[HTML]{",
-                            calc_hex_color(styleForegroundColor), 
+                            calc_hex_color(styleForegroundColor),
                             "}"
                         )
                         # If the colored cell is a multirow cell then
@@ -325,7 +325,7 @@ setMethod(
                         }
                     }
 
-                    # if the cell is not a multirow-merged-cell or it is the 
+                    # if the cell is not a multirow-merged-cell or it is the
                     # first cell in a multirow-merged-cell, then the value
                     # will be inserted
                     if (i == valRow) {
@@ -339,14 +339,14 @@ setMethod(
                             error = function(description) {
                                 stop(paste0("Error in 'create_latex_table_body' ",
                                         "while evaluating the function given ",
-                                        "in 'set_latex_pre_process' on cell value (", 
+                                        "in 'set_latex_pre_process' on cell value (",
                                         "row: ", i,
                                         "col: ", j,
                                         "value:", as.character(val),
                                         "). Check the function definition. ",
                                         "Details: ", as.character(description)
                                     ), call. = FALSE)
-                                    
+
                             })
                         # Split cell value into pieces if there are line breaks
                         val <- strsplit(as.character(val), "\\n")[[1]]
@@ -360,7 +360,7 @@ setMethod(
                         if (length(styleFontColor) > 0)
                             val <- paste0(
                                     "\\textcolor[HTML]{",
-                                    calc_hex_color(styleFontColor), 
+                                    calc_hex_color(styleFontColor),
                                     "}{", val, "}"
                                 )
                         # font size
@@ -368,15 +368,15 @@ setMethod(
                             val <- paste0(
                                     "{",
                                     styleLatexFontSize,
-                                    " ", 
+                                    " ",
                                     val,
                                     "}"
                                 )
                         # Indentation of cell contents
                         if (length(styleIndent) > 0)
                             val <- paste0(
-                                    "\\hspace{", 
-                                    as.character(styleIndent), 
+                                    "\\hspace{",
+                                    as.character(styleIndent),
                                     "em}",
                                     val
                                 )
@@ -384,7 +384,7 @@ setMethod(
                         # If the cell content has fixed line breaks (\n) then
                         # use a tabular for the fixed line breaks
                         # But if the cell is a colored multirow cell
-                        # then you have to use a \pbox (tabular is not positioned 
+                        # then you have to use a \pbox (tabular is not positioned
                         # properly)
                         if (length(val) > 1) {
                             if (coloredMultirowCell && fixedCellWidth) {
@@ -397,7 +397,7 @@ setMethod(
                                         textHAlignmentMultirowInner,
                                         "\\fi\n\t\t\t\t",
                                         paste0(
-                                            val, 
+                                            val,
                                             collapse = "\\\\\n\t\t\t\t"
                                         ),
                                         "\n\t\t\t}"
@@ -405,13 +405,13 @@ setMethod(
                             } else {
                                 # Non colored (multirow) cell with linebreaks
                                 val <- paste0(
-                                        "\n\t\t\t\\begin{tabular}{@{}", 
+                                        "\n\t\t\t\\begin{tabular}{@{}",
                                         textHAlignmentTabular,
                                         "@{}}\n\t\t\t\t",
                                         paste0(
                                             paste(
                                                 textHAlignmentMultirowInner,
-                                                val 
+                                                val
                                             ),
                                             collapse = "\\\\\n\t\t\t\t"
                                         ),
@@ -433,39 +433,39 @@ setMethod(
                         )
                         if (min(merge$row_id) != max(merge$row_id)) {
                             val <- paste0(
-                                    "\\multirow{", 
-                                    textMultirowNRows, 
+                                    "\\multirow{",
+                                    textMultirowNRows,
                                     "}{",
                                     textMultirowWidth,
                                     "}",
                                     textMultirowVerticalMove,
-                                    "{", 
+                                    "{",
                                     textCellColor,
                                     textHAlignmentMultirowInner,
                                     val,
                                     "}"
-                                ) 
+                                )
                         } else {
                             if (fixedCellWidth) {
                                 val <- paste0(
                                         textHAlignmentMultirowInner,
-                                        "\\parbox{", 
+                                        "\\parbox{",
                                         textMultirowWidth,
                                         "}{\\strut",
                                         textCellColor,
                                         textHAlignmentMultirowInner,
                                         val,
                                         "\\strut}"
-                                    ) 
+                                    )
                             } else {
                                 val <- paste0(
                                         textCellColor,
-                                        "\\begin{tabular}{", 
+                                        "\\begin{tabular}{",
                                         hAlignment,
                                         "}",
                                         val,
                                         "\\end{tabular}"
-                                    ) 
+                                    )
                             }
                         }
                     } else {
@@ -476,17 +476,17 @@ setMethod(
                     # wrap the value with the multicolumn command
                     # (if no multicolumn, then it is \multicolumn{1}{...})
                     addCellElement(paste0(
-                        "\\multicolumn{", 
-                        count_cols, 
-                        "}{", 
-                        textHAlignmentMulticol, 
-                        "}{", 
-                        val, 
+                        "\\multicolumn{",
+                        count_cols,
+                        "}{",
+                        textHAlignmentMulticol,
+                        "}{",
+                        val,
                         "}"
                     ))
                 }
             }
-            # append TOP HHLINE commands 
+            # append TOP HHLINE commands
             if (i == 1 && textHLineTop != "")
                 addTextElement(paste0("\\hhline{", textHLineTop, "}"))
             # append all cell texts and newline command

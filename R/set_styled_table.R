@@ -1,6 +1,6 @@
 #' Set styles of multiple cells
 #'
-#' This function can only be used inside another styling function, since 
+#' This function can only be used inside another styling function, since
 #' the \code{row_id} and \code{col_id} calculation happens in the level-2 parent.frame.
 #' @name set_specific_style
 #' @rdname set_specific_style-methods
@@ -8,8 +8,8 @@
 #' @param ... Various arguments
 #' @include styled_table.R
 setGeneric(
-    "set_specific_style", 
-    function(st, value, style_name, style_type, ...) 
+    "set_specific_style",
+    function(st, value, style_name, style_type, ...)
         standardGeneric("set_specific_style")
 )
 
@@ -27,21 +27,21 @@ setGeneric(
 #' @return The modified [StyledTable] object
 #' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 setMethod(
-    "set_specific_style", 
+    "set_specific_style",
     signature(
-        st = "StyledTable", 
-        value = "ANY", 
-        style_name = "character", 
+        st = "StyledTable",
+        value = "ANY",
+        style_name = "character",
         style_type = "character"
     ),
     function(
-        st, 
-        value, 
-        style_name, 
-        style_type, 
-        row_id = NULL, 
-        col_id = NULL, 
-        condition = NULL, 
+        st,
+        value,
+        style_name,
+        style_type,
+        row_id = NULL,
+        col_id = NULL,
+        condition = NULL,
         condition_text = NULL,
         append_mode = "replace"
     ) {
@@ -136,8 +136,8 @@ setGeneric("set_latex_font_name", function(st, value, ...) standardGeneric("set_
 #' @return The modified [StyledTable] object
 #' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 setMethod(
-    "set_latex_font_name", 
-    signature(st = "StyledTable", value = "ANY"), 
+    "set_latex_font_name",
+    signature(st = "StyledTable", value = "ANY"),
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
         row_id <- substitute(row_id)
@@ -164,8 +164,8 @@ setGeneric("set_excel_font_name", function(st, value, ...) standardGeneric("set_
 #' @return The modified [StyledTable] object
 #' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 setMethod(
-    "set_excel_font_name", 
-    signature(st = "StyledTable", value = "ANY"), 
+    "set_excel_font_name",
+    signature(st = "StyledTable", value = "ANY"),
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
         row_id <- substitute(row_id)
@@ -174,7 +174,7 @@ setMethod(
     }
 )
 
-#' Set LaTeX font size 
+#' Set LaTeX font size
 #' @name set_latex_font_size
 #' @rdname set_latex_font_size-methods
 #' @exportMethod set_latex_font_size
@@ -192,8 +192,8 @@ setGeneric("set_latex_font_size", function(st, value, ...) standardGeneric("set_
 #' @return The modified [StyledTable] object
 #' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 setMethod(
-    "set_latex_font_size", 
-    signature(st = "StyledTable", value = "ANY"), 
+    "set_latex_font_size",
+    signature(st = "StyledTable", value = "ANY"),
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
         row_id <- substitute(row_id)
@@ -220,8 +220,8 @@ setGeneric("set_excel_font_size", function(st, value, ...) standardGeneric("set_
 #' @return The modified [StyledTable] object
 #' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 setMethod(
-    "set_excel_font_size", 
-    signature(st = "StyledTable", value = "ANY"), 
+    "set_excel_font_size",
+    signature(st = "StyledTable", value = "ANY"),
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
         row_id <- substitute(row_id)
@@ -230,7 +230,7 @@ setMethod(
     }
 )
 
-#' Set font color 
+#' Set font color
 #' @name set_font_color
 #' @rdname set_font_color-methods
 #' @exportMethod set_font_color
@@ -248,8 +248,8 @@ setGeneric("set_font_color", function(st, value, ...) standardGeneric("set_font_
 #' @return The modified [StyledTable] object
 #' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 setMethod(
-    "set_font_color", 
-    signature(st = "StyledTable", value = "ANY"), 
+    "set_font_color",
+    signature(st = "StyledTable", value = "ANY"),
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
         row_id <- substitute(row_id)
@@ -258,7 +258,7 @@ setMethod(
     }
 )
 
-#' Set bold font 
+#' Set bold font
 #' @name set_bold
 #' @rdname set_bold-methods
 #' @exportMethod set_bold
@@ -276,8 +276,8 @@ setGeneric("set_bold", function(st, ...) standardGeneric("set_bold"))
 #' @return The modified [StyledTable] object
 #' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 setMethod(
-    "set_bold", 
-    signature(st = "StyledTable"), 
+    "set_bold",
+    signature(st = "StyledTable"),
     function(st, value = TRUE, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
         row_id <- substitute(row_id)
@@ -286,7 +286,7 @@ setMethod(
     }
 )
 
-#' Set italic font 
+#' Set italic font
 #' @name set_italic
 #' @rdname set_italic-methods
 #' @exportMethod set_italic
@@ -304,8 +304,8 @@ setGeneric("set_italic", function(st, ...) standardGeneric("set_italic"))
 #' @return The modified [StyledTable] object
 #' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 setMethod(
-    "set_italic", 
-    signature(st = "StyledTable"), 
+    "set_italic",
+    signature(st = "StyledTable"),
     function(st, value = TRUE, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
         row_id <- substitute(row_id)
@@ -314,7 +314,7 @@ setMethod(
     }
 )
 
-#' Set strikout font 
+#' Set strikout font
 #' @name set_strikeout
 #' @rdname set_strikeout-methods
 #' @exportMethod set_strikeout
@@ -332,8 +332,8 @@ setGeneric("set_strikeout", function(st, ...) standardGeneric("set_strikeout"))
 #' @return The modified [StyledTable] object
 #' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 setMethod(
-    "set_strikeout", 
-    signature(st = "StyledTable"), 
+    "set_strikeout",
+    signature(st = "StyledTable"),
     function(st, value = TRUE, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
         row_id <- substitute(row_id)
@@ -342,7 +342,7 @@ setMethod(
     }
 )
 
-#' Set underlined font 
+#' Set underlined font
 #' @name set_underline
 #' @rdname set_underline-methods
 #' @exportMethod set_underline
@@ -360,8 +360,8 @@ setGeneric("set_underline", function(st, ...) standardGeneric("set_underline"))
 #' @return The modified [StyledTable] object
 #' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 setMethod(
-    "set_underline", 
-    signature(st = "StyledTable"), 
+    "set_underline",
+    signature(st = "StyledTable"),
     function(st, value = TRUE, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
         row_id <- substitute(row_id)
@@ -370,7 +370,7 @@ setMethod(
     }
 )
 
-#' Set excel_boldweight font 
+#' Set excel_boldweight font
 #' @name set_excel_boldweight
 #' @rdname set_excel_boldweight-methods
 #' @exportMethod set_excel_boldweight
@@ -388,8 +388,8 @@ setGeneric("set_excel_boldweight", function(st, value, ...) standardGeneric("set
 #' @return The modified [StyledTable] object
 #' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 setMethod(
-    "set_excel_boldweight", 
-    signature(st = "StyledTable", value = "ANY"), 
+    "set_excel_boldweight",
+    signature(st = "StyledTable", value = "ANY"),
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
         row_id <- substitute(row_id)
@@ -398,7 +398,7 @@ setMethod(
     }
 )
 
-#' Set wrapped cell 
+#' Set wrapped cell
 #' @name set_excel_wrapped
 #' @rdname set_excel_wrapped-methods
 #' @exportMethod set_excel_wrapped
@@ -416,8 +416,8 @@ setGeneric("set_excel_wrapped", function(st, ...) standardGeneric("set_excel_wra
 #' @return The modified [StyledTable] object
 #' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 setMethod(
-    "set_excel_wrapped", 
-    signature(st = "StyledTable"), 
+    "set_excel_wrapped",
+    signature(st = "StyledTable"),
     function(st, value = TRUE, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
         row_id <- substitute(row_id)
@@ -426,7 +426,7 @@ setMethod(
     }
 )
 
-#' Set horizontal alignment of cells 
+#' Set horizontal alignment of cells
 #' @name set_horizontal
 #' @rdname set_horizontal-methods
 #' @exportMethod set_horizontal
@@ -444,8 +444,8 @@ setGeneric("set_horizontal", function(st, value, ...) standardGeneric("set_horiz
 #' @return The modified [StyledTable] object
 #' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 setMethod(
-    "set_horizontal", 
-    signature(st = "StyledTable", value = "ANY"), 
+    "set_horizontal",
+    signature(st = "StyledTable", value = "ANY"),
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
         row_id <- substitute(row_id)
@@ -454,7 +454,7 @@ setMethod(
     }
 )
 
-#' Set vertical alignment of cells 
+#' Set vertical alignment of cells
 #' @name set_excel_vertical
 #' @rdname set_excel_vertical-methods
 #' @exportMethod set_excel_vertical
@@ -472,8 +472,8 @@ setGeneric("set_excel_vertical", function(st, value, ...) standardGeneric("set_e
 #' @return The modified [StyledTable] object
 #' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 setMethod(
-    "set_excel_vertical", 
-    signature(st = "StyledTable", value = "ANY"), 
+    "set_excel_vertical",
+    signature(st = "StyledTable", value = "ANY"),
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
         row_id <- substitute(row_id)
@@ -482,7 +482,7 @@ setMethod(
     }
 )
 
-#' Set rotation of cell content 
+#' Set rotation of cell content
 #' @name set_rotation
 #' @rdname set_rotation-methods
 #' @exportMethod set_rotation
@@ -500,8 +500,8 @@ setGeneric("set_rotation", function(st, value, ...) standardGeneric("set_rotatio
 #' @return The modified [StyledTable] object
 #' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 setMethod(
-    "set_rotation", 
-    signature(st = "StyledTable", value = "ANY"), 
+    "set_rotation",
+    signature(st = "StyledTable", value = "ANY"),
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
         row_id <- substitute(row_id)
@@ -510,7 +510,7 @@ setMethod(
     }
 )
 
-#' Set indentation of cell content 
+#' Set indentation of cell content
 #' @name set_indent
 #' @rdname set_indent-methods
 #' @exportMethod set_indent
@@ -528,8 +528,8 @@ setGeneric("set_indent", function(st, value, ...) standardGeneric("set_indent"))
 #' @return The modified [StyledTable] object
 #' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 setMethod(
-    "set_indent", 
-    signature(st = "StyledTable", value = "ANY"), 
+    "set_indent",
+    signature(st = "StyledTable", value = "ANY"),
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
         row_id <- substitute(row_id)
@@ -538,7 +538,7 @@ setMethod(
     }
 )
 
-#' Set border position of cells 
+#' Set border position of cells
 #' @name set_border_position
 #' @rdname set_border_position-methods
 #' @exportMethod set_border_position
@@ -557,8 +557,8 @@ setGeneric("set_border_position", function(st, value, ...) standardGeneric("set_
 #' @return The modified [StyledTable] object
 #' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 setMethod(
-    "set_border_position", 
-    signature(st = "StyledTable", value = "ANY"), 
+    "set_border_position",
+    signature(st = "StyledTable", value = "ANY"),
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL, append_mode = "appendBehind") {
         condition <- substitute(condition)
         row_id <- substitute(row_id)
@@ -569,7 +569,7 @@ setMethod(
     }
 )
 
-#' Set border color of cells 
+#' Set border color of cells
 #' @name set_border_color
 #' @rdname set_border_color-methods
 #' @exportMethod set_border_color
@@ -587,8 +587,8 @@ setGeneric("set_border_color", function(st, value, ...) standardGeneric("set_bor
 #' @return The modified [StyledTable] object
 #' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 setMethod(
-    "set_border_color", 
-    signature(st = "StyledTable", value = "ANY"), 
+    "set_border_color",
+    signature(st = "StyledTable", value = "ANY"),
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
         row_id <- substitute(row_id)
@@ -597,7 +597,7 @@ setMethod(
     }
 )
 
-#' Set border pen of cells 
+#' Set border pen of cells
 #' @name set_excel_border_pen
 #' @rdname set_excel_border_pen-methods
 #' @exportMethod set_excel_border_pen
@@ -615,8 +615,8 @@ setGeneric("set_excel_border_pen", function(st, value, ...) standardGeneric("set
 #' @return The modified [StyledTable] object
 #' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 setMethod(
-    "set_excel_border_pen", 
-    signature(st = "StyledTable", value = "ANY"), 
+    "set_excel_border_pen",
+    signature(st = "StyledTable", value = "ANY"),
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
         row_id <- substitute(row_id)
@@ -625,7 +625,7 @@ setMethod(
     }
 )
 
-#' Set fill color of cells 
+#' Set fill color of cells
 #' @name set_fill_color
 #' @rdname set_fill_color-methods
 #' @exportMethod set_fill_color
@@ -643,8 +643,8 @@ setGeneric("set_fill_color", function(st, value, ...) standardGeneric("set_fill_
 #' @return The modified [StyledTable] object
 #' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 setMethod(
-    "set_fill_color", 
-    signature(st = "StyledTable", value = "ANY"), 
+    "set_fill_color",
+    signature(st = "StyledTable", value = "ANY"),
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
         row_id <- substitute(row_id)
@@ -656,7 +656,7 @@ setMethod(
 
 
 
-#' Set data format of cells 
+#' Set data format of cells
 #' @name set_excel_data_format
 #' @rdname set_excel_data_format-methods
 #' @exportMethod set_excel_data_format
@@ -675,8 +675,8 @@ setGeneric("set_excel_data_format", function(st, value, ...) standardGeneric("se
 #' @return The modified [StyledTable] object
 #' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 setMethod(
-    "set_excel_data_format", 
-    signature(st = "StyledTable", value = "ANY"), 
+    "set_excel_data_format",
+    signature(st = "StyledTable", value = "ANY"),
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL, append_mode = "replace") {
         condition <- substitute(condition)
         row_id <- substitute(row_id)
@@ -685,7 +685,7 @@ setMethod(
     }
 )
 
-#' Set locked cell 
+#' Set locked cell
 #' @name set_excel_locked
 #' @rdname set_excel_locked-methods
 #' @exportMethod set_excel_locked
@@ -703,8 +703,8 @@ setGeneric("set_excel_locked", function(st, ...) standardGeneric("set_excel_lock
 #' @return The modified [StyledTable] object
 #' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 setMethod(
-    "set_excel_locked", 
-    signature(st = "StyledTable"), 
+    "set_excel_locked",
+    signature(st = "StyledTable"),
     function(st, value = TRUE, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
         row_id <- substitute(row_id)
@@ -713,7 +713,7 @@ setMethod(
     }
 )
 
-#' Set hidden cell 
+#' Set hidden cell
 #' @name set_excel_hidden
 #' @rdname set_excel_hidden-methods
 #' @exportMethod set_excel_hidden
@@ -731,8 +731,8 @@ setGeneric("set_excel_hidden", function(st, ...) standardGeneric("set_excel_hidd
 #' @return The modified [StyledTable] object
 #' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 setMethod(
-    "set_excel_hidden", 
-    signature(st = "StyledTable"), 
+    "set_excel_hidden",
+    signature(st = "StyledTable"),
     function(st, value = TRUE, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
         row_id <- substitute(row_id)
@@ -759,8 +759,8 @@ setGeneric("set_latex_vertical_move", function(st, value, ...) standardGeneric("
 #' @return The modified [StyledTable] object
 #' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 setMethod(
-    "set_latex_vertical_move", 
-    signature(st = "StyledTable", value = "ANY"), 
+    "set_latex_vertical_move",
+    signature(st = "StyledTable", value = "ANY"),
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
         row_id <- substitute(row_id)
@@ -788,8 +788,8 @@ setGeneric("set_latex_pre_process", function(st, value, ...) standardGeneric("se
 #' @return The modified [StyledTable] object
 #' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 setMethod(
-    "set_latex_pre_process", 
-    signature(st = "StyledTable", value = "ANY"), 
+    "set_latex_pre_process",
+    signature(st = "StyledTable", value = "ANY"),
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL, append_mode = "replace") {
         condition <- substitute(condition)
         row_id <- substitute(row_id)
@@ -817,8 +817,8 @@ setGeneric("set_excel_pre_process", function(st, value, ...) standardGeneric("se
 #' @return The modified [StyledTable] object
 #' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 setMethod(
-    "set_excel_pre_process", 
-    signature(st = "StyledTable", value = "ANY"), 
+    "set_excel_pre_process",
+    signature(st = "StyledTable", value = "ANY"),
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL, append_mode = "replace") {
         condition <- substitute(condition)
         row_id <- substitute(row_id)

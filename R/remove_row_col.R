@@ -11,13 +11,13 @@ setGeneric("remove_col", function(st, col_id) standardGeneric("remove_col"))
 #' @param col_id A vector of col numbers which should be removed from the [StyledTable] object.
 #' @return The modified [StyledTable] object
 setMethod(
-    "remove_col", 
+    "remove_col",
     signature(
-        st = "StyledTable", 
+        st = "StyledTable",
         col_id = "ANY"
     ),
     function(
-        st, 
+        st,
         col_id
     ) {
         errHandler <- function(description) {
@@ -45,16 +45,16 @@ setMethod(
         st@styles <- lapply(st@styles, function(row) row[remainingCols])
         # remove columns from excel_col_width slot
         colIndex <- which(!st@excel_col_width$col_id %in% col_id)
-        st@excel_col_width$widths <- st@excel_col_width$widths[colIndex] 
+        st@excel_col_width$widths <- st@excel_col_width$widths[colIndex]
         st@excel_col_width$col_id <- sapply(
-                st@excel_col_width$col_id[colIndex], 
+                st@excel_col_width$col_id[colIndex],
                 function(x) x - sum(col_id < x)
             )
         # remove columns from latex_col_width slot
         colIndex <- which(!st@latex_col_width$col_id %in% col_id)
         st@latex_col_width$widths <- st@latex_col_width$widths[colIndex]
         st@latex_col_width$col_id <- sapply(
-                st@latex_col_width$col_id[colIndex], 
+                st@latex_col_width$col_id[colIndex],
                 function(x) x - sum(col_id < x)
             )
         # remove columns from merges slot
@@ -71,7 +71,7 @@ setMethod(
                 }
             )
         st@merges <- st@merges[unlist(sapply(
-                st@merges, 
+                st@merges,
                 function(m) {
                     if (m$row_id[1] < m$row_id[2])
                         return(m$col_id[1] <= m$col_id[2])
@@ -95,13 +95,13 @@ setGeneric("remove_row", function(st, row_id) standardGeneric("remove_row"))
 #' @param row_id A vector of row numbers which should be removed from the [StyledTable] object.
 #' @return The modified [StyledTable] object
 setMethod(
-    "remove_row", 
+    "remove_row",
     signature(
-        st = "StyledTable", 
+        st = "StyledTable",
         row_id = "ANY"
     ),
     function(
-        st, 
+        st,
         row_id
     ) {
         errHandler <- function(description) {
@@ -123,16 +123,16 @@ setMethod(
         st@styles <- st@styles[remainingRows]
         # remove rows from excel_row_height slot
         rowIndex <- which(!st@excel_row_height$row_id %in% row_id)
-        st@excel_row_height$widths <- st@excel_row_height$widths[rowIndex] 
+        st@excel_row_height$widths <- st@excel_row_height$widths[rowIndex]
         st@excel_row_height$row_id <- sapply(
-                st@excel_row_height$row_id[rowIndex], 
+                st@excel_row_height$row_id[rowIndex],
                 function(x) x - sum(row_id < x)
             )
         # remove rows from latex_row_height slot
         rowIndex <- which(!st@latex_row_height$row_id %in% row_id)
         st@latex_row_height$widths <- st@latex_row_height$widths[rowIndex]
         st@latex_row_height$row_id <- sapply(
-                st@latex_row_height$row_id[rowIndex], 
+                st@latex_row_height$row_id[rowIndex],
                 function(x) x - sum(row_id < x)
             )
         # remove row_id from merges slot
@@ -149,7 +149,7 @@ setMethod(
                 }
             )
         st@merges <- st@merges[unlist(sapply(
-                st@merges, 
+                st@merges,
                 function(m) {
                     if (m$col_id[1] < m$col_id[2])
                         return(m$row_id[1] <= m$row_id[2])

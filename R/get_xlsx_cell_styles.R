@@ -49,7 +49,7 @@ setMethod("get_xlsx_border", signature(sc = "StyledCell"),
 #' @name get_xlsx_cell_protection
 #' @rdname get_xlsx_cell_protection-methods
 setGeneric(
-    "get_xlsx_cell_protection", 
+    "get_xlsx_cell_protection",
     function(sc) standardGeneric("get_xlsx_cell_protection")
 )
 
@@ -70,7 +70,7 @@ setMethod("get_xlsx_cell_protection", signature(sc = "StyledCell"),
 #' @name get_xlsx_fill
 #' @rdname get_xlsx_fill-methods
 setGeneric(
-    "get_xlsx_fill", 
+    "get_xlsx_fill",
     function(sc) standardGeneric("get_xlsx_fill")
 )
 
@@ -92,7 +92,7 @@ setMethod("get_xlsx_fill", signature(sc = "StyledCell"),
 #' @name get_xlsx_data_format
 #' @rdname get_xlsx_data_format-methods
 setGeneric(
-    "get_xlsx_data_format", 
+    "get_xlsx_data_format",
     function(sc) standardGeneric("get_xlsx_data_format")
 )
 
@@ -120,7 +120,7 @@ setGeneric("get_xlsx_cell_style", function(wb, sc) standardGeneric("get_xlsx_cel
 setMethod("get_xlsx_cell_style", signature(wb = "ANY", sc = "StyledCell"),
     function(wb, sc) {
         do_call_without_missing(CellStyle, list(
-            wb = wb, 
+            wb = wb,
             font = getXlsxFontCellStyle(wb, sc),
             alignment = get_xlsx_alignment(sc),
             border = get_xlsx_border(sc),

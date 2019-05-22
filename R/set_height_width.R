@@ -53,16 +53,16 @@ set_height_width <- function(st, slot_name, id, value) {
             ))
         if (any(!id %in% 1:maxInd))
             errHandler(paste0(
-                    "The argument '", 
+                    "The argument '",
                     typeInd,
                     "' must be a subinterval of 1:",
                     maxInd,
                     "."
-                )) 
+                ))
     }
     # Check if values has the right type and length
     if (
-            !is.numeric(value) || 
+            !is.numeric(value) ||
             !length(value) %in% c(1, length(id)) ||
             any(is.na(value))
         )
@@ -71,7 +71,7 @@ set_height_width <- function(st, slot_name, id, value) {
                 "or the same number of ",
                 typeInd,
                 "s as the styled table."
-            )) 
+            ))
     # Check if values are all > 0
     if (any(value <= 0))
         errHandler("The argument 'value' must be a positive vector.")
@@ -103,7 +103,7 @@ setGeneric("set_excel_row_height", function(st, value, ...) standardGeneric("set
 #' @param row_id A vector of row numbers (N is substituted as \code{count_rows(st)})
 #' @return The modified [StyledTable] object
 setMethod(
-    "set_excel_row_height", 
+    "set_excel_row_height",
     signature(
         st = "StyledTable",
         value = "numeric"
@@ -128,7 +128,7 @@ setGeneric("set_excel_col_width", function(st, value, ...) standardGeneric("set_
 #' @param col_id A vector of column numbers (N is substituted as \code{count_cols(st)})
 #' @return The modified [StyledTable] object
 setMethod(
-    "set_excel_col_width", 
+    "set_excel_col_width",
     signature(
         st = "StyledTable",
         value = "numeric"
@@ -154,7 +154,7 @@ setGeneric("set_latex_row_height", function(st, value, ...) standardGeneric("set
 #' @param row_id A vector of row numbers (N is substituted as \code{count_rows(st)})
 #' @return The modified [StyledTable] object
 setMethod(
-    "set_latex_row_height", 
+    "set_latex_row_height",
     signature(
         st = "StyledTable",
         value = "numeric"
@@ -179,7 +179,7 @@ setGeneric("set_latex_col_width", function(st, value, ...) standardGeneric("set_
 #' @param col_id A vector of column numbers (N is substituted as \code{count_cols(st)})
 #' @return The modified [StyledTable] object
 setMethod(
-    "set_latex_col_width", 
+    "set_latex_col_width",
     signature(
         st = "StyledTable",
         value = "numeric"

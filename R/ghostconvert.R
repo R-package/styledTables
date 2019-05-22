@@ -8,7 +8,7 @@
 #' Author:   Tim Bergsma \cr
 #' Maintainer:   Tim Bergsma <bergsmat at gmail.com> \cr
 #' License:  GPL-3 \cr
-#' 
+#'
 #' Call Ghostscript, converting by default from PDF to PNG.
 #' @importFrom tools find_gs_cmd
 #' @param x path for file to be converted

@@ -4,9 +4,9 @@
 #' @rdname create_cross_table_header-methods
 #' @exportMethod create_cross_table_header
 setGeneric(
-    "create_cross_table_header", 
+    "create_cross_table_header",
     function(
-        y_col_headings, 
+        y_col_headings,
         ...
     ) standardGeneric("create_cross_table_header")
 )
@@ -14,10 +14,10 @@ setGeneric(
 #' Create a styled header for a cross table
 #'
 #' This function creates a styled header for a cross table. It is best used
-#' together with [create_cross_table_body()] and [styled_table()]. 
+#' together with [create_cross_table_body()] and [styled_table()].
 #' It assumes that the cross table consists of several Y columns that come first
 #' and has nested cross table part. That means that the cross table X columns
-#' can have more than one header level. 
+#' can have more than one header level.
 #' For example: Male > Positive | Male > Negative | Female > Positive | Female > Negative
 #' In this case the 'Male' and 'Female' headings will be in merged cells above the 'Positive' and 'Negative' cells.
 #' @rdname create_cross_table_header-methods
@@ -26,7 +26,7 @@ setGeneric(
 #' @param cross_table_heading (optional) A single character string that is printed in a merged cell above the Y cross table cols.
 #' @param ... (optional) One or more vectors of character strings that hold the levels of the first/second/third/... cross table X column headings. These levels are used as header texts in the first/second/third/... row of the generated cross table columns. If no character vector is supplied, then the resulting table is not a cross table, but a normal table.
 #' @return The generated [StyledTable] object holding the styled table header rows
-#' @examples 
+#' @examples
 #' library(dplyr)
 #' # prepare data set for cross table
 #' students_data <- data.frame(
@@ -86,7 +86,7 @@ setMethod(
         # Filter out all NULL entries
         if (length(xColHeadings) > 0)
             xColHeadings <- xColHeadings[which(sapply(xColHeadings, function(x) !is.null(x)))]
-        
+
         ### Check consistency of supplied arguments
         errHandler <- function(description) {
             stop(paste0(
@@ -105,7 +105,7 @@ setMethod(
         # Check x_col_headings (...) and cross_table_heading
         if (length(xColHeadings) > 0) {
             if (
-                !is.null(cross_table_heading) && 
+                !is.null(cross_table_heading) &&
                     (!is.character(cross_table_heading) || length(cross_table_heading) != 1)
             )
                 errHandler(paste0("Argument 'cross_table_heading' must be NULL or a character string."))
@@ -124,7 +124,7 @@ setMethod(
         ### Create header data
         # append the main cross table heading to the cross column headings
         # (actually it is a special case of the cross col heading system: a heading without column)
-        if (!is.null(cross_table_heading)) 
+        if (!is.null(cross_table_heading))
             xColHeadings <- c(cross_table_heading, xColHeadings)
         # Calculate number of header rows
         if (length(xColHeadings) > 0) {
@@ -144,7 +144,7 @@ setMethod(
                     rbindlist(lapply(1:nrows, function(i) {
                         if (i < nrows) {
                             nLevelsBelow <- prod(sapply(
-                                        xColHeadings[seq_save(i + 1L, nrows)], 
+                                        xColHeadings[seq_save(i + 1L, nrows)],
                                         length
                                     ))
                         } else {
@@ -158,7 +158,7 @@ setMethod(
                         }
                         data.table(matrix(
                             rep(
-                                rep(xColHeadings[[i]], each = nLevelsBelow), 
+                                rep(xColHeadings[[i]], each = nLevelsBelow),
                                 nLevelsAbove
                             ), nrow = 1))
                     }), use.names = FALSE)
@@ -168,7 +168,7 @@ setMethod(
                     merges,
                     unlist(lapply(seq_save(1L,(nrows - 1L)), function(i) {
                         nLevelsBelow <- prod(sapply(
-                                    xColHeadings[seq_save(i + 1L, nrows)], 
+                                    xColHeadings[seq_save(i + 1L, nrows)],
                                     length
                                 ))
                         if (i > 1L) {
@@ -180,13 +180,13 @@ setMethod(
                         if (nLevelsBelow == 1L)
                             return(NULL)
                         unlist(lapply(
-                            0L:(length(xColHeadings[[i]]) - 1L), 
+                            0L:(length(xColHeadings[[i]]) - 1L),
                             function(j) lapply(
-                                0L:(nLevelsAbove - 1L), 
+                                0L:(nLevelsAbove - 1L),
                                 function(k) list(
-                                    row_id = c(i, i), 
-                                    col_id = ny_cols + 
-                                        (j + k * nLevelsAbove) * nLevelsBelow + 
+                                    row_id = c(i, i),
+                                    col_id = ny_cols +
+                                        (j + k * nLevelsAbove) * nLevelsBelow +
                                         c(1L, nLevelsBelow))
                             )), recursive = FALSE)
                     }), recursive = FALSE)

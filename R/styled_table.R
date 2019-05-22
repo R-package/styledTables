@@ -56,7 +56,7 @@ setMethod("initialize", signature(.Object = "StyledTable"), function(.Object, ..
     nRow <- nrow(args$data)
     # number of data cols
     nCol <- ncol(args$data)
-    if (nRow == 0 || nCol == 0) 
+    if (nRow == 0 || nCol == 0)
         errHandler("The argument 'data' has to be a non empty  matrix or data.frame.")
     .Object@data <- lapply(1:nRow, function(i) unname(as.list(args$data[i,])))
     ######### read merges ###########
@@ -68,11 +68,11 @@ setMethod("initialize", signature(.Object = "StyledTable"), function(.Object, ..
         for (m in args$merges) {
             if (
                     !is.list(m) ||
-                    !is.numeric(m$row_id) || 
-                    !is.numeric(m$col_id) || 
+                    !is.numeric(m$row_id) ||
+                    !is.numeric(m$col_id) ||
                     any(is.na(m$row_id)) ||
                     any(is.na(m$col_id)) ||
-                    length(m$row_id) != 2 || 
+                    length(m$row_id) != 2 ||
                     length(m$col_id) != 2 ||
                     any(!m$row_id %in% 1:nRow) ||
                     any(!m$col_id %in% 1:nCol) ||
@@ -86,20 +86,20 @@ setMethod("initialize", signature(.Object = "StyledTable"), function(.Object, ..
                         "of length two."
                     ))
         }
-        # Check if merged regions are not overlapping 
+        # Check if merged regions are not overlapping
         for (i in seq_len(length(args$merges))) {
             m1 <- args$merges[[i]]
             for (j in seq_save(i + 1, length(args$merges))) {
                 m2 <- args$merges[[j]]
                 if (
-                        any(between_vec(m1$row_id, m2$row_id)) && 
+                        any(between_vec(m1$row_id, m2$row_id)) &&
                         any(between_vec(m1$col_id, m2$col_id))
                     )
                     errHandler("The 'merges' argument contains an overlapping cell.")
             }
         }
         # assign merges
-        .Object@merges <- args$merges 
+        .Object@merges <- args$merges
     } else {
         .Object@merges <- list()
     }
@@ -127,7 +127,7 @@ setMethod("initialize", signature(.Object = "StyledTable"), function(.Object, ..
                         ))
         }
         # assign styles
-        .Object@styles <- args$styles 
+        .Object@styles <- args$styles
     } else {
         .Object@styles <- lapply(seq_len(nRow), function(i) vector("list", nCol))
     }
@@ -136,28 +136,28 @@ setMethod("initialize", signature(.Object = "StyledTable"), function(.Object, ..
         # Check if excel_row_height$row_id and $height have correct types and same length
         if (
                 !is.list(args$excel_row_height) ||
-                !is.numeric(args$excel_row_height$row_id) || 
-                !is.numeric(args$excel_row_height$height) || 
+                !is.numeric(args$excel_row_height$row_id) ||
+                !is.numeric(args$excel_row_height$height) ||
                 length(args$excel_row_height$row_id) != length(args$excel_row_height$height)
             )
             errHandler(paste0(
-                    "The slot 'excel_row_height' must contain a list ", 
-                    "which holds numeric vectors 'row_id' and ", 
+                    "The slot 'excel_row_height' must contain a list ",
+                    "which holds numeric vectors 'row_id' and ",
                     "'height' of the same length."
-                )) 
+                ))
         # Check if excel_row_height$row_id is a subset of 1:N
         if (any(!args$excel_row_height$row_id %in% 1:nRow))
             errHandler(paste0(
                     "The list element 'row_id' in the 'excel_row_height' slot ",
                     "must be a subset of possible row indices of the ",
                     "data list in 'data'."
-                )) 
+                ))
         # Check if excel_row_height$height >0
         if (any(!args$excel_row_height$height <= 0))
             errHandler(paste0(
                     "The list element 'height' in the 'excel_row_height' slot ",
                     "must be a vector of positive numbers."
-                )) 
+                ))
         # assign excel_row_height
         .Object@excel_row_height <- args$excel_row_height
     } else {
@@ -168,28 +168,28 @@ setMethod("initialize", signature(.Object = "StyledTable"), function(.Object, ..
         # Check if excel_col_width$col_id and $width have correct types and same length
         if (
                 !is.list(args$excel_col_width) ||
-                !is.numeric(args$excel_col_width$col_id) || 
-                !is.numeric(args$excel_col_width$width) || 
+                !is.numeric(args$excel_col_width$col_id) ||
+                !is.numeric(args$excel_col_width$width) ||
                 length(args$excel_col_width$col_id) != length(args$excel_col_width$width)
             )
             errHandler(paste0(
-                    "The slot 'excel_col_width' must contain a list ", 
-                    "which holds numeric vectors 'col_id' and ", 
+                    "The slot 'excel_col_width' must contain a list ",
+                    "which holds numeric vectors 'col_id' and ",
                     "'width' of the same length."
-                )) 
+                ))
         # Check if excel_col_width$col_id is a subset of 1:N
         if (any(!args$excel_col_width$col_id %in% 1:nCol))
             errHandler(paste0(
                     "The list element 'col_id' in the 'excel_col_width' slot ",
                     "must be a subset of possible col indices of the ",
                     "data list in 'data'."
-                )) 
+                ))
         # Check if excel_col_width$width >0
         if (any(!args$excel_col_width$width <= 0))
             errHandler(paste0(
                     "The list element 'width' in the 'excel_col_width' slot ",
                     "must be a vector of positive numbers."
-                )) 
+                ))
         # assign excel_col_width
         .Object@excel_col_width <- args$excel_col_width
     } else {
@@ -200,28 +200,28 @@ setMethod("initialize", signature(.Object = "StyledTable"), function(.Object, ..
         # Check if latex_row_height$row_id and $height have correct types and same length
         if (
                 !is.list(args$latex_row_height) ||
-                !is.numeric(args$latex_row_height$row_id) || 
-                !is.numeric(args$latex_row_height$height) || 
+                !is.numeric(args$latex_row_height$row_id) ||
+                !is.numeric(args$latex_row_height$height) ||
                 length(args$latex_row_height$row_id) != length(args$latex_row_height$height)
             )
             errHandler(paste0(
-                    "The slot 'latex_row_height' must contain a list ", 
-                    "which holds numeric vectors 'row_id' and ", 
+                    "The slot 'latex_row_height' must contain a list ",
+                    "which holds numeric vectors 'row_id' and ",
                     "'height' of the same length."
-                )) 
+                ))
         # Check if latex_row_height$row_id is a subset of 1:N
         if (any(!args$latex_row_height$row_id %in% 1:nRow))
             errHandler(paste0(
                     "The list element 'row_id' in the 'latex_row_height' slot ",
                     "must be a subset of possible row indices of the ",
                     "data list in 'data'."
-                )) 
+                ))
         # Check if latex_row_height$height >0
         if (any(!args$latex_row_height$height <= 0))
             errHandler(paste0(
                     "The list element 'height' in the 'latex_row_height' slot ",
                     "must be a vector of positive numbers."
-                )) 
+                ))
         # assign latex_row_height
         .Object@latex_row_height <- args$latex_row_height
     } else {
@@ -232,28 +232,28 @@ setMethod("initialize", signature(.Object = "StyledTable"), function(.Object, ..
         # Check if latex_col_width$col_id and $width have correct types and same length
         if (
                 !is.list(args$latex_col_width) ||
-                !is.numeric(args$latex_col_width$col_id) || 
-                !is.numeric(args$latex_col_width$width) || 
+                !is.numeric(args$latex_col_width$col_id) ||
+                !is.numeric(args$latex_col_width$width) ||
                 length(args$latex_col_width$col_id) != length(args$latex_col_width$width)
             )
             errHandler(paste0(
-                    "The slot 'latex_col_width' must contain a list ", 
-                    "which holds numeric vectors 'col_id' and ", 
+                    "The slot 'latex_col_width' must contain a list ",
+                    "which holds numeric vectors 'col_id' and ",
                     "'width' of the same length."
-                )) 
+                ))
         # Check if latex_col_width$col_id is a subset of 1:N
         if (any(!args$latex_col_width$col_id %in% 1:nCol))
             errHandler(paste0(
                     "The list element 'col_id' in the 'latex_col_width' slot ",
                     "must be a subset of possible col indices of the ",
                     "data list in 'data'."
-                )) 
+                ))
         # Check if latex_col_width$width >0
         if (any(!args$latex_col_width$width <= 0))
             errHandler(paste0(
                     "The list element 'width' in the 'latex_col_width' slot ",
                     "must be a vector of positive numbers."
-                )) 
+                ))
         # assign latex_col_width
         .Object@latex_col_width <- args$latex_col_width
     } else {

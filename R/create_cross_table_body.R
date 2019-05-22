@@ -15,7 +15,7 @@ setGeneric("create_cross_table_body", function(data, ...) standardGeneric("creat
 #' value in the column defined by \code{sub_table_cols} as sub heading.
 #' The columns specified in \code{y_cols}, \code{x_cols} and \code{value_cols}
 #' will be used for the cross table calculation.
-#' If the table should not be a cross table, but a normal table then the 
+#' If the table should not be a cross table, but a normal table then the
 #' arguments \code{x_cols} and \code{value_cols} should be omitted.
 #' @rdname create_cross_table_body-methods
 #' @aliases create_cross_table_body,data.frame-method
@@ -119,7 +119,7 @@ setMethod(
         ### check sub_table_cols
         if (!is.null(sub_table_cols)) {
             if (
-                !is.character(sub_table_cols) || 
+                !is.character(sub_table_cols) ||
                     any(!sub_table_cols %in% colNames) ||
                     length(unique(sub_table_cols)) != length(sub_table_cols)
             )
@@ -128,12 +128,12 @@ setMethod(
             # then apply this function to all subHeadings
             if (is.function(sub_heading_stylings))
                 sub_heading_stylings <- lapply(
-                        seq_len(length(sub_table_cols)), 
+                        seq_len(length(sub_table_cols)),
                         function(x) sub_heading_stylings
                     )
             if (
                 !is.null(sub_heading_stylings) && (
-                    !is.list(sub_heading_stylings) || 
+                    !is.list(sub_heading_stylings) ||
                     length(sub_heading_stylings) != length(sub_table_cols) ||
                     any(!unlist(lapply(sub_heading_stylings, is.function)))
                 )
@@ -148,7 +148,7 @@ setMethod(
                     "function(st) {...}, where 'st' is a styled",
                     "table and the function must return a styled table."
                 ))
-                    
+
             # append the sub_table_cols indices to the usedColumnIndices
             usedColumnIndices <- sub_table_cols
         } else {
@@ -176,8 +176,8 @@ setMethod(
                 length(y_cols) == 0
         )
             errHandler(paste(
-                "Argument 'y_cols' must be a non empty subset of '", 
-                colNamesMsg, 
+                "Argument 'y_cols' must be a non empty subset of '",
+                colNamesMsg,
                 "'."
             ))
         # check if the vector overlaps with other given column indices
@@ -204,8 +204,8 @@ setMethod(
             # check if the vector overlaps with other given column indices
             if (any(x_cols %in% usedColumnIndices))
                 errHandler(paste(
-                    "The argument 'x_cols' holding the column names that", 
-                    "should be added to the right of the cross table.", 
+                    "The argument 'x_cols' holding the column names that",
+                    "should be added to the right of the cross table.",
                     "This set must be non overlapping with all other",
                     "column names given in 'sub_table_cols' and 'y_cols' and 'x_cols'."
                 ))
@@ -227,7 +227,7 @@ setMethod(
             # check if the vector overlaps with other given column indices
             if (any(y_cols_right %in% x_cols))
                 errHandler(paste(
-                    "The argument 'y_cols_right' holding the column names that", 
+                    "The argument 'y_cols_right' holding the column names that",
                     "should be used for the cross table computation must be non",
                     "overlapping with all other",
                     "column names given in 'sub_table_cols' and 'y_cols'."
@@ -260,12 +260,12 @@ setMethod(
             # then apply this function to all subHeadings
             if (is.function(value_col_stylings))
                 value_col_stylings <- lapply(
-                        seq_len(length(value_cols)), 
-                        function(x) value_col_stylings 
+                        seq_len(length(value_cols)),
+                        function(x) value_col_stylings
                     )
             if (
                 !is.null(value_col_stylings) && (
-                    !is.list(value_col_stylings) || 
+                    !is.list(value_col_stylings) ||
                     length(value_cols) != length(value_col_stylings) ||
                     any(!unlist(lapply(value_col_stylings, is.function)))
                 )
@@ -310,7 +310,7 @@ setMethod(
             for (i in seq_len(length(fill_values))) {
                 if (typeof(fill_values[[i]]) != typeof(data[[value_cols[i]]]))
                     errHandler(paste0(
-                        "The 'fill_values[[", i, "]]' has type '", 
+                        "The 'fill_values[[", i, "]]' has type '",
                         typeof(fill_values[[i]]), "' whereas the column 'data[[\"",
                         value_cols[i] , "\"]]' has type '",
                         typeof(data[[value_cols[i]]]), "'."
@@ -324,40 +324,40 @@ setMethod(
 
         #### Calculate cross table data
         if (length(value_cols) > 0) {
-            # The data.frame has one or more value columns that should be used for cross table calculation 
-            # Solution: 
-            # - Transform the value_cols into indices columns 
-            #    (so that all value_cols are of type integer, 
+            # The data.frame has one or more value columns that should be used for cross table calculation
+            # Solution:
+            # - Transform the value_cols into indices columns
+            #    (so that all value_cols are of type integer,
             #     this solves the problem that value_cols may be of diff. types)
             # - melt all value indeces columns
             # - dcast into a cross table
             # - replace the valueCol indices by the corresponding values
             #
-            # The heading levels of the crossed table are the current heading 
+            # The heading levels of the crossed table are the current heading
             # texts of the columns
             # If drop_missing_rows = FALSE, then no extra rows will be introduced
             # even if some of the sub_table_cols or y_cols are sparse factors
             # If drop_missing_cols = TRUE, then extra cross table columns will be generated
-            # if the x_cols are sparse factors 
+            # if the x_cols are sparse factors
             KEYCOL <- "KEYCOL"
             VALUECOL <- "VALUECOL"
             dcastFormula <- as.formula(paste0(
-                    paste0(c(sub_table_cols, y_cols), collapse = " + "), 
-                    " ~ ", 
+                    paste0(c(sub_table_cols, y_cols), collapse = " + "),
+                    " ~ ",
                     paste0(c(x_cols, KEYCOL), collapse = " + ")
                 ))
             dataCross <- melt(
                     data = copy(data)[, (value_cols) := .I], # replace the value columns by the row indices of the values
-                    variable.name = KEYCOL, 
+                    variable.name = KEYCOL,
                     value.name = VALUECOL,
                     measure.vars = value_cols
                 )
             args = list(
                     data = dataCross,
-                    formula = dcastFormula, 
+                    formula = dcastFormula,
                     fun.aggregate = aggregation,
-                    value.var = VALUECOL, 
-                    fill = NA, 
+                    value.var = VALUECOL,
+                    fill = NA,
                     drop = c(drop_missing_rows, drop_missing_cols)
                 )
             args <- args[sapply(args, function(x) !is.null(x))]
@@ -395,7 +395,7 @@ setMethod(
 
         # define a list of styling function that implements the styling of the value columns
         if (!is.null(value_col_stylings)) {
-            if (is.null(body_styling)) 
+            if (is.null(body_styling))
                 body_styling <- function(st) st
             for (i in seq_len(length(value_cols))) {
                 # calculate the column ids of the value column in the resulting
@@ -405,8 +405,8 @@ setMethod(
                         length(value_cols) * (
                             seq_len(prod(
                                 sapply(
-                                    x_cols, 
-                                    function(x) 
+                                    x_cols,
+                                    function(x)
                                         length(levels(as.factor(data[[x]])))
                                 )
                             )) - 1L)
@@ -424,7 +424,7 @@ setMethod(
                 body_styling <- function(st) {
                     env <- parent.env(environment())
                     env$valueColStyling(
-                        env$body_styling(st), 
+                        env$body_styling(st),
                         col_id = env$valueColIds
                     )
                 }
@@ -436,8 +436,8 @@ setMethod(
 
         ### generate styled cross table body
         create_sub_table(
-            data = dataCross, 
-            subLevel = 1, 
+            data = dataCross,
+            subLevel = 1,
             sub_table_cols = sub_table_cols,
             sub_heading_stylings = sub_heading_stylings,
             body_styling = body_styling,
@@ -450,14 +450,14 @@ setMethod(
 #' Helper function that creates a styled sub table
 #'
 #' This function creates a styled cross table from a given data.frame that
-#' already has cross table format. 
+#' already has cross table format.
 #' It uses the columns specified in \code{sub_table_cols} to separate the
 #' table body into several sub tables, where each sub table has the current
 #' value in the column defined by \code{sub_table_cols} as sub heading.
 #' The columns specified in \code{y_cols}, \code{x_cols} and \code{value_cols}
 #' define the cross table structure.
 #' The data.frame given in \code{data} has already s
-#' If the table should not be a cross table, but a normal table then the 
+#' If the table should not be a cross table, but a normal table then the
 #' arguments \code{x_cols} and \code{value_cols} should be omitted.
 #' The function is a recursive function that builds that subTables from inside out.
 #' @param data A data.frame that should be used for the creation of the cross table.
@@ -468,12 +468,12 @@ setMethod(
 #' @param y_cols A vector of column names that are unchanged by the cross table compuation. If the table should not be a cross table, but a normal table this argument can be omitted.
 #' @param x_cols (optional) A vector of column names that are used for column name generation by the cross table compuation. If the table should not be a cross table, but a normal table this argument can be omitted.
 create_sub_table <- function(
-    data, 
-    subLevel, 
-    sub_table_cols, 
-    sub_heading_stylings = NULL, 
-    body_styling = NULL, 
-    y_cols, 
+    data,
+    subLevel,
+    sub_table_cols,
+    sub_heading_stylings = NULL,
+    body_styling = NULL,
+    y_cols,
     x_cols
 ) {
     # check if the sub heading level is already at the lowest level
@@ -483,8 +483,8 @@ create_sub_table <- function(
         # the data.frame has subTableColumns which should not displayed
         #  => remove the columns
         if (length(sub_table_cols) > 0)
-            data <- data[, 
-                    setdiff(colnames(data), sub_table_cols), 
+            data <- data[,
+                    setdiff(colnames(data), sub_table_cols),
                     with = FALSE
                 ]
         setorderv(data, y_cols)

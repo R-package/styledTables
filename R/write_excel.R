@@ -52,7 +52,7 @@ setMethod(
             # if a similar styling was passed in earlier then do not generate a
             # new cellStyle element, but return the earlier created one
             candidates <- createdCellStyles[unlist(lapply(
-                createdCellStyles, 
+                createdCellStyles,
                 function(x) compare_styles(x$style, styleVal)
             ))]
             if (length(candidates) == 0) {
@@ -68,12 +68,12 @@ setMethod(
         row_id <- first_row:(nRow + first_row - 1L)
         # Delete existing rows that will be overwritten
         row_id_existing <- intersect(
-            row_id, 
+            row_id,
             as.numeric(names(getRows(sheet)))
         )
         if (length(row_id_existing) > 0L) {
                 errHandler(paste0(
-                        "The rows were the table would be written too (", 
+                        "The rows were the table would be written too (",
                         paste0(row_id_existing, collapse = ", "),
                         ") are not empty."
                     ))
@@ -85,15 +85,15 @@ setMethod(
         # Set height of each row
         for (i in seq_len(length(st@excel_row_height$row_id))) {
             xlsx::setRowHeight(
-                rows = rows[as.character(first_row + st@excel_row_height$row_id[i] - 1L)], 
+                rows = rows[as.character(first_row + st@excel_row_height$row_id[i] - 1L)],
                 st@excel_row_height$heights[i]
             )
         }
-        # Set width of each column    
+        # Set width of each column
         for (i in seq_len(length(st@excel_col_width$col_id))) {
             xlsx::setColumnWidth(
                 sheet,
-                first_col + st@excel_col_width$col_id[i] - 1L, 
+                first_col + st@excel_col_width$col_id[i] - 1L,
                 st@excel_col_width$widths[i]
             )
         }
@@ -102,7 +102,7 @@ setMethod(
             for (j in seq_len(nCol)) {
                 merges <- st@merges[
                         unlist(lapply(
-                            st@merges, 
+                            st@merges,
                             function(m) between_vec(i, m$row_id) && between_vec(j, m$col_id)
                         ))
                     ]
@@ -122,14 +122,14 @@ setMethod(
                     error = function(description) {
                         stop(paste0("Error in 'write_excel' ",
                                 "while evaluating the function given ",
-                                "in 'set_excel_pre_process' on cell value (", 
+                                "in 'set_excel_pre_process' on cell value (",
                                 "row: ", i,
                                 "col: ", j,
                                 "value:", as.character(value),
                                 "). Check the function definition. ",
                                 "Details: ", as.character(description)
                             ), call. = FALSE)
-                            
+
                     })
                 # write value to cell
                 if (!is.null(value) && !is.na(value))
@@ -146,13 +146,13 @@ setMethod(
         # Merge cells
         for (m in st@merges) {
             addMergedRegion(
-                sheet, 
+                sheet,
                 first_row - 1L + m$row_id[1],
                 first_row - 1L + m$row_id[2],
                 first_col - 1L + m$col_id[1],
                 first_col - 1L + m$col_id[2]
             )
-        
+
         }
         # write last row to sheet
         attr(sheet, "lastRow") <- first_row - 1L + nRow

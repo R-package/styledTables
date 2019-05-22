@@ -35,13 +35,13 @@ setMethod(
                 errHandler(paste0(
                     "The argument 'row_id' must be an unbroken numeric vector."
                 ))
-                
+
             if (any(!row_id %in% 1:count_rows(st)))
                 errHandler(paste0(
                         "The argument 'row_id' must be a subinterval of 1:",
                         count_rows(st),
                         "."
-                    )) 
+                    ))
         }
         st <- set_excel_font_size(st, 7, row_id = row_id)
         st <- set_excel_font_name(st, "Arial", row_id = row_id)
@@ -90,7 +90,7 @@ setMethod(
                         "The argument 'row_id' must be a subinterval of 1:",
                         count_rows(st),
                         "."
-                    )) 
+                    ))
         }
         col_id = 1:count_cols(st)
         if (length(row_id) > 1)
@@ -142,13 +142,13 @@ setMethod(
                 errHandler(paste0(
                     "The argument 'row_id' must be an unbroken numeric vector."
                 ))
-                
+
             if (any(!row_id %in% 1:count_rows(st)))
                 errHandler(paste0(
                         "The argument 'row_id' must be a subinterval of 1:",
                         count_rows(st),
                         "."
-                    )) 
+                    ))
         }
         ncols <- count_cols(st)
         st <- merge_cells(st, row_id = row_id, col_id = 1:ncols)
@@ -194,13 +194,13 @@ setMethod(
                 errHandler(paste0(
                     "The argument 'row_id' must be an unbroken numeric vector."
                 ))
-                
+
             if (any(!row_id %in% 1:count_rows(st)))
                 errHandler(paste0(
                         "The argument 'row_id' must be a subinterval of 1:",
                         count_rows(st),
                         "."
-                    )) 
+                    ))
         }
         # Substitute N in the col_id selector
         if (is.null(col_id)) {
@@ -213,7 +213,7 @@ setMethod(
                         "The argument 'col_id' must be a subinterval of 1:",
                         count_cols(st),
                         "."
-                    )) 
+                    ))
         }
         st <- set_excel_data_format(st, "#,##0", row_id = row_id, col_id = col_id)
         set_latex_pre_process(
@@ -226,8 +226,8 @@ setMethod(
                 } else {
                     "$\\cdot$"
                 }
-            }, 
-            row_id = row_id, 
+            },
+            row_id = row_id,
             col_id = col_id)
     }
 )
@@ -270,7 +270,7 @@ setMethod(
                         "The argument 'row_id' must be a subinterval of 1:",
                         count_rows(st),
                         "."
-                    )) 
+                    ))
         }
         # Substitute N in the col_id selector
         if (is.null(col_id)) {
@@ -283,21 +283,21 @@ setMethod(
                         "The argument 'col_id' must be a subinterval of 1:",
                         count_cols(st),
                         "."
-                    )) 
+                    ))
         }
         st <- set_excel_data_format(st, "#,##0.0", row_id = row_id, col_id = col_id)
         set_latex_pre_process(
             st,
             function(x) {
                 if (!is.na(x) && x != 0) {
-                    format(round(x, 1), nsmall = 1, decimal.mark = ",") 
+                    format(round(x, 1), nsmall = 1, decimal.mark = ",")
                 } else if (!is.na(x) && x == 0) {
                     "-"
                 } else {
                     "$\\cdot$"
                 }
             },
-            row_id = row_id, 
+            row_id = row_id,
             col_id = col_id)
     }
 )

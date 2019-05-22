@@ -13,7 +13,7 @@ check_validity <- function(sc, style_name) {
                 {
                     if (length(sc@border_color) > 0 && length(sc@border_position) == 0)
                         paste0("When argument 'border_color' is",
-                                " given, the argument 'border_position' is ", 
+                                " given, the argument 'border_position' is ",
                                 "mandatory.")
                 }
             ),
@@ -22,7 +22,7 @@ check_validity <- function(sc, style_name) {
                 {
                     if (length(sc@border_color) > 0 && length(sc@border_position) == 0)
                         paste0("When argument 'excel_border_pen' is",
-                                " given, the argument 'border_position' is ", 
+                                " given, the argument 'border_position' is ",
                                 "mandatory.")
                 }
             ),
@@ -55,14 +55,14 @@ check_validity <- function(sc, style_name) {
 }
 
 #' @title S4 helper class that summarizes NULL and missing values
-#' 
+#'
 #' @description This class is used as signature class for missing or NULL values
 #' @exportClass MissingOrNull
 setClassUnion(name = "MissingOrNull", members = c("missing", "NULL"))
 
 #' Style class for single cells in [StyledTable] objects
-#' 
-#' This class holds all style settings for a single excel cell. The values are 
+#'
+#' This class holds all style settings for a single excel cell. The values are
 #' filled in by the user.
 #' @name StyledCell-class
 #' @rdname StyledCell-class
@@ -132,7 +132,7 @@ setClass(
                 # Check if border values are given together with border_position
                 if ((length(object@excel_border_pen) > 0 || length(object@border_color) > 0) && length(object@border_position) == 0)
                     paste0("When arguments 'excel_border_pen' or 'border_color' are",
-                            " given, the argument 'border_position' is ", 
+                            " given, the argument 'border_position' is ",
                             "mandatory.")
             }
         )
@@ -144,7 +144,7 @@ setClass(
 
 #' Constructor method of StyledCell Class.
 #'
-#' @name StyledCell 
+#' @name StyledCell
 #' @rdname StyledCell-class
 #' @aliases initialize,StyledCell-method
 #' @param .Object A StyledCell object
@@ -175,7 +175,7 @@ setClass(
 #' @param excel_pre_process A function that can be used to pre process cell values for the Excel table generation
 #' @param latex_pre_process A function that can be used to pre process cell values for the LaTeX table generation
 #' @param latex_font_size The LaTeX command to set the font size
-setMethod("initialize", signature(.Object = "StyledCell"), 
+setMethod("initialize", signature(.Object = "StyledCell"),
     function(
         .Object,
         excel_font_name,
@@ -345,11 +345,11 @@ setMethod("setStyledCell", signature(sc = "StyledCell", value = "ANY", style_nam
     function(sc, value, style_name) {
         # Transform input values
         if (style_name %in% c(
-            "font_color", 
-            "border_color", 
-            "fill_color", 
-            "excel_background_color", 
-            "excel_fill_pattern", 
+            "font_color",
+            "border_color",
+            "fill_color",
+            "excel_background_color",
+            "excel_fill_pattern",
             "border_position")
         )
             value <- transform_char(value, toUpper = TRUE)
@@ -433,7 +433,7 @@ setMethod("getXlsxFontCellStyle", signature(wb = "ANY", sc = "StyledCell"),
             strikeout = sc@strikeout,
             boldweight = sc@excel_boldweight,
             underline = sc@underline
-        )) 
+        ))
         if (length(font) > 0) {
             argList <- font[names(font)[unlist(lapply(font, function(x) !is.null(x)))]]
             argList$wb <- wb

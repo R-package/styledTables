@@ -1,9 +1,9 @@
 knit_print_rmd_html <- function(x, ...) {
   fig_path <- knitr::opts_chunk$get("fig.path")
   fig_name <- paste0(
-    fig_path, 
+    fig_path,
     "StyledTable-",
-    substr(digest::digest(x), 1, 10), 
+    substr(digest::digest(x), 1, 10),
     ".png"
   )
   dir_name <- dirname(fig_name)

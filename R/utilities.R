@@ -8,8 +8,8 @@
 assert_type_ <- function(var, types, var_name, allow_na = TRUE) {
     if ((!allow_na && is.na(var)) || (!is.na(var) && !typeof(var) %in% types))
         sprintf(
-            "Argument '%s' must be of type '%s'.", 
-            var_name, 
+            "Argument '%s' must be of type '%s'.",
+            var_name,
             paste(paste0("'", types, "'"), collapse = " oder ")
         )
 }
@@ -90,11 +90,11 @@ asser_color_value <- function(var) {
 
 #' Transform text
 #'
-#' Transform a text to upper case and maybe append some text at front of the 
+#' Transform a text to upper case and maybe append some text at front of the
 #' beginning or at the end
 #' @param var (string) Text that should be transformed
-#' @param pre (string) Text that should be appended in front 
-#' @param post (string) Text that should be appended at the end 
+#' @param pre (string) Text that should be appended in front
+#' @param post (string) Text that should be appended at the end
 #' @param toUpper (logical) Should the text be transformed to upper case?
 transform_char <- function(var = NULL, pre = "", post = "", toUpper = TRUE) {
     if (!is.null(var) && is.character(var)) {
@@ -125,22 +125,22 @@ do_call_without_missing <- function(fn, args, skipIfAllMissing = TRUE) {
         do.call(fn, rArgs)
 }
 
-#' Improved \code{seq} command that returns an empty vector if lower > upper boundary 
+#' Improved \code{seq} command that returns an empty vector if lower > upper boundary
 #'
 #' Enhance the \code{seq} such that it can handle the situation if \code{from > to}
 #' @param from First element in the sequence
 #' @param to Last element in the sequence
 #' @return The sequence
 seq_save <- function(
-    from, 
-    to 
+    from,
+    to
 ) {
     if (to < from)
         return(integer(0))
     seq(from, to)
 }
 
-#' Improved \code{seq} command which allows an two element vector holding the sequence boundaries 
+#' Improved \code{seq} command which allows an two element vector holding the sequence boundaries
 #'
 #' The boundaries for the sequence command are given as two element vector and passed to the \code{seq_save} function.
 #' @param bLU A two element vector. The first element is the lower boundary the second element the upper boundarie. If the lower boundary is greater than the upper boundary, then an empty vector is returned.
