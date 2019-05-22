@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Call function with arguments and remove all empty arguments (NULL or length == 0) — do_call_without_missing • styledTables</title>
+<title>Substitute <code>row_id</code> — substitute_row_id • styledTables</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -41,9 +41,10 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Call function with arguments and remove all empty arguments (NULL or length == 0) — do_call_without_missing" />
+<meta property="og:title" content="Substitute <code>row_id</code> — substitute_row_id" />
 
-<meta property="og:description" content="Invokes a function with a list of arguments, but removes all NULL arguments first" />
+<meta property="og:description" content="This function is used to substitute n_row inside
+of the expression passed into row_id" />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -130,35 +131,44 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Call function with arguments and remove all empty arguments (NULL or length == 0)</h1>
+    <h1>Substitute <code>row_id</code></h1>
     <small class="dont-index">Source: <a href='https://github.com/R-package/styledTables/blob/master/R/utilities.R'><code>R/utilities.R</code></a></small>
-    <div class="hidden name"><code>do_call_without_missing.Rd</code></div>
+    <div class="hidden name"><code>substitute_row_id.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Invokes a function with a list of arguments, but removes all <code>NULL</code> arguments first</p>
+    <p>This function is used to substitute <code>n_row</code> inside
+of the expression passed into <code>row_id</code></p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>do_call_without_missing</span>(<span class='no'>fn</span>, <span class='no'>args</span>, <span class='kw'>skipIfAllMissing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>substitute_row_id</span>(<span class='no'>st</span>, <span class='no'>row_id</span>, <span class='kw'>stack_level</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>error_handler</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>fn</th>
-      <td><p>(function) Function that should be invoked</p></td>
+      <th>st</th>
+      <td><p>The <a href='StyledTable-class.html'>StyledTable</a> object</p></td>
     </tr>
     <tr>
-      <th>args</th>
-      <td><p>(named list) List of arguments (<code>NULL</code> arguments will be removed)</p></td>
+      <th>row_id</th>
+      <td><p>The passed expression that should be evaluated to the row ids</p></td>
     </tr>
     <tr>
-      <th>skipIfAllMissing</th>
-      <td><p>(logical) If <code>skipIfAllMissing = TRUE</code> and all arguments in <code>args</code> are <code>NULL</code>, then the function <code>fn</code> is not invoked and <code>NULL</code> is returned instead.</p></td>
+      <th>stack_level</th>
+      <td><p>The level number of the environment stack (1: parent.frame, 2: parent.parent.frame))</p></td>
+    </tr>
+    <tr>
+      <th>error_handler</th>
+      <td><p>Error handling function. Takes a message string</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>The evaluated row ids (unbroken numeric vector)</p>
     
 
   </div>
@@ -166,7 +176,9 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#value">Value</a></li>
+          </ul>
 
   </div>
 </div>

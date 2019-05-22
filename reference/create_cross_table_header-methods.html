@@ -82,7 +82,7 @@ In this case the 'Male' and 'Female' headings will be in merged cells above the 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">styledTables</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.0</span>
       </span>
     </div>
 
@@ -184,7 +184,7 @@ In this case the 'Male' and 'Female' headings will be in merged cells above the 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='co'># prepare data set for cross table</span>
-<span class='no'>studentsData</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
+<span class='no'>students_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
     <span class='kw'>country</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Germany"</span>, <span class='st'>"Austria"</span>), <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>16</span>),
     <span class='kw'>year</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"2010"</span>, <span class='fl'>8</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"2011"</span>, <span class='fl'>8</span>)),
     <span class='kw'>subject</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"Mathematics"</span>, <span class='fl'>4</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"Statistics"</span>, <span class='fl'>4</span>)), <span class='fl'>2</span>),
@@ -206,7 +206,7 @@ In this case the 'Male' and 'Female' headings will be in merged cells above the 
   <span class='no'>format_stat_header</span>
 <span class='co'># setup styled cross table body</span>
 <span class='no'>s_body</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_cross_table_body-methods.html'>create_cross_table_body</a></span>(
-    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>studentsData</span>,
+    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>students_data</span>,
     <span class='kw'>sub_table_cols</span> <span class='kw'>=</span> <span class='st'>"country"</span>,
     <span class='kw'>sub_heading_styling</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>st</span>) <span class='fu'><a href='set_horizontal-methods.html'>set_horizontal</a></span>(<span class='no'>st</span>, <span class='st'>"center"</span>),
     <span class='kw'>body_styling</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>st</span>) <span class='fu'><a href='set_horizontal-methods.html'>set_horizontal</a></span>(<span class='no'>st</span>, <span class='st'>"center"</span>),
@@ -246,7 +246,7 @@ In this case the 'Male' and 'Female' headings will be in merged cells above the 
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9100.</p>
 </div>
       </footer>
    </div>
