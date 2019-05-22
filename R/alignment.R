@@ -5,7 +5,6 @@
 #' @param wrapText Logical should cell content be wrapped
 #' @param rotation Numerical value for cell content rotation
 #' @param indent Number of white spaces that should be used for indentation
-#' @export
 Alignment <- function(horizontal=NULL, vertical=NULL, wrapText=FALSE,
                         rotation=0, indent=0)
 {

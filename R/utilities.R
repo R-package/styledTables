@@ -236,3 +236,86 @@ compare_styles <- function(s1, s2) {
     ))
 }
 
+#' Substitute \code{col_id} and \code{row_id}
+#'
+#' This function is used to substitute \code{n_col} and \code{n_row} inside
+#' of the expressions passed into \code{col_id} and \code{row_id}
+#' @param st The [StyledTable] object
+#' @param col_id The passed expression that should be evaluated to the column ids
+#' @param stack_level The level number of the environment stack (1: parent.frame, 2: parent.parent.frame))
+#' @param error_handler Error handling function. Takes a message string
+#' @return The evaluated column ids (unbroken numeric vector)
+substitute_col_id <- function(st, col_id, stack_level = 1, error_handler) {
+    # Substitute n_col in the columns selector
+    env <- new.env()
+    env$n_col <- count_cols(st)
+    error_col <- function(obj)
+        error_handler(paste0(
+                "The argument 'col_id' must be a numeric vector and subset of 1:",
+                count_cols(st),
+                ". The total number of columns can be substituted by 'n_col'",
+                "The passed in ",
+                "value could not be parsed: 'col_id = ",
+                deparse(col_id), "'. Details: ",
+                obj$message
+            ))
+    tryCatch({
+            col_id <- eval(col_id, list(n_row = count_rows(st)), parent.frame(n = stack_level))
+        },
+        warning = error_col,
+        error = error_col
+    )
+    if (!is.null(col_id)) {
+        if (!is.numeric(col_id))
+            error_handler("The argument 'col_id' must be numeric.")
+        if (any(!col_id %in% 1:count_cols(st)))
+            error_handler(paste0(
+                    "The argument 'col_id' must be a subset of 1:",
+                    count_cols(st),
+                    ". The total number of columns can be substituted by 'n_col'."
+                ))
+    }
+    col_id
+}
+
+#' Substitute \code{row_id}
+#'
+#' This function is used to substitute \code{n_row} inside
+#' of the expression passed into \code{row_id}
+#' @param st The [StyledTable] object
+#' @param row_id The passed expression that should be evaluated to the row ids
+#' @param stack_level The level number of the environment stack (1: parent.frame, 2: parent.parent.frame))
+#' @param error_handler Error handling function. Takes a message string
+#' @return The evaluated row ids (unbroken numeric vector)
+substitute_row_id <- function(st, row_id, stack_level = 1, error_handler) {
+    # Substitute n_row in the rows selector
+    env <- new.env()
+    env$n_row <- count_rows(st)
+    error_row <- function(obj)
+        error_handler(paste0(
+                "The argument 'row_id' must be a subinterval of 1:",
+                count_rows(st),
+                ". The total number of rows can be substituted by 'n_row'",
+                "The passed in ",
+                "value could not be parsed: 'row_id = ",
+                deparse(row_id), "'. Details: ",
+                obj$message
+            ))
+    tryCatch({
+            row_id <- eval(row_id, list(n_row = count_rows(st)), parent.frame(n = stack_level))
+        },
+        warning = error_row,
+        error = error_row
+    )
+    if (!is.null(row_id)) {
+        if (!is.numeric(row_id))
+            error_handler("The argument 'row_id' must be numeric.")
+        if (any(!row_id %in% 1:count_rows(st)))
+            error_handler(paste0(
+                    "The argument 'row_id' must be a subset of 1:",
+                    count_rows(st),
+                    ". The total number of rows can be substituted by 'n_row'."
+                ))
+    }
+    row_id
+}

@@ -331,7 +331,6 @@ setMethod("initialize", signature(.Object = "StyledCell"),
 #'
 #' @name setStyledCell
 #' @rdname setStyledCell-methods
-#' @exportMethod setStyledCell
 setGeneric(
     "setStyledCell",
     function(sc, value, style_name) standardGeneric("setStyledCell")
@@ -387,7 +386,6 @@ setMethod("setStyledCell", signature(sc = "MissingOrNull", value = "ANY", style_
 #'
 #' @name getStyledCell
 #' @rdname getStyledCell-methods
-#' @exportMethod getStyledCell
 #' @param ... Various arguments
 setGeneric("getStyledCell", function(sc, ...) standardGeneric("getStyledCell"))
 
@@ -415,7 +413,6 @@ setMethod("getStyledCell", signature(sc = "MissingOrNull"),
 #'
 #' @name getXlsxFontCellStyle
 #' @rdname getXlsxFontCellStyle-methods
-#' @exportMethod getXlsxFontCellStyle
 setGeneric(
     "getXlsxFontCellStyle",
     function(wb, sc) standardGeneric("getXlsxFontCellStyle")

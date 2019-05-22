@@ -14,7 +14,7 @@ setGeneric("format_stat_header", function(st, ...) standardGeneric("format_stat_
 #' @rdname format_stat_header-methods
 #' @aliases format_stat_header,StyledTable-method
 #' @param st A [StyledTable] object
-#' @param row_id A vector of row numbers (N is substituted as \code{count_rows(st)})
+#' @param row_id A vector of row numbers. If omitted, the formatting will be applied to all rows
 #' @return The modified [StyledTable] object
 setMethod(
     "format_stat_header",
@@ -33,8 +33,7 @@ setMethod(
         } else {
             if (!is.numeric(row_id) || length(row_id) == 0 || any(is.na(row_id)))
                 errHandler(paste0(
-                    "The argument 'row_id' must be an unbroken numeric vector. ",
-                    "(Number of rows may be replaced by 'N')."
+                    "The argument 'row_id' must be an unbroken numeric vector."
                 ))
                 
             if (any(!row_id %in% 1:count_rows(st)))
@@ -65,7 +64,7 @@ setGeneric("format_stat_body", function(st, ...) standardGeneric("format_stat_bo
 #' @rdname format_stat_body-methods
 #' @aliases format_stat_body,StyledTable-method
 #' @param st A [StyledTable] object
-#' @param row_id A vector of row numbers (N is substituted as \code{count_rows(st)})
+#' @param row_id A vector of row numbers. If omitted, the formatting will be applied to all rows
 #' @return The modified [StyledTable] object
 setMethod(
     "format_stat_body",
@@ -84,8 +83,7 @@ setMethod(
         } else {
             if (!is.numeric(row_id) || length(row_id) == 0 || any(is.na(row_id)))
                 errHandler(paste0(
-                    "The argument 'row_id' must be an unbroken numeric vector. ",
-                    "(Number of rows may be replaced by 'N')."
+                    "The argument 'row_id' must be an unbroken numeric vector."
                 ))
             if (any(!row_id %in% 1:count_rows(st)))
                 errHandler(paste0(
@@ -123,7 +121,7 @@ setGeneric("format_stat_sub_heading", function(st, ...) standardGeneric("format_
 #' @rdname format_stat_sub_heading-methods
 #' @aliases format_stat_sub_heading,StyledTable-method
 #' @param st A [StyledTable] object
-#' @param row_id A vector of row numbers
+#' @param row_id A vector of row numbers. If omitted, the formatting will be applied to all rows
 #' @return The modified [StyledTable] object
 setMethod(
     "format_stat_sub_heading",
@@ -142,8 +140,7 @@ setMethod(
         } else {
             if (!is.numeric(row_id) || length(row_id) == 0 || any(is.na(row_id)))
                 errHandler(paste0(
-                    "The argument 'row_id' must be an unbroken numeric vector. ",
-                    "(Number of rows may be replaced by 'N')."
+                    "The argument 'row_id' must be an unbroken numeric vector."
                 ))
                 
             if (any(!row_id %in% 1:count_rows(st)))
@@ -175,8 +172,8 @@ setGeneric("format_stat_absolute", function(st, ...) standardGeneric("format_sta
 #' @rdname format_stat_absolute-methods
 #' @aliases format_stat_absolute,StyledTable-method
 #' @param st A [StyledTable] object
-#' @param row_id A vector of row numbers
-#' @param col_id A vector of col numbers
+#' @param row_id A vector of row numbers. If omitted, the formatting will be applied to all rows
+#' @param col_id A vector of column numbers. If omitted, the formatting will be applied to all columns
 #' @return The modified [StyledTable] object
 setMethod(
     "format_stat_absolute",
@@ -195,8 +192,7 @@ setMethod(
         } else {
             if (!is.numeric(row_id) || length(row_id) == 0 || any(is.na(row_id)))
                 errHandler(paste0(
-                    "The argument 'row_id' must be an unbroken numeric vector. ",
-                    "(Number of rows may be replaced by 'N')."
+                    "The argument 'row_id' must be an unbroken numeric vector."
                 ))
                 
             if (any(!row_id %in% 1:count_rows(st)))
@@ -211,7 +207,7 @@ setMethod(
             col_id <- 1:count_cols(st)
         } else {
             if (!is.numeric(col_id))
-                errHandler("The argument 'col_id' must be numeric (Number of columns may be replaced by 'N').")
+                errHandler("The argument 'col_id' must be numeric vector.")
             if (any(!col_id %in% 1:count_cols(st)))
                 errHandler(paste0(
                         "The argument 'col_id' must be a subinterval of 1:",
@@ -247,8 +243,8 @@ setGeneric("format_stat_relative", function(st, ...) standardGeneric("format_sta
 #' @rdname format_stat_relative-methods
 #' @aliases format_stat_relative,StyledTable-method
 #' @param st A [StyledTable] object
-#' @param row_id A vector of row numbers
-#' @param col_id A vector of col numbers
+#' @param row_id A vector of row numbers. If omitted, the formatting will be applied to all rows
+#' @param col_id A vector of column numbers. If omitted, the formatting will be applied to all columns
 #' @return The modified [StyledTable] object
 setMethod(
     "format_stat_relative",
@@ -267,8 +263,7 @@ setMethod(
         } else {
             if (!is.numeric(row_id) || length(row_id) == 0 || any(is.na(row_id)))
                 errHandler(paste0(
-                    "The argument 'row_id' must be an unbroken numeric vector. ",
-                    "(Number of rows may be replaced by 'N')."
+                    "The argument 'row_id' must be an unbroken numeric vector."
                 ))
             if (any(!row_id %in% 1:count_rows(st)))
                 errHandler(paste0(
@@ -282,7 +277,7 @@ setMethod(
             col_id <- 1:count_cols(st)
         } else {
             if (!is.numeric(col_id))
-                errHandler("The argument 'col_id' must be numeric (Number of row_id may be replaced by 'N').")
+                errHandler("The argument 'col_id' must be numeric vector.")
             if (any(!col_id %in% 1:count_cols(st)))
                 errHandler(paste0(
                         "The argument 'col_id' must be a subinterval of 1:",

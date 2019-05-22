@@ -15,7 +15,7 @@ format_stat_body(st, ...)
 
 \item{...}{Various arguments}
 
-\item{row_id}{A vector of row numbers (N is substituted as \code{count_rows(st)})}
+\item{row_id}{A vector of row numbers. If omitted, the formatting will be applied to all rows}
 }
 \value{
 The modified \link{StyledTable} object

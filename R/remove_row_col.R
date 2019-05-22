@@ -26,10 +26,17 @@ setMethod(
                 description
             ), call. = FALSE)
         }
+        # If no column should be deleted, exit
+        if (length(col_id) == 0)
+            return(st)
         # Check if col_id is correct
-        if (!is.numeric(col_id) | length(col_id) == 0 | any(!col_id %in% 1:count_cols(st)))
+        if (!is.numeric(col_id))
             errHandler(paste(
-                "The argument 'col_id' must be a non empty numeric vector",
+                "The argument 'col_id' must be a numeric vector",
+            ))
+        if (any(!col_id %in% 1:count_cols(st)))
+            errHandler(paste(
+                "The argument 'col_id' must be a sunon empty numeric vector",
             ))
         # remove columns from data slot
         remainingCols = setdiff(1:count_cols(st), col_id)

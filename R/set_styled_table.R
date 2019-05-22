@@ -1,4 +1,7 @@
 #' Set styles of multiple cells
+#'
+#' This function can only be used inside another styling function, since 
+#' the \code{row_id} and \code{col_id} calculation happens in the level-2 parent.frame.
 #' @name set_specific_style
 #' @rdname set_specific_style-methods
 #' @exportMethod set_specific_style
@@ -16,8 +19,8 @@ setGeneric(
 #' @param value The value that should be set
 #' @param style_name The name of the style slot that should be set
 #' @param style_type The type which the value has to have (used for type checking)
-#' @param row_id A vector of row ids to which the change should be applied to (\code{N} is substituted with the total number of table rows)
-#' @param col_id A vector of column ids to which the change should be applied to (\code{N} is substituted with the total number of table columns)
+#' @param row_id A vector of row ids to which the change should be applied to. The variable \code{n_row} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{row_id} is omitted, then the change will be applied to all rows
+#' @param col_id A vector of column ids to which the change should be applied to. The variable \code{n_col} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{col_id} is omitted, then the change will be applied to all columns
 #' @param condition An equation (non standard evaluation) that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param append_mode A character string that defines if the styling value of the cell should be replaced (append_mode = "replace"), if the new styling should be appended at the end of the current styling value of the cell (append_mode = "appendBehind"), if the new styling should be appended in front of the current styling value of the cell (append_mode = "appendBefore")
@@ -57,33 +60,13 @@ setMethod(
                     paste0(style_type, collapse = ", "),
                     "'."
             ))
-                
-        # Substitute N in the rows selector
-        if (is.null(row_id)) {
+        # Substitute n_col and n_row in the rows and columns selector
+        row_id <- substitute_row_id(st, row_id, stack_level = 5, errHandler)
+        col_id <- substitute_col_id(st, col_id, stack_level = 5, errHandler)
+        if (is.null(row_id))
             row_id <- 1:count_rows(st)
-        } else {
-            if (!is.numeric(row_id))
-                errHandler("The argument 'row_id' must be numeric.")
-            if (any(!row_id %in% 1:count_rows(st)))
-                errHandler(paste0(
-                        "The argument 'row_id' must be a subinterval of 1:",
-                        count_rows(st),
-                        "."
-                    ))
-        }
-        # Substitute N in the cols selector
-        if (is.null(col_id)) {
+        if (is.null(col_id))
             col_id <- 1:count_cols(st)
-        } else {
-            if (!is.numeric(col_id))
-                errHandler("The argument 'col_id' must be numeric.")
-            if (any(!col_id %in% 1:count_cols(st)))
-                errHandler(paste0(
-                        "The argument 'col_id' must be a subinterval of 1:",
-                        count_cols(st),
-                        "."
-                    ))
-        }
         # Evaluate the condition on the 'data' and calculate the remaining set of row_id
         # In order to evaluate the condition the chosen rows in 'data' are transformed into a data.frame
         if (!is.null(condition) | !is.null(condition_text)) {
@@ -106,9 +89,9 @@ setMethod(
                     setnames(df, paste0("X", 1:count_cols(st)))
                 },
                 warning = function(w)
-                    errHandlerCondition("Pick a set of rows where each row has the same type (character/numeric). "),
+                    errHandlerCondition("Pick a set of rows where each row has the same type (character/numeric)."),
                 error = function(e)
-                    errHandlerCondition("Pick a set of rows where each row has the same type (character/numeric). ")
+                    errHandlerCondition("Pick a set of rows where each row has the same type (character/numeric).")
             )
             tryCatch(
                 {
@@ -146,8 +129,8 @@ setGeneric("set_latex_font_name", function(st, value, ...) standardGeneric("set_
 #' @aliases set_latex_font_name,StyledTable,character-method
 #' @param st A [StyledTable] object
 #' @param value The value that should be set
-#' @param row_id A vector of row ids to which the change should be applied to (\code{N} is substituted with the total number of table rows)
-#' @param col_id A vector of column ids to which the change should be applied to (\code{N} is substituted with the total number of table columns)
+#' @param row_id A vector of row ids to which the change should be applied to. The variable \code{n_row} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{row_id} is omitted, then the change will be applied to all rows
+#' @param col_id A vector of column ids to which the change should be applied to. The variable \code{n_col} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{col_id} is omitted, then the change will be applied to all columns
 #' @param condition An equation (non standard evaluation) that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @return The modified [StyledTable] object
@@ -157,6 +140,8 @@ setMethod(
     signature(st = "StyledTable", value = "ANY"), 
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
+        row_id <- substitute(row_id)
+        col_id <- substitute(col_id)
         set_specific_style(st, value, "latex_font_name", "character", row_id, col_id, condition, condition_text)
     }
 )
@@ -172,8 +157,8 @@ setGeneric("set_excel_font_name", function(st, value, ...) standardGeneric("set_
 #' @aliases set_excel_font_name,StyledTable,character-method
 #' @param st A [StyledTable] object
 #' @param value The value that should be set
-#' @param row_id A vector of row ids to which the change should be applied to (\code{N} is substituted with the total number of table rows)
-#' @param col_id A vector of column ids to which the change should be applied to (\code{N} is substituted with the total number of table columns)
+#' @param row_id A vector of row ids to which the change should be applied to. The variable \code{n_row} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{row_id} is omitted, then the change will be applied to all rows
+#' @param col_id A vector of column ids to which the change should be applied to. The variable \code{n_col} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{col_id} is omitted, then the change will be applied to all columns
 #' @param condition An equation (non standard evaluation) that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @return The modified [StyledTable] object
@@ -183,6 +168,8 @@ setMethod(
     signature(st = "StyledTable", value = "ANY"), 
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
+        row_id <- substitute(row_id)
+        col_id <- substitute(col_id)
         set_specific_style(st, value, "excel_font_name", "character", row_id, col_id, condition, condition_text)
     }
 )
@@ -198,8 +185,8 @@ setGeneric("set_latex_font_size", function(st, value, ...) standardGeneric("set_
 #' @aliases set_latex_font_size,StyledTable,character-method
 #' @param st A [StyledTable] object
 #' @param value The value that should be set
-#' @param row_id A vector of row ids to which the change should be applied to (\code{N} is substituted with the total number of table rows)
-#' @param col_id A vector of column ids to which the change should be applied to (\code{N} is substituted with the total number of table columns)
+#' @param row_id A vector of row ids to which the change should be applied to. The variable \code{n_row} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{row_id} is omitted, then the change will be applied to all rows
+#' @param col_id A vector of column ids to which the change should be applied to. The variable \code{n_col} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{col_id} is omitted, then the change will be applied to all columns
 #' @param condition An equation (non standard evaluation) that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @return The modified [StyledTable] object
@@ -209,6 +196,8 @@ setMethod(
     signature(st = "StyledTable", value = "ANY"), 
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
+        row_id <- substitute(row_id)
+        col_id <- substitute(col_id)
         set_specific_style(st, value, "latex_font_size", "character", row_id, col_id, condition, condition_text)
     }
 )
@@ -224,8 +213,8 @@ setGeneric("set_excel_font_size", function(st, value, ...) standardGeneric("set_
 #' @aliases set_excel_font_size,StyledTable,character-method
 #' @param st A [StyledTable] object
 #' @param value The value that should be set
-#' @param row_id A vector of row ids to which the change should be applied to (\code{N} is substituted with the total number of table rows)
-#' @param col_id A vector of column ids to which the change should be applied to (\code{N} is substituted with the total number of table columns)
+#' @param row_id A vector of row ids to which the change should be applied to. The variable \code{n_row} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{row_id} is omitted, then the change will be applied to all rows
+#' @param col_id A vector of column ids to which the change should be applied to. The variable \code{n_col} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{col_id} is omitted, then the change will be applied to all columns
 #' @param condition An equation (non standard evaluation) that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @return The modified [StyledTable] object
@@ -235,6 +224,8 @@ setMethod(
     signature(st = "StyledTable", value = "ANY"), 
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
+        row_id <- substitute(row_id)
+        col_id <- substitute(col_id)
         set_specific_style(st, value, "excel_font_size", "double", row_id, col_id, condition, condition_text)
     }
 )
@@ -250,8 +241,8 @@ setGeneric("set_font_color", function(st, value, ...) standardGeneric("set_font_
 #' @aliases set_font_color,StyledTable,character-method
 #' @param st A [StyledTable] object
 #' @param value The value that should be set
-#' @param row_id A vector of row ids to which the change should be applied to (\code{N} is substituted with the total number of table rows)
-#' @param col_id A vector of column ids to which the change should be applied to (\code{N} is substituted with the total number of table columns)
+#' @param row_id A vector of row ids to which the change should be applied to. The variable \code{n_row} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{row_id} is omitted, then the change will be applied to all rows
+#' @param col_id A vector of column ids to which the change should be applied to. The variable \code{n_col} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{col_id} is omitted, then the change will be applied to all columns
 #' @param condition An equation (non standard evaluation) that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @return The modified [StyledTable] object
@@ -261,6 +252,8 @@ setMethod(
     signature(st = "StyledTable", value = "ANY"), 
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
+        row_id <- substitute(row_id)
+        col_id <- substitute(col_id)
         set_specific_style(st, value, "font_color", "character", row_id, col_id, condition, condition_text)
     }
 )
@@ -276,8 +269,8 @@ setGeneric("set_bold", function(st, ...) standardGeneric("set_bold"))
 #' @aliases set_bold,StyledTable,character-method
 #' @param st A [StyledTable] object
 #' @param value The value that should be set
-#' @param row_id A vector of row ids to which the change should be applied to (\code{N} is substituted with the total number of table rows)
-#' @param col_id A vector of column ids to which the change should be applied to (\code{N} is substituted with the total number of table columns)
+#' @param row_id A vector of row ids to which the change should be applied to. The variable \code{n_row} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{row_id} is omitted, then the change will be applied to all rows
+#' @param col_id A vector of column ids to which the change should be applied to. The variable \code{n_col} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{col_id} is omitted, then the change will be applied to all columns
 #' @param condition An equation (non standard evaluation) that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @return The modified [StyledTable] object
@@ -287,6 +280,8 @@ setMethod(
     signature(st = "StyledTable"), 
     function(st, value = TRUE, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
+        row_id <- substitute(row_id)
+        col_id <- substitute(col_id)
         set_specific_style(st, value, "bold", "logical", row_id, col_id, condition, condition_text)
     }
 )
@@ -302,8 +297,8 @@ setGeneric("set_italic", function(st, ...) standardGeneric("set_italic"))
 #' @aliases set_italic,StyledTable,character-method
 #' @param st A [StyledTable] object
 #' @param value The value that should be set
-#' @param row_id A vector of row ids to which the change should be applied to (\code{N} is substituted with the total number of table rows)
-#' @param col_id A vector of column ids to which the change should be applied to (\code{N} is substituted with the total number of table columns)
+#' @param row_id A vector of row ids to which the change should be applied to. The variable \code{n_row} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{row_id} is omitted, then the change will be applied to all rows
+#' @param col_id A vector of column ids to which the change should be applied to. The variable \code{n_col} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{col_id} is omitted, then the change will be applied to all columns
 #' @param condition An equation (non standard evaluation) that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @return The modified [StyledTable] object
@@ -313,6 +308,8 @@ setMethod(
     signature(st = "StyledTable"), 
     function(st, value = TRUE, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
+        row_id <- substitute(row_id)
+        col_id <- substitute(col_id)
         set_specific_style(st, value, "italic", "logical", row_id, col_id, condition, condition_text)
     }
 )
@@ -328,8 +325,8 @@ setGeneric("set_strikeout", function(st, ...) standardGeneric("set_strikeout"))
 #' @aliases set_strikeout,StyledTable,character-method
 #' @param st A [StyledTable] object
 #' @param value The value that should be set
-#' @param row_id A vector of row ids to which the change should be applied to (\code{N} is substituted with the total number of table rows)
-#' @param col_id A vector of column ids to which the change should be applied to (\code{N} is substituted with the total number of table columns)
+#' @param row_id A vector of row ids to which the change should be applied to. The variable \code{n_row} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{row_id} is omitted, then the change will be applied to all rows
+#' @param col_id A vector of column ids to which the change should be applied to. The variable \code{n_col} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{col_id} is omitted, then the change will be applied to all columns
 #' @param condition An equation (non standard evaluation) that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @return The modified [StyledTable] object
@@ -339,6 +336,8 @@ setMethod(
     signature(st = "StyledTable"), 
     function(st, value = TRUE, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
+        row_id <- substitute(row_id)
+        col_id <- substitute(col_id)
         set_specific_style(st, value, "strikeout", "logical", row_id, col_id, condition, condition_text)
     }
 )
@@ -354,8 +353,8 @@ setGeneric("set_underline", function(st, ...) standardGeneric("set_underline"))
 #' @aliases set_underline,StyledTable,character-method
 #' @param st A [StyledTable] object
 #' @param value The value that should be set
-#' @param row_id A vector of row ids to which the change should be applied to (\code{N} is substituted with the total number of table rows)
-#' @param col_id A vector of column ids to which the change should be applied to (\code{N} is substituted with the total number of table columns)
+#' @param row_id A vector of row ids to which the change should be applied to. The variable \code{n_row} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{row_id} is omitted, then the change will be applied to all rows
+#' @param col_id A vector of column ids to which the change should be applied to. The variable \code{n_col} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{col_id} is omitted, then the change will be applied to all columns
 #' @param condition An equation (non standard evaluation) that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @return The modified [StyledTable] object
@@ -365,6 +364,8 @@ setMethod(
     signature(st = "StyledTable"), 
     function(st, value = TRUE, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
+        row_id <- substitute(row_id)
+        col_id <- substitute(col_id)
         set_specific_style(st, value, "underline", "double", row_id, col_id, condition, condition_text)
     }
 )
@@ -380,8 +381,8 @@ setGeneric("set_excel_boldweight", function(st, value, ...) standardGeneric("set
 #' @aliases set_excel_boldweight,StyledTable,character-method
 #' @param st A [StyledTable] object
 #' @param value The value that should be set
-#' @param row_id A vector of row ids to which the change should be applied to (\code{N} is substituted with the total number of table rows)
-#' @param col_id A vector of column ids to which the change should be applied to (\code{N} is substituted with the total number of table columns)
+#' @param row_id A vector of row ids to which the change should be applied to. The variable \code{n_row} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{row_id} is omitted, then the change will be applied to all rows
+#' @param col_id A vector of column ids to which the change should be applied to. The variable \code{n_col} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{col_id} is omitted, then the change will be applied to all columns
 #' @param condition An equation (non standard evaluation) that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @return The modified [StyledTable] object
@@ -391,6 +392,8 @@ setMethod(
     signature(st = "StyledTable", value = "ANY"), 
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
+        row_id <- substitute(row_id)
+        col_id <- substitute(col_id)
         set_specific_style(st, value, "excel_boldweight", "double", row_id, col_id, condition, condition_text)
     }
 )
@@ -406,8 +409,8 @@ setGeneric("set_excel_wrapped", function(st, ...) standardGeneric("set_excel_wra
 #' @aliases set_excel_wrapped,StyledTable,character-method
 #' @param st A [StyledTable] object
 #' @param value The value that should be set
-#' @param row_id A vector of row ids to which the change should be applied to (\code{N} is substituted with the total number of table rows)
-#' @param col_id A vector of column ids to which the change should be applied to (\code{N} is substituted with the total number of table columns)
+#' @param row_id A vector of row ids to which the change should be applied to. The variable \code{n_row} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{row_id} is omitted, then the change will be applied to all rows
+#' @param col_id A vector of column ids to which the change should be applied to. The variable \code{n_col} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{col_id} is omitted, then the change will be applied to all columns
 #' @param condition An equation (non standard evaluation) that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @return The modified [StyledTable] object
@@ -417,6 +420,8 @@ setMethod(
     signature(st = "StyledTable"), 
     function(st, value = TRUE, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
+        row_id <- substitute(row_id)
+        col_id <- substitute(col_id)
         set_specific_style(st, value, "excel_wrapped", "logical", row_id, col_id, condition, condition_text)
     }
 )
@@ -432,8 +437,8 @@ setGeneric("set_horizontal", function(st, value, ...) standardGeneric("set_horiz
 #' @aliases set_horizontal,StyledTable,character-method
 #' @param st A [StyledTable] object
 #' @param value The value that should be set
-#' @param row_id A vector of row ids to which the change should be applied to (\code{N} is substituted with the total number of table rows)
-#' @param col_id A vector of column ids to which the change should be applied to (\code{N} is substituted with the total number of table columns)
+#' @param row_id A vector of row ids to which the change should be applied to. The variable \code{n_row} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{row_id} is omitted, then the change will be applied to all rows
+#' @param col_id A vector of column ids to which the change should be applied to. The variable \code{n_col} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{col_id} is omitted, then the change will be applied to all columns
 #' @param condition An equation (non standard evaluation) that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @return The modified [StyledTable] object
@@ -443,6 +448,8 @@ setMethod(
     signature(st = "StyledTable", value = "ANY"), 
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
+        row_id <- substitute(row_id)
+        col_id <- substitute(col_id)
         set_specific_style(st, value, "horizontal", "character", row_id, col_id, condition, condition_text)
     }
 )
@@ -458,8 +465,8 @@ setGeneric("set_excel_vertical", function(st, value, ...) standardGeneric("set_e
 #' @aliases set_excel_vertical,StyledTable,character-method
 #' @param st A [StyledTable] object
 #' @param value The value that should be set
-#' @param row_id A vector of row ids to which the change should be applied to (\code{N} is substituted with the total number of table rows)
-#' @param col_id A vector of column ids to which the change should be applied to (\code{N} is substituted with the total number of table columns)
+#' @param row_id A vector of row ids to which the change should be applied to. The variable \code{n_row} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{row_id} is omitted, then the change will be applied to all rows
+#' @param col_id A vector of column ids to which the change should be applied to. The variable \code{n_col} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{col_id} is omitted, then the change will be applied to all columns
 #' @param condition An equation (non standard evaluation) that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @return The modified [StyledTable] object
@@ -469,6 +476,8 @@ setMethod(
     signature(st = "StyledTable", value = "ANY"), 
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
+        row_id <- substitute(row_id)
+        col_id <- substitute(col_id)
         set_specific_style(st, value, "vertical", "character", row_id, col_id, condition, condition_text)
     }
 )
@@ -484,8 +493,8 @@ setGeneric("set_rotation", function(st, value, ...) standardGeneric("set_rotatio
 #' @aliases set_rotation,StyledTable,character-method
 #' @param st A [StyledTable] object
 #' @param value The value that should be set
-#' @param row_id A vector of row ids to which the change should be applied to (\code{N} is substituted with the total number of table rows)
-#' @param col_id A vector of column ids to which the change should be applied to (\code{N} is substituted with the total number of table columns)
+#' @param row_id A vector of row ids to which the change should be applied to. The variable \code{n_row} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{row_id} is omitted, then the change will be applied to all rows
+#' @param col_id A vector of column ids to which the change should be applied to. The variable \code{n_col} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{col_id} is omitted, then the change will be applied to all columns
 #' @param condition An equation (non standard evaluation) that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @return The modified [StyledTable] object
@@ -495,6 +504,8 @@ setMethod(
     signature(st = "StyledTable", value = "ANY"), 
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
+        row_id <- substitute(row_id)
+        col_id <- substitute(col_id)
         set_specific_style(st, value, "rotation", "double", row_id, col_id, condition, condition_text)
     }
 )
@@ -510,8 +521,8 @@ setGeneric("set_indent", function(st, value, ...) standardGeneric("set_indent"))
 #' @aliases set_indent,StyledTable,character-method
 #' @param st A [StyledTable] object
 #' @param value The value that should be set
-#' @param row_id A vector of row ids to which the change should be applied to (\code{N} is substituted with the total number of table rows)
-#' @param col_id A vector of column ids to which the change should be applied to (\code{N} is substituted with the total number of table columns)
+#' @param row_id A vector of row ids to which the change should be applied to. The variable \code{n_row} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{row_id} is omitted, then the change will be applied to all rows
+#' @param col_id A vector of column ids to which the change should be applied to. The variable \code{n_col} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{col_id} is omitted, then the change will be applied to all columns
 #' @param condition An equation (non standard evaluation) that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @return The modified [StyledTable] object
@@ -521,6 +532,8 @@ setMethod(
     signature(st = "StyledTable", value = "ANY"), 
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
+        row_id <- substitute(row_id)
+        col_id <- substitute(col_id)
         set_specific_style(st, value, "indent", "double", row_id, col_id, condition, condition_text)
     }
 )
@@ -536,8 +549,8 @@ setGeneric("set_border_position", function(st, value, ...) standardGeneric("set_
 #' @aliases set_border_position,StyledTable,character-method
 #' @param st A [StyledTable] object
 #' @param value The value that should be set
-#' @param row_id A vector of row ids to which the change should be applied to (\code{N} is substituted with the total number of table rows)
-#' @param col_id A vector of column ids to which the change should be applied to (\code{N} is substituted with the total number of table columns)
+#' @param row_id A vector of row ids to which the change should be applied to. The variable \code{n_row} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{row_id} is omitted, then the change will be applied to all rows
+#' @param col_id A vector of column ids to which the change should be applied to. The variable \code{n_col} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{col_id} is omitted, then the change will be applied to all columns
 #' @param condition An equation (non standard evaluation) that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param append_mode A character string that defines if the styling value of the cell should be replaced (append_mode = "replace"), if the new styling should be appended at the end of the current styling value of the cell (append_mode = "appendBehind"), if the new styling should be appended in front of the current styling value of the cell (append_mode = "appendBefore")
@@ -548,6 +561,8 @@ setMethod(
     signature(st = "StyledTable", value = "ANY"), 
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL, append_mode = "appendBehind") {
         condition <- substitute(condition)
+        row_id <- substitute(row_id)
+        col_id <- substitute(col_id)
         if (is.character(value) && all(value == "all"))
             value = c("left", "right", "top", "bottom")
         set_specific_style(st, value, "border_position", "character", row_id, col_id, condition, condition_text, append_mode)
@@ -565,8 +580,8 @@ setGeneric("set_border_color", function(st, value, ...) standardGeneric("set_bor
 #' @aliases set_border_color,StyledTable,character-method
 #' @param st A [StyledTable] object
 #' @param value The value that should be set
-#' @param row_id A vector of row ids to which the change should be applied to (\code{N} is substituted with the total number of table rows)
-#' @param col_id A vector of column ids to which the change should be applied to (\code{N} is substituted with the total number of table columns)
+#' @param row_id A vector of row ids to which the change should be applied to. The variable \code{n_row} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{row_id} is omitted, then the change will be applied to all rows
+#' @param col_id A vector of column ids to which the change should be applied to. The variable \code{n_col} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{col_id} is omitted, then the change will be applied to all columns
 #' @param condition An equation (non standard evaluation) that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @return The modified [StyledTable] object
@@ -576,6 +591,8 @@ setMethod(
     signature(st = "StyledTable", value = "ANY"), 
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
+        row_id <- substitute(row_id)
+        col_id <- substitute(col_id)
         set_specific_style(st, value, "border_color", "character", row_id, col_id, condition, condition_text)
     }
 )
@@ -591,8 +608,8 @@ setGeneric("set_excel_border_pen", function(st, value, ...) standardGeneric("set
 #' @aliases set_excel_border_pen,StyledTable,character-method
 #' @param st A [StyledTable] object
 #' @param value The value that should be set
-#' @param row_id A vector of row ids to which the change should be applied to (\code{N} is substituted with the total number of table rows)
-#' @param col_id A vector of column ids to which the change should be applied to (\code{N} is substituted with the total number of table columns)
+#' @param row_id A vector of row ids to which the change should be applied to. The variable \code{n_row} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{row_id} is omitted, then the change will be applied to all rows
+#' @param col_id A vector of column ids to which the change should be applied to. The variable \code{n_col} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{col_id} is omitted, then the change will be applied to all columns
 #' @param condition An equation (non standard evaluation) that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @return The modified [StyledTable] object
@@ -602,6 +619,8 @@ setMethod(
     signature(st = "StyledTable", value = "ANY"), 
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
+        row_id <- substitute(row_id)
+        col_id <- substitute(col_id)
         set_specific_style(st, value, "excel_border_pen", "character", row_id, col_id, condition, condition_text)
     }
 )
@@ -617,8 +636,8 @@ setGeneric("set_fill_color", function(st, value, ...) standardGeneric("set_fill_
 #' @aliases set_fill_color,StyledTable,character-method
 #' @param st A [StyledTable] object
 #' @param value The value that should be set
-#' @param row_id A vector of row ids to which the change should be applied to (\code{N} is substituted with the total number of table rows)
-#' @param col_id A vector of column ids to which the change should be applied to (\code{N} is substituted with the total number of table columns)
+#' @param row_id A vector of row ids to which the change should be applied to. The variable \code{n_row} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{row_id} is omitted, then the change will be applied to all rows
+#' @param col_id A vector of column ids to which the change should be applied to. The variable \code{n_col} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{col_id} is omitted, then the change will be applied to all columns
 #' @param condition An equation (non standard evaluation) that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @return The modified [StyledTable] object
@@ -628,9 +647,14 @@ setMethod(
     signature(st = "StyledTable", value = "ANY"), 
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
+        row_id <- substitute(row_id)
+        col_id <- substitute(col_id)
         set_specific_style(st, value, "fill_color", "character", row_id, col_id, condition, condition_text)
     }
 )
+
+
+
 
 #' Set data format of cells 
 #' @name set_excel_data_format
@@ -643,8 +667,8 @@ setGeneric("set_excel_data_format", function(st, value, ...) standardGeneric("se
 #' @aliases set_excel_data_format,StyledTable,character-method
 #' @param st A [StyledTable] object
 #' @param value The value that should be set
-#' @param row_id A vector of row ids to which the change should be applied to (\code{N} is substituted with the total number of table rows)
-#' @param col_id A vector of column ids to which the change should be applied to (\code{N} is substituted with the total number of table columns)
+#' @param row_id A vector of row ids to which the change should be applied to. The variable \code{n_row} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{row_id} is omitted, then the change will be applied to all rows
+#' @param col_id A vector of column ids to which the change should be applied to. The variable \code{n_col} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{col_id} is omitted, then the change will be applied to all columns
 #' @param condition An equation (non standard evaluation) that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param append_mode A character string that defines if the styling value of the cell should be replaced (append_mode = "replace"), if the new styling should be appended at the end of the current styling value of the cell (append_mode = "appendBehind"), if the new styling should be appended in front of the current styling value of the cell (append_mode = "appendBefore")
@@ -655,6 +679,8 @@ setMethod(
     signature(st = "StyledTable", value = "ANY"), 
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL, append_mode = "replace") {
         condition <- substitute(condition)
+        row_id <- substitute(row_id)
+        col_id <- substitute(col_id)
         set_specific_style(st, value, "excel_data_format", "character", row_id, col_id, condition, condition_text, append_mode)
     }
 )
@@ -670,8 +696,8 @@ setGeneric("set_excel_locked", function(st, ...) standardGeneric("set_excel_lock
 #' @aliases set_excel_locked,StyledTable,character-method
 #' @param st A [StyledTable] object
 #' @param value The value that should be set
-#' @param row_id A vector of row ids to which the change should be applied to (\code{N} is substituted with the total number of table rows)
-#' @param col_id A vector of column ids to which the change should be applied to (\code{N} is substituted with the total number of table columns)
+#' @param row_id A vector of row ids to which the change should be applied to. The variable \code{n_row} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{row_id} is omitted, then the change will be applied to all rows
+#' @param col_id A vector of column ids to which the change should be applied to. The variable \code{n_col} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{col_id} is omitted, then the change will be applied to all columns
 #' @param condition An equation (non standard evaluation) that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @return The modified [StyledTable] object
@@ -681,6 +707,8 @@ setMethod(
     signature(st = "StyledTable"), 
     function(st, value = TRUE, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
+        row_id <- substitute(row_id)
+        col_id <- substitute(col_id)
         set_specific_style(st, value, "excel_locked", "logical", row_id, col_id, condition, condition_text)
     }
 )
@@ -696,8 +724,8 @@ setGeneric("set_excel_hidden", function(st, ...) standardGeneric("set_excel_hidd
 #' @aliases set_excel_hidden,StyledTable,character-method
 #' @param st A [StyledTable] object
 #' @param value The value that should be set
-#' @param row_id A vector of row ids to which the change should be applied to (\code{N} is substituted with the total number of table rows)
-#' @param col_id A vector of column ids to which the change should be applied to (\code{N} is substituted with the total number of table columns)
+#' @param row_id A vector of row ids to which the change should be applied to. The variable \code{n_row} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{row_id} is omitted, then the change will be applied to all rows
+#' @param col_id A vector of column ids to which the change should be applied to. The variable \code{n_col} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{col_id} is omitted, then the change will be applied to all columns
 #' @param condition An equation (non standard evaluation) that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @return The modified [StyledTable] object
@@ -707,6 +735,8 @@ setMethod(
     signature(st = "StyledTable"), 
     function(st, value = TRUE, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
+        row_id <- substitute(row_id)
+        col_id <- substitute(col_id)
         set_specific_style(st, value, "excel_hidden", "logical", row_id, col_id, condition, condition_text)
     }
 )
@@ -722,8 +752,8 @@ setGeneric("set_latex_vertical_move", function(st, value, ...) standardGeneric("
 #' @aliases set_latex_vertical_move,StyledTable,ANY-method
 #' @param st A [StyledTable] object
 #' @param value The function that should be used for pre processing
-#' @param row_id A vector of row ids to which the change should be applied to (\code{N} is substituted with the total number of table rows)
-#' @param col_id A vector of column ids to which the change should be applied to (\code{N} is substituted with the total number of table columns)
+#' @param row_id A vector of row ids to which the change should be applied to. The variable \code{n_row} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{row_id} is omitted, then the change will be applied to all rows
+#' @param col_id A vector of column ids to which the change should be applied to. The variable \code{n_col} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{col_id} is omitted, then the change will be applied to all columns
 #' @param condition An equation (non standard evaluation) that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @return The modified [StyledTable] object
@@ -733,6 +763,8 @@ setMethod(
     signature(st = "StyledTable", value = "ANY"), 
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL) {
         condition <- substitute(condition)
+        row_id <- substitute(row_id)
+        col_id <- substitute(col_id)
         set_specific_style(st, value, "latex_vertical_move", "character", row_id, col_id, condition, condition_text)
     }
 )
@@ -748,8 +780,8 @@ setGeneric("set_latex_pre_process", function(st, value, ...) standardGeneric("se
 #' @aliases set_latex_pre_process,StyledTable,ANY-method
 #' @param st A [StyledTable] object
 #' @param value The function that should be used for pre processing
-#' @param row_id A vector of row ids to which the change should be applied to (\code{N} is substituted with the total number of table rows)
-#' @param col_id A vector of column ids to which the change should be applied to (\code{N} is substituted with the total number of table columns)
+#' @param row_id A vector of row ids to which the change should be applied to. The variable \code{n_row} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{row_id} is omitted, then the change will be applied to all rows
+#' @param col_id A vector of column ids to which the change should be applied to. The variable \code{n_col} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{col_id} is omitted, then the change will be applied to all columns
 #' @param condition An equation (non standard evaluation) that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param append_mode A character string that defines if the styling value of the cell should be replaced (append_mode = "replace"), if the new styling should be appended at the end of the current styling value of the cell (append_mode = "appendBehind"), if the new styling should be appended in front of the current styling value of the cell (append_mode = "appendBefore")
@@ -760,6 +792,8 @@ setMethod(
     signature(st = "StyledTable", value = "ANY"), 
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL, append_mode = "replace") {
         condition <- substitute(condition)
+        row_id <- substitute(row_id)
+        col_id <- substitute(col_id)
         set_specific_style(st, value, "latex_pre_process", "closure", row_id, col_id, condition, condition_text, append_mode)
     }
 )
@@ -775,8 +809,8 @@ setGeneric("set_excel_pre_process", function(st, value, ...) standardGeneric("se
 #' @aliases set_excel_pre_process,StyledTable,ANY-method
 #' @param st A [StyledTable] object
 #' @param value The function that should be used for pre processing
-#' @param row_id A vector of row ids to which the change should be applied to (\code{N} is substituted with the total number of table rows)
-#' @param col_id A vector of column ids to which the change should be applied to (\code{N} is substituted with the total number of table columns)
+#' @param row_id A vector of row ids to which the change should be applied to. The variable \code{n_row} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{row_id} is omitted, then the change will be applied to all rows
+#' @param col_id A vector of column ids to which the change should be applied to. The variable \code{n_col} can be used in the expression to name the total number of columns (will be replaced). If the argument \code{col_id} is omitted, then the change will be applied to all columns
 #' @param condition An equation (non standard evaluation) that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param append_mode A character string that defines if the styling value of the cell should be replaced (append_mode = "replace"), if the new styling should be appended at the end of the current styling value of the cell (append_mode = "appendBehind"), if the new styling should be appended in front of the current styling value of the cell (append_mode = "appendBefore")
@@ -787,6 +821,8 @@ setMethod(
     signature(st = "StyledTable", value = "ANY"), 
     function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL, append_mode = "replace") {
         condition <- substitute(condition)
+        row_id <- substitute(row_id)
+        col_id <- substitute(col_id)
         set_specific_style(st, value, "excel_pre_process", "closure", row_id, col_id, condition, condition_text, append_mode)
     }
 )

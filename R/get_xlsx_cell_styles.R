@@ -2,7 +2,6 @@
 #'
 #' @name get_xlsx_alignment
 #' @rdname get_xlsx_alignment-methods
-#' @exportMethod get_xlsx_alignment
 setGeneric(
     "get_xlsx_alignment",
     function(sc) standardGeneric("get_xlsx_alignment")
@@ -27,7 +26,6 @@ setMethod("get_xlsx_alignment", signature(sc = "StyledCell"),
 #'
 #' @name get_xlsx_border
 #' @rdname get_xlsx_border-methods
-#' @exportMethod get_xlsx_border
 setGeneric(
     "get_xlsx_border",
     function(sc) standardGeneric("get_xlsx_border")
@@ -50,7 +48,6 @@ setMethod("get_xlsx_border", signature(sc = "StyledCell"),
 #'
 #' @name get_xlsx_cell_protection
 #' @rdname get_xlsx_cell_protection-methods
-#' @exportMethod get_xlsx_cell_protection
 setGeneric(
     "get_xlsx_cell_protection", 
     function(sc) standardGeneric("get_xlsx_cell_protection")
@@ -72,7 +69,6 @@ setMethod("get_xlsx_cell_protection", signature(sc = "StyledCell"),
 #'
 #' @name get_xlsx_fill
 #' @rdname get_xlsx_fill-methods
-#' @exportMethod get_xlsx_fill
 setGeneric(
     "get_xlsx_fill", 
     function(sc) standardGeneric("get_xlsx_fill")
@@ -95,7 +91,6 @@ setMethod("get_xlsx_fill", signature(sc = "StyledCell"),
 #'
 #' @name get_xlsx_data_format
 #' @rdname get_xlsx_data_format-methods
-#' @exportMethod get_xlsx_data_format
 setGeneric(
     "get_xlsx_data_format", 
     function(sc) standardGeneric("get_xlsx_data_format")
@@ -116,7 +111,6 @@ setMethod("get_xlsx_data_format", signature(sc = "StyledCell"),
 #'
 #' @name get_xlsx_cell_style
 #' @rdname get_xlsx_cell_style-methods
-#' @exportMethod get_xlsx_cell_style
 setGeneric("get_xlsx_cell_style", function(wb, sc) standardGeneric("get_xlsx_cell_style"))
 
 #' @rdname get_xlsx_cell_style-methods

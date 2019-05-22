@@ -34,7 +34,7 @@ In this case the 'Male' and 'Female' headings will be in merged cells above the 
 \examples{
 library(dplyr)
 # prepare data set for cross table
-studentsData <- data.frame(
+students_data <- data.frame(
     country = rep(c("Germany", "Austria"), each = 16),
     year = c(rep("2010", 8), rep("2011", 8)),
     subject = rep(c(rep("Mathematics", 4), rep("Statistics", 4)), 2),
@@ -56,7 +56,7 @@ s_header <- create_cross_table_header(
   format_stat_header
 # setup styled cross table body
 s_body <- create_cross_table_body(
-    data = studentsData,
+    data = students_data,
     sub_table_cols = "country",
     sub_heading_styling = function(st) set_horizontal(st, "center"),
     body_styling = function(st) set_horizontal(st, "center"),

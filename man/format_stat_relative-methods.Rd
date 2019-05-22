@@ -16,9 +16,9 @@ format_stat_relative(st, ...)
 
 \item{...}{Various arguments}
 
-\item{row_id}{A vector of row numbers}
+\item{row_id}{A vector of row numbers. If omitted, the formatting will be applied to all rows}
 
-\item{col_id}{A vector of col numbers}
+\item{col_id}{A vector of column numbers. If omitted, the formatting will be applied to all columns}
 }
 \value{
 The modified \link{StyledTable} object

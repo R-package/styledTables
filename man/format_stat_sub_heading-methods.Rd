@@ -15,7 +15,7 @@ format_stat_sub_heading(st, ...)
 
 \item{...}{Various arguments}
 
-\item{row_id}{A vector of row numbers}
+\item{row_id}{A vector of row numbers. If omitted, the formatting will be applied to all rows}
 }
 \value{
 The modified \link{StyledTable} object

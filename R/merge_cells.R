@@ -23,61 +23,41 @@ setMethod(
                 "Error in 'merge_cells'-method: ",
                 description
             ), call. = FALSE)
-        # Substitute N in the row_id selector
-        nRow <- count_rows(st)
-        nCol <- count_cols(st)
-        if (missing(row_id)) {
-            row_id <- c(1, nRow)
-        } else {
-            if (!is.numeric(row_id) || length(row_id) == 0 || !all(diff(row_id) == 1))
-                errHandler(paste0(
-                    "The argument 'row_id' must be an unbroken numeric vector. ",
-                    "(Number of rows may be replaced by 'N')."
-                ))
-                
-            if (any(!row_id %in% 1:nRow))
-                errHandler(paste0(
-                        "The argument 'row_id' must be a subinterval of 1:",
-                        nRow,
-                        "."
-                    ))
-            row_id <- c(min(row_id), max(row_id))
-        }
-        # Substitute N in the col_id selector
-        if (missing(col_id)) {
-            col_id <- c(1, nCol)
-        } else {
-            if (!is.numeric(col_id) || length(col_id) == 0 || !all(diff(col_id) == 1))
-                errHandler(paste0(
-                    "The argument 'col_id' must be an unbroken numeric vector. ",
-                    "(Number of cols may be replaced by 'N')."
-                ))
-            if (any(!col_id %in% 1:nCol))
-                errHandler(paste0(
-                        "The argument 'col_id' must be a subinterval of 1:",
-                        nCol,
-                        "."
-                    ))
-            col_id <- c(min(col_id), max(col_id))
-        }
+        # Substitute n_col and n_row in the rows and columns selector
+        row_id <- substitute_row_id(st, substitute(row_id), stack_level = 1, errHandler)
+        col_id <- substitute_col_id(st, substitute(col_id), stack_level = 1, errHandler)
+        if (is.null(row_id))
+            row_id <- 1:count_rows(st)
+        if (!all(diff(row_id) == 1))
+            errHandler(paste0(
+                "The argument 'row_id' must be an unbroken numeric vector. ",
+                "(Number of rows may be replaced by 'n_row')."
+            ))
+        if (is.null(col_id))
+            col_id <- 1:count_cols(st)
+        if (!all(diff(col_id) == 1))
+            errHandler(paste0(
+                "The argument 'col_id' must be an unbroken numeric vector. ",
+                "(Number of cols may be replaced by 'n_col')."
+            ))
         # First check which merges are overlapping and 
         # filter out the assimilated merged areas (entirely contained in new merge)
         st@merges <- st@merges[unlist(sapply(st@merges, function(m) {
             # Check if any existing merge area is overlapping
             if (
-                (any(between_vec(row_id,  m$row_id)) || any(between_vec(m$row_id, row_id))) &&
-                    (any(between_vec(col_id, m$col_id)) || any(between_vec(m$col_id, col_id)))
+                (any(row_id %in% m$row_id) || any(m$row_id %in% row_id)) &&
+                    (any(col_id %in% m$col_id) || any(m$col_id %in% col_id))
             ) {
                 # If the conflicting merged area is not entirely contained in the new merge
                 # throw an error
-                if (!all(between_vec(m$row_id, row_id)) || !all(between_vec(m$col_id, col_id)))
+                if (!all(m$row_id %in% row_id) || !all(m$col_id %in% col_id))
                     errHandler("The given region for the merged cell is already part of a merged cell.")
                 return(FALSE)
             }
             TRUE
         }))]
         # Add merge to StyledTable
-        st@merges[[length(st@merges) + 1]] <- list(row_id = row_id, col_id = col_id)
+        st@merges[[length(st@merges) + 1]] <- list(row_id = c(min(row_id), max(row_id)), col_id = c(min(col_id), max(col_id)))
         st
     }
 )
@@ -110,38 +90,23 @@ setMethod(
                 "Error in 'merge_equal_cells'-method: ",
                 description
             ), call. = FALSE)
-        # Substitute N in the row_id selector
-        nRow <- count_rows(st)
-        nCol <- count_cols(st)
-        if (missing(row_id)) {
-            row_id <- 1:nRow
-        } else {
-            if (!is.numeric(row_id) || length(row_id) == 0)
-                errHandler(paste0(
-                    "The argument 'row_id' must be a numeric vector."
-                ))
-            if (any(!row_id %in% 1:nRow))
-                errHandler(paste0(
-                        "The argument 'row_id' must be a subinterval of 1:",
-                        nRow,
-                        "."
-                    ))
-        }
-        # Substitute N in the col_id selector
-        if (missing(col_id)) {
-            col_id <- 1:nCol
-        } else {
-            if (!is.numeric(col_id) || length(col_id) == 0)
-                errHandler(paste0(
-                    "The argument 'col_id' must be a numeric vector."
-                ))
-            if (any(!col_id %in% 1:nCol))
-                errHandler(paste0(
-                        "The argument 'col_id' must be a subinterval of 1:",
-                        nCol,
-                        "."
-                    ))
-        }
+        # Substitute n_col and n_row in the rows and columns selector
+        row_id <- substitute_row_id(st, substitute(row_id), stack_level = 1, errHandler)
+        col_id <- substitute_col_id(st, substitute(col_id), stack_level = 1, errHandler)
+        if (is.null(row_id))
+            row_id <- 1:count_rows(st)
+        if (!all(diff(row_id) == 1))
+            errHandler(paste0(
+                "The argument 'row_id' must be an unbroken numeric vector. ",
+                "(Number of rows may be replaced by 'n_row')."
+            ))
+        if (is.null(col_id))
+            col_id <- 1:count_cols(st)
+        if (!all(diff(col_id) == 1))
+            errHandler(paste0(
+                "The argument 'col_id' must be an unbroken numeric vector. ",
+                "(Number of cols may be replaced by 'n_col')."
+            ))
         # First check which merges are overlapping and 
         # filter out the assimilated merged areas (entirely contained in new merge)
         cData <- st@data
