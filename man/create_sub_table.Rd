@@ -5,7 +5,8 @@
 \title{Helper function that creates a styled sub table}
 \usage{
 create_sub_table(data, subLevel, sub_table_cols,
-  sub_heading_stylings = NULL, body_styling = NULL, y_cols, x_cols)
+  sub_heading_stylings = NULL, body_styling = NULL, y_cols,
+  y_cols_right)
 }
 \arguments{
 \item{data}{A data.frame that should be used for the creation of the cross table.}
@@ -20,7 +21,7 @@ create_sub_table(data, subLevel, sub_table_cols,
 
 \item{y_cols}{A vector of column names that are unchanged by the cross table compuation. If the table should not be a cross table, but a normal table this argument can be omitted.}
 
-\item{x_cols}{(optional) A vector of column names that are used for column name generation by the cross table compuation. If the table should not be a cross table, but a normal table this argument can be omitted.}
+\item{y_cols_right}{A vector of column names that are unchanged by the cross table compuation. This columns are of the same kind as the columns defined by the argument \code{y_cols}, but aligned to the right of the generated cross table.}
 }
 \description{
 This function creates a styled cross table from a given data.frame that

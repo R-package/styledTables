@@ -103,7 +103,11 @@ setMethod(
         # variable names of data.frame
         colNames <- colnames(data)
         # variable vector for error messages
-        colNamesMsg <- paste0("(", paste0(colNames, collapse = ", "),  ")")
+        colNamesMsg <- paste0(
+            "(",
+            paste0(colNames, collapse = ", "),
+            ")"
+        )
         ### Check consistency of supplied arguments
         errHandler <- function(description) {
             stop(paste0(
@@ -113,9 +117,6 @@ setMethod(
                 description
             ), call. = FALSE)
         }
-        # a vector of used column indices that is used in order to check
-        # that non of the supplied column indices overlap
-        usedColumnIndices <- NULL
         ### check sub_table_cols
         if (!is.null(sub_table_cols)) {
             if (
@@ -123,7 +124,11 @@ setMethod(
                     any(!sub_table_cols %in% colNames) ||
                     length(unique(sub_table_cols)) != length(sub_table_cols)
             )
-                errHandler(paste("Argument 'sub_table_cols' must be a subset of '", colNamesMsg, "'."))
+                errHandler(paste0(
+                    "Argument 'sub_table_cols' must be a subset of '",
+                    colNamesMsg,
+                    "'."
+                ))
             # if the sub_heading_stylings is just a single function
             # then apply this function to all subHeadings
             if (is.function(sub_heading_stylings))
@@ -138,24 +143,21 @@ setMethod(
                     any(!unlist(lapply(sub_heading_stylings, is.function)))
                 )
             )
-                errHandler(paste(
+                errHandler(paste0(
                     "The argument 'sub_heading_stylings' must either be NULL,",
-                    "a single styling function or a",
-                    "numbered list of the same length as 'sub_table_cols' that",
-                    "holds styling functions that will be",
-                    "applied to the different sub heading levels of the sub tables.",
-                    "Each styling function must be of the type:",
-                    "function(st) {...}, where 'st' is a styled",
-                    "table and the function must return a styled table."
+                    " a single styling function or a",
+                    " numbered list of the same length as 'sub_table_cols' that",
+                    " holds styling functions that will be",
+                    " applied to the different sub heading levels of the sub tables.",
+                    " Each styling function must be of the type:",
+                    " function(st) {...}, where 'st' is a styled",
+                    " table and the function must return a styled table."
                 ))
-
-            # append the sub_table_cols indices to the usedColumnIndices
-            usedColumnIndices <- sub_table_cols
         } else {
             if (!is.null(sub_heading_stylings))
-                errHandler(paste(
+                errHandler(paste0(
                     "The argument 'sub_heading_stylings' can only be set, if",
-                    "the argument 'sub_table_cols' is given as well."
+                    " the argument 'sub_table_cols' is given as well."
                 ))
         }
         ### check body_styling
@@ -163,31 +165,32 @@ setMethod(
             !is.function(body_styling)
             )
         )
-            errHandler(paste(
+            errHandler(paste0(
                 "The argument 'body_styling' must be NULL or a styling function",
-                "of the type:",
-                "function(st) {...}, where 'st' is a styled",
-                "table and the function must return a styled table."
+                " of the type:",
+                " function(st) {...}, where 'st' is a styled",
+                " table and the function must return a styled table."
             ))
         ### check y_cols
-        if (
-            !is.character(y_cols) ||
-                any(!y_cols %in% colNames) ||
-                length(y_cols) == 0
-        )
-            errHandler(paste(
-                "Argument 'y_cols' must be a non empty subset of '",
-                colNamesMsg,
-                "'."
-            ))
-        # check if the vector overlaps with other given column indices
-        if (any(y_cols %in% usedColumnIndices))
-            errHandler(paste(
-                "The column names given in 'y_cols' should not",
-                "overlap with the column names given 'sub_table_cols'."
-            ))
-        # append the sub_table_cols indices to the usedColumnIndices
-        usedColumnIndices <- c(usedColumnIndices, y_cols)
+
+        if (!is.null(y_cols)) {
+            if (
+                !is.character(y_cols) ||
+                    any(!y_cols %in% colNames) ||
+                    length(y_cols) == 0
+            )
+                errHandler(paste0(
+                    "Argument 'y_cols' must be a subset of '",
+                    colNamesMsg,
+                    "'."
+                ))
+            # check if the vector overlaps with other given column indices
+            if (any(y_cols %in% sub_table_cols))
+                errHandler(paste0(
+                    "The column names given in 'y_cols' should not",
+                    " overlap with the column names given 'sub_table_cols'."
+                ))
+        }
         ### check x_cols
         if (!is.null(x_cols)) {
             if (
@@ -199,18 +202,18 @@ setMethod(
                     "The argument 'x_cols' must be vectors holding",
                     " the column names that should be used for the cross",
                     " table computation. These vectors must be a non",
-                    " overlapping subset of '", colNamesMsg, "'."
+                    " overlapping subset of '",
+                    colNamesMsg,
+                    "'."
                 ))
             # check if the vector overlaps with other given column indices
-            if (any(x_cols %in% usedColumnIndices))
-                errHandler(paste(
+            if (any(x_cols %in% c(sub_table_cols, y_cols)))
+                errHandler(paste0(
                     "The argument 'x_cols' holding the column names that",
-                    "should be added to the right of the cross table.",
-                    "This set must be non overlapping with all other",
-                    "column names given in 'sub_table_cols' and 'y_cols' and 'x_cols'."
+                    " should be used for the cross table computation must be non",
+                    " overlapping with all other",
+                    " column names given in 'sub_table_cols' and 'y_cols'."
                 ))
-            # append the sub_table_cols indices to the usedColumnIndices
-            usedColumnIndices <- c(usedColumnIndices, x_cols)
         }
         ### check y_cols_right
         if (!is.null(y_cols_right)) {
@@ -219,22 +222,30 @@ setMethod(
                     any(!y_cols_right %in% colNames)
             )
                 errHandler(paste0(
-                    "The argument 'y_cols_right' holding ",
+                    "The argument 'y_cols_right' holding",
                     " the column names that should be used as extra y-columns",
                     " printed to the right of the generated cross table",
-                    " must be a non overlapping subset of '", colNamesMsg, "'."
+                    " must be a non overlapping subset of '",
+                    colNamesMsg,
+                    "'."
                 ))
             # check if the vector overlaps with other given column indices
-            if (any(y_cols_right %in% x_cols))
-                errHandler(paste(
+            if (any(y_cols_right %in% c(sub_table_cols, x_cols)))
+                errHandler(paste0(
                     "The argument 'y_cols_right' holding the column names that",
-                    "should be used for the cross table computation must be non",
-                    "overlapping with all other",
-                    "column names given in 'sub_table_cols' and 'y_cols'."
+                    " should be added to the right of the cross table.",
+                    " This set must be non overlapping with all other",
+                    " column names given in 'sub_table_cols' and 'x_cols'."
                 ))
-            # append the sub_table_cols indices to the usedColumnIndices
-            usedColumnIndices <- c(usedColumnIndices, x_cols)
         }
+        if (is.null(y_cols) && is.null(y_cols_right))
+            errHandler(paste0(
+                "It is not allowed that 'y_cols' and 'y_cols_right' are both",
+                " omitted at the same time. At least one of them must be a non",
+                " empty subset of '",
+                colNamesMsg,
+                "'."
+            ))
         ### check value_cols
         if (!is.null(value_cols)) {
             if (
@@ -243,18 +254,19 @@ setMethod(
                     length(unique(value_cols)) != length(value_cols)
             )
                 errHandler(paste0(
-                    "The argument 'value_cols' which holds the column ",
-                    " names that should be used as values for the cross table ",
-                    "computation must be a non ",
-                    "overlapping subset of '", colNamesMsg, "'."
+                    "The argument 'value_cols' which holds the column",
+                    " names that should be used as values for the cross table",
+                    " computation must be a non",
+                    " overlapping subset of '",
+                    colNamesMsg, "'."
                 ))
             # check if the vector overlaps with other given column indices
-            if (any(value_cols %in% usedColumnIndices))
-                errHandler(paste(
-                    "The argument 'value_cols' which holds the column ",
-                    "names that should be used as values for the cross table",
-                    "computation must be non overlapping with the column names",
-                    "given in 'sub_table_cols', 'y_cols'."
+            if (any(value_cols %in% c(sub_table_cols, y_cols, x_cols, y_cols_right)))
+                errHandler(paste0(
+                    "The argument 'value_cols' which holds the column names",
+                    " that should be used as values for the cross table",
+                    " computation must be non overlapping with the column names",
+                    " given in 'sub_table_cols', 'y_cols'."
                 ))
             # if the sub_heading_stylings is just a single function
             # then apply this function to all subHeadings
@@ -270,54 +282,59 @@ setMethod(
                     any(!unlist(lapply(value_col_stylings, is.function)))
                 )
             )
-                errHandler(paste(
+                errHandler(paste0(
                     "The argument 'value_col_stylings' must either be NULL,",
-                    "a single column styling function or a",
-                    "numbered list of the same length as 'value_cols' that",
-                    "holds styling functions that should be",
-                    "applied to the different value columns of the cross table.",
-                    "The column styling functions have to be of the type ",
-                    "function(st, col_id) {...}, where 'st' is a styled",
-                    "table and 'col_id' is a numeric column vector and",
-                    "the function must return a styled table."
+                    " a single column styling function or a",
+                    " numbered list of the same length as 'value_cols' that",
+                    " holds styling functions that should be",
+                    " applied to the different value columns of the cross table.",
+                    " The column styling functions have to be of the type ",
+                    " function(st, col_id) {...}, where 'st' is a styled",
+                    " table and 'col_id' is a numeric column vector and",
+                    " the function must return a styled table."
                 ))
-            # append the sub_table_cols indices to the usedColumnIndices
-            usedColumnIndices <- c(usedColumnIndices, value_cols)
         } else {
             if (!is.null(x_cols))
                 errHandler(paste0(
-                        "If the 'x_cols' argument is non empty, then ",
-                        "the 'value_cols' argument must be passed as well."
-                    ))
+                    "If the 'x_cols' argument is non empty, then",
+                    " the 'value_cols' argument must be passed as well."
+                ))
             if (!is.null(value_col_stylings))
                 errHandler(paste0(
-                        "If the 'value_col_stylings' argument is non empty, then ",
-                        "the 'value_cols' argument must be passed as well."
-                    ))
+                    "If the 'value_col_stylings' argument is non empty, then",
+                    " the 'value_cols' argument must be passed as well."
+                ))
         }
         ### check fill_values
         if (!is.null(fill_values)) {
             if (is.null(value_cols))
-                errHandler(paste(
-                        "If the 'fill_values' argument is non empty, then",
-                        "the 'value_cols' argument must be passed as well."
-                    ))
+                errHandler(paste0(
+                    "If the 'fill_values' argument is non empty, then",
+                    " the 'value_cols' argument must be passed as well."
+                ))
             if (!is.list(fill_values) || length(fill_values) != length(value_cols))
-                errHandler(paste(
+                errHandler(paste0(
                     "The argument 'fill_values' must be a list of the same",
-                    "length as the argument 'value_cols'."
+                    " length as the argument 'value_cols'."
                 ))
             for (i in seq_len(length(fill_values))) {
                 if (typeof(fill_values[[i]]) != typeof(data[[value_cols[i]]]))
                     errHandler(paste0(
-                        "The 'fill_values[[", i, "]]' has type '",
-                        typeof(fill_values[[i]]), "' whereas the column 'data[[\"",
-                        value_cols[i] , "\"]]' has type '",
-                        typeof(data[[value_cols[i]]]), "'."
+                        "The 'fill_values[[",
+                        i,
+                        "]]' has type '",
+                        typeof(fill_values[[i]]),
+                        "' whereas the column 'data[[\"",
+                        value_cols[i] ,
+                        "\"]]' has type '",
+                        typeof(data[[value_cols[i]]]),
+                        "'."
                     ))
                 if (length(fill_values[[i]]) != 1)
                     errHandler(paste0(
-                        "The entry 'fill_values[[", i, "]]' has not length == 1."
+                        "The entry 'fill_values[[",
+                        i,
+                        "]]' has not length == 1."
                     ))
             }
         }
@@ -342,7 +359,7 @@ setMethod(
             KEYCOL <- "KEYCOL"
             VALUECOL <- "VALUECOL"
             dcastFormula <- as.formula(paste0(
-                    paste0(c(sub_table_cols, y_cols), collapse = " + "),
+                    paste0(c(sub_table_cols, y_cols, y_cols_right), collapse = " + "),
                     " ~ ",
                     paste0(c(x_cols, KEYCOL), collapse = " + ")
                 ))
@@ -365,8 +382,9 @@ setMethod(
                 dcast,
                 args = args
             )
+
             # replace the value indices in the generated value columns by their original values
-            value_colsCross <- setdiff(colnames(dataCross), c(sub_table_cols, y_cols))
+            value_colsCross <- setdiff(colnames(dataCross), c(sub_table_cols, y_cols, y_cols_right))
             for (i in seq_len(length(value_colsCross))) {
                 # name of the value column in the crossTable
                 vColCross <- value_colsCross[i]
@@ -384,14 +402,27 @@ setMethod(
                 dataCross[, (vColCross) := valueMap[VALUEIDS_]]
                 dataCross[, VALUEIDS_ := NULL]
             }
+            colNamesNew <- colnames(dataCross)
+            # all remaining rows are Cross Table Columns
+            xColIds <- match(
+                setdiff(colNamesNew, c(sub_table_cols, y_cols, y_cols_right)),
+                colNamesNew
+            )
         } else {
             # no X columns or value colums are given
             # only print Y columns (no cross table)
-            subTableColIds <- match(sub_table_cols, colNames)
-            yColIds <- match(y_cols, colNames)
-            dataCross <- data[, c(subTableColIds, yColIds), with = FALSE]
+            dataCross <- data
+            colNamesNew <- colnames(dataCross)
+            # No cross table columns
+            xColIds <- NULL
         }
-        dataCross <- setorderv(dataCross, y_cols)
+        # Pick the columns from the generated dataCross
+        # [sub_table_cols, y_cols, #cross_table#, y_cols_right]
+        subTableColIds <- match(sub_table_cols, colNamesNew)
+        yColIds <- match(y_cols, colNamesNew)
+        yColRightIds <- match(y_cols_right, colNamesNew)
+        dataCross <- dataCross[, c(subTableColIds, yColIds, xColIds, yColRightIds), with = FALSE]
+        dataCross <- setorderv(dataCross, c(y_cols, y_cols_right))
 
         # define a list of styling function that implements the styling of the value columns
         if (!is.null(value_col_stylings)) {
@@ -442,7 +473,7 @@ setMethod(
             sub_heading_stylings = sub_heading_stylings,
             body_styling = body_styling,
             y_cols = y_cols,
-            x_cols = x_cols
+            y_cols_right = y_cols_right
         )
     }
 )
@@ -466,7 +497,7 @@ setMethod(
 #' @param sub_heading_stylings (optional) A list of styling functions. A styling function is a function that takes a [StyledTable] object as its only argument and returns a styled function. The first styling function is applied to the level-1 sub heading (the sub heading defined by the first entry in \code{sub_table_cols}), the second styling function is applied to the level-2 sub heading etc. Alternatively a single styling function can be passed into \code{sub_heading_stylings}, in this case this styling function is applied to all sub heading levels.
 #' @param body_styling (optional) A styling function that is applied to the generated styled body of each sub table. A styling function is a function that takes a [StyledTable] object as its only argument and returns a styled function. In order to format the value columns of the resulting cross table use the argument \code{value_col_stylings}.
 #' @param y_cols A vector of column names that are unchanged by the cross table compuation. If the table should not be a cross table, but a normal table this argument can be omitted.
-#' @param x_cols (optional) A vector of column names that are used for column name generation by the cross table compuation. If the table should not be a cross table, but a normal table this argument can be omitted.
+#' @param y_cols_right A vector of column names that are unchanged by the cross table compuation. This columns are of the same kind as the columns defined by the argument \code{y_cols}, but aligned to the right of the generated cross table.
 create_sub_table <- function(
     data,
     subLevel,
@@ -474,7 +505,7 @@ create_sub_table <- function(
     sub_heading_stylings = NULL,
     body_styling = NULL,
     y_cols,
-    x_cols
+    y_cols_right
 ) {
     # check if the sub heading level is already at the lowest level
     if (subLevel > length(sub_table_cols)) {
@@ -487,7 +518,7 @@ create_sub_table <- function(
                     setdiff(colnames(data), sub_table_cols),
                     with = FALSE
                 ]
-        setorderv(data, y_cols)
+        setorderv(data, c(y_cols, y_cols_right))
         # create styled subTable
         st <- styled_table(data)
         # apply body styling
@@ -512,7 +543,7 @@ create_sub_table <- function(
                         sub_heading_stylings,
                         body_styling,
                         y_cols,
-                        x_cols
+                        y_cols_right
                     )
             } else {
                 styledSubTable <- NULL
