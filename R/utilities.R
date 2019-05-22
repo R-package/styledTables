@@ -19,7 +19,7 @@ assert_type_ <- function(var, types, var_name, allow_na = TRUE) {
 #' @param var The value that should be checked
 assert_char <- function(var) {
     if (!is.null(var)) {
-        var_name = deparse(substitute(var))
+        var_name <- deparse(substitute(var))
         assert_type_(var, "character", var_name)
     }
 }
@@ -29,7 +29,7 @@ assert_char <- function(var) {
 #' @param var The value that should be checked
 assert_number <- function(var) {
     if (!is.null(var)) {
-        var_name = deparse(substitute(var))
+        var_name <- deparse(substitute(var))
         assert_type_(var, c("integer", "double"), var_name)
     }
 }
@@ -39,7 +39,7 @@ assert_number <- function(var) {
 #' @param var The value that should be checked
 assert_logical <- function(var) {
     if (!is.null(var)) {
-        var_name = deparse(substitute(var))
+        var_name <- deparse(substitute(var))
         assert_type_(var, "logical", var_name)
     }
 }
@@ -120,7 +120,7 @@ remove_missing <- function(li) {
 #' @param args (named list) List of arguments (\code{NULL} arguments will be removed)
 #' @param skipIfAllMissing (logical) If \code{skipIfAllMissing = TRUE} and all arguments in \code{args} are \code{NULL}, then the function \code{fn} is not invoked and \code{NULL} is returned instead.
 do_call_without_missing <- function(fn, args, skipIfAllMissing = TRUE) {
-    rArgs <-remove_missing(args)
+    rArgs <- remove_missing(args)
     if (!skipIfAllMissing || length(rArgs) > 0)
         do.call(fn, rArgs)
 }

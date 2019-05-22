@@ -92,7 +92,7 @@ setMethod(
                         "."
                     ))
         }
-        col_id = 1:count_cols(st)
+        col_id <- 1:count_cols(st)
         if (length(row_id) > 1)
             st <- set_excel_row_height(st, 12.25, row_id = row_id[2:length(row_id)])
         if (length(col_id) > 1)
@@ -301,4 +301,3 @@ setMethod(
             col_id = col_id)
     }
 )
-

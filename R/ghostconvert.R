@@ -34,31 +34,31 @@
 #' }
 ghostconvert <- function(
   x,
-  y = file.path(gdir,out),
+  y = file.path(gdir, out),
   gdir = dirname(x),
-  out = sub('\\.[^.]+$',paste0(if(multipage) multifix else NULL, '.',suffix),basename(x)),
-  gs_cmd = '',
-  device = 'pngalpha',
+  out = sub("\\.[^.]+$", paste0(if (multipage) multifix else NULL, ".", suffix), basename(x)),
+  gs_cmd = "",
+  device = "pngalpha",
   multipage = FALSE,
-  multifix = '-%03d',
-  suffix = 'png',
+  multifix = "-%03d",
+  suffix = "png",
   antialias = 4,
   resolution = 300,
   replace = TRUE,
-  other = '',
+  other = "",
   ...
 ){
   stopifnot(length(x) == 1, length(y) == 1)
   exec <- find_gs_cmd(gs_cmd)
-  if(exec == '') stop('gs_cmd not found')
-  dev <- paste0('-sDEVICE=',device)
-  file <- paste('-o',y)
-  alias <- paste0('-dTextAlphaBits=', antialias)
-  res <- paste0('-r',resolution)
+  if (exec == "") stop("gs_cmd not found")
+  dev <- paste0("-sDEVICE=", device)
+  file <- paste("-o", y)
+  alias <- paste0("-dTextAlphaBits=", antialias)
+  res <- paste0("-r", resolution)
   command <- paste(exec, dev, file, alias, res, other, x)
   result <- tryCatch(error = function(e) e, system(command))
-  bad <- inherits(result, 'try-error') || !file.exists(y)
-  if(bad) stop('could not make ', y)
-  if(replace) unlink(x)
+  bad <- inherits(result, "try-error") || !file.exists(y)
+  if (bad) stop("could not make ", y)
+  if (replace) unlink(x)
   invisible(y)
 }

@@ -39,7 +39,7 @@ setMethod(
                 "The argument 'col_id' must be a sunon empty numeric vector",
             ))
         # remove columns from data slot
-        remainingCols = setdiff(1:count_cols(st), col_id)
+        remainingCols <- setdiff(1:count_cols(st), col_id)
         st@data <- lapply(st@data, function(row) row[remainingCols])
         # remove columns from styles slot
         st@styles <- lapply(st@styles, function(row) row[remainingCols])
@@ -117,7 +117,7 @@ setMethod(
                 "holding the numbers of the rows that should be deleted."
             ))
         # remove rows from data slot
-        remainingRows = setdiff(1:count_rows(st), row_id)
+        remainingRows <- setdiff(1:count_rows(st), row_id)
         st@data <- st@data[remainingRows]
         # remove row_id from styles slot
         st@styles <- st@styles[remainingRows]

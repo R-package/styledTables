@@ -99,7 +99,7 @@ setMethod(
         fill_values = NULL
     ) {
         data <- as.data.table(data)
-        ncols = ncol(data)
+        ncols <- ncol(data)
         # variable names of data.frame
         colNames <- colnames(data)
         # variable vector for error messages
@@ -325,7 +325,7 @@ setMethod(
                         "]]' has type '",
                         typeof(fill_values[[i]]),
                         "' whereas the column 'data[[\"",
-                        value_cols[i] ,
+                        value_cols[i],
                         "\"]]' has type '",
                         typeof(data[[value_cols[i]]]),
                         "'."
@@ -369,7 +369,7 @@ setMethod(
                     value.name = VALUECOL,
                     measure.vars = value_cols
                 )
-            args = list(
+            args <- list(
                     data = dataCross,
                     formula = dcastFormula,
                     fun.aggregate = aggregation,

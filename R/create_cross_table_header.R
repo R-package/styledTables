@@ -166,7 +166,7 @@ setMethod(
             # Add the merges for the cross table header levels
             merges <- c(
                     merges,
-                    unlist(lapply(seq_save(1L,(nrows - 1L)), function(i) {
+                    unlist(lapply(seq_save(1L, (nrows - 1L)), function(i) {
                         nLevelsBelow <- prod(sapply(
                                     xColHeadings[seq_save(i + 1L, nrows)],
                                     length

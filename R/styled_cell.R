@@ -218,110 +218,110 @@ setMethod("initialize", signature(.Object = "StyledCell"),
                 ), call. = FALSE)
         }
         if (!missing(excel_font_name)) {
-            .Object@excel_font_name = excel_font_name
+            .Object@excel_font_name <- excel_font_name
             check_slot("excel_font_name")
         }
         if (!missing(latex_font_name)) {
-            .Object@latex_font_name = latex_font_name
+            .Object@latex_font_name <- latex_font_name
             check_slot("latex_font_name")
         }
         if (!missing(excel_font_size)) {
-            .Object@excel_font_size = excel_font_size
+            .Object@excel_font_size <- excel_font_size
             check_slot("excel_font_size")
         }
         if (!missing(font_color)) {
             font_color <- transform_char(font_color, toUpper = TRUE)
-            .Object@font_color = font_color
+            .Object@font_color <- font_color
             check_slot("font_color")
         }
         if (!missing(bold)) {
-            .Object@bold = bold
+            .Object@bold <- bold
         }
         if (!missing(italic)) {
-            .Object@italic = italic
+            .Object@italic <- italic
         }
         if (!missing(strikeout)) {
-            .Object@strikeout = strikeout
+            .Object@strikeout <- strikeout
         }
         if (!missing(underline)) {
-            .Object@underline = underline
+            .Object@underline <- underline
         }
         if (!missing(excel_boldweight)) {
-            .Object@excel_boldweight = excel_boldweight
+            .Object@excel_boldweight <- excel_boldweight
         }
         if (!missing(excel_wrapped)) {
-            .Object@excel_wrapped = excel_wrapped
+            .Object@excel_wrapped <- excel_wrapped
         }
         if (!missing(horizontal)) {
             horizontal <- transform_char(horizontal, pre = "ALIGN_", toUpper = TRUE)
-            .Object@horizontal = horizontal
+            .Object@horizontal <- horizontal
             check_slot("horizontal")
         }
         if (!missing(vertical)) {
             vertical <- transform_char(vertical, pre = "VERTICAL_", toUpper = TRUE)
-            .Object@vertical = vertical
+            .Object@vertical <- vertical
             check_slot("vertical")
         }
         if (!missing(rotation)) {
-            .Object@rotation = rotation
+            .Object@rotation <- rotation
         }
         if (!missing(indent)) {
-            .Object@indent = indent
+            .Object@indent <- indent
         }
         if (!missing(border_position)) {
             border_position <- transform_char(border_position, toUpper = TRUE)
-            .Object@border_position = border_position
+            .Object@border_position <- border_position
             check_slot("border_position")
         }
         if (!missing(border_color)) {
             border_color <- transform_char(border_color, toUpper = TRUE)
-            .Object@border_color = border_color
+            .Object@border_color <- border_color
             check_slot("border_color")
         }
         if (!missing(excel_border_pen)) {
             excel_border_pen <- transform_char(excel_border_pen, pre = "BORDER_", toUpper = TRUE)
-            .Object@excel_border_pen = excel_border_pen
+            .Object@excel_border_pen <- excel_border_pen
             check_slot("excel_border_pen")
         }
         if (!missing(fill_color)) {
             fill_color <- transform_char(fill_color, toUpper = TRUE)
-            .Object@fill_color = fill_color
+            .Object@fill_color <- fill_color
             check_slot("fill_color")
         }
         if (!missing(excel_background_color)) {
             excel_background_color <- transform_char(excel_background_color, toUpper = TRUE)
-            .Object@excel_background_color = excel_background_color
+            .Object@excel_background_color <- excel_background_color
             check_slot("excel_background_color")
         }
         if (!missing(excel_fill_pattern)) {
             excel_fill_pattern <- transform_char(excel_fill_pattern, toUpper = TRUE)
-            .Object@excel_fill_pattern = excel_fill_pattern
+            .Object@excel_fill_pattern <- excel_fill_pattern
             check_slot("excel_fill_pattern")
         }
         if (!missing(excel_data_format)) {
-            .Object@excel_data_format = excel_data_format
+            .Object@excel_data_format <- excel_data_format
         }
         if (!missing(excel_locked)) {
-            .Object@excel_locked = excel_locked
+            .Object@excel_locked <- excel_locked
         }
         if (!missing(excel_hidden)) {
-            .Object@excel_hidden = excel_hidden
+            .Object@excel_hidden <- excel_hidden
         }
         if (!missing(latex_vertical_move)) {
-            .Object@latex_vertical_move = latex_vertical_move
+            .Object@latex_vertical_move <- latex_vertical_move
         }
         if (!missing(excel_pre_process)) {
-            .Object@excel_pre_process = excel_pre_process
+            .Object@excel_pre_process <- excel_pre_process
         } else {
-            .Object@excel_pre_process = function(x) x
+            .Object@excel_pre_process <- function(x) x
         }
         if (!missing(latex_pre_process)) {
-            .Object@latex_pre_process = latex_pre_process
+            .Object@latex_pre_process <- latex_pre_process
         } else {
-            .Object@latex_pre_process = sanitize
+            .Object@latex_pre_process <- sanitize
         }
         if (!missing(latex_font_size)) {
-            .Object@latex_font_size = latex_font_size
+            .Object@latex_font_size <- latex_font_size
             check_slot("latex_font_size")
         }
         .Object
@@ -446,4 +446,3 @@ setMethod("getXlsxFontCellStyle", signature(wb = "ANY", sc = "StyledCell"),
         }
     }
 )
-

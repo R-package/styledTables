@@ -564,7 +564,7 @@ setMethod(
         row_id <- substitute(row_id)
         col_id <- substitute(col_id)
         if (is.character(value) && all(value == "all"))
-            value = c("left", "right", "top", "bottom")
+            value <- c("left", "right", "top", "bottom")
         set_specific_style(st, value, "border_position", "character", row_id, col_id, condition, condition_text, append_mode)
     }
 )

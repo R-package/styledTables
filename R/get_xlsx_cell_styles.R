@@ -130,4 +130,3 @@ setMethod("get_xlsx_cell_style", signature(wb = "ANY", sc = "StyledCell"),
         ))
     }
 )
-

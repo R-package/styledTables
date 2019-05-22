@@ -63,8 +63,8 @@ setMethod(
             cs
         }
         # Dimensions of table
-        nCol = count_cols(st)
-        nRow = count_rows(st)
+        nCol <- count_cols(st)
+        nRow <- count_rows(st)
         row_id <- first_row:(nRow + first_row - 1L)
         # Delete existing rows that will be overwritten
         row_id_existing <- intersect(
