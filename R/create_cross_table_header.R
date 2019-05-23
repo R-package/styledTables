@@ -55,7 +55,7 @@ setGeneric(
 #'     sub_table_cols = "country",
 #'     sub_heading_styling = function(st) set_horizontal(st, "center"),
 #'     body_styling = function(st) set_horizontal(st, "center"),
-#'     y_cols = c("year", "subject"),
+#'     y_cols_left = c("year", "subject"),
 #'     x_cols = c("gender", "result"),
 #'     value_cols = c("N", "rel"),
 #'     value_col_stylings = list(
@@ -96,7 +96,7 @@ setMethod(
                 description
             ), call. = FALSE)
         }
-        # Check y_cols_headings
+        # Check y_cols_left_headings
         if (!is.null(y_col_headings) & !is.character(y_col_headings))
             errHandler(paste0(
                 "Argument 'y_col_headings' must be a vector of",
@@ -133,10 +133,10 @@ setMethod(
             nrows <- 1L
         }
         # Generate the header for all Y cols (no cross table cols)
-        ny_cols <- length(y_col_headings)
-        headerData <- data.table(matrix(rep(y_col_headings, each = nrows), ncol = ny_cols))
+        ny_cols_left <- length(y_col_headings)
+        headerData <- data.table(matrix(rep(y_col_headings, each = nrows), ncol = ny_cols_left))
         # List of merged cells (will be filled up later on)
-        merges <- lapply(seq_save(1L, ny_cols), function(i) list(col_id = c(i, i), row_id = c(1L, nrows)))
+        merges <- lapply(seq_save(1L, ny_cols_left), function(i) list(col_id = c(i, i), row_id = c(1L, nrows)))
         # Generate cross table header cols and put them to the right of the y cols
         if (length(xColHeadings) > 0) {
             sHeader <- styled_table(cbind(
@@ -185,7 +185,7 @@ setMethod(
                                 0L:(nLevelsAbove - 1L), 
                                 function(k) list(
                                     row_id = c(i, i), 
-                                    col_id = ny_cols + 
+                                    col_id = ny_cols_left + 
                                         (j + k * nLevelsAbove) * nLevelsBelow + 
                                         c(1L, nLevelsBelow))
                             )), recursive = FALSE)
