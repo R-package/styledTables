@@ -12,7 +12,7 @@ Authors@R:
              email = "Gregor.deCillia@statistik.gv.at"))
 Description: This R package offers an easy to use frame work for creating beautiful tables in LaTeX, Excel, PDF and PNG. It offers the full spectrum of formatting possibilities. Generate LaTeX and Excel tables in one go.
 Depends:
-    R (>= 3.6.0)
+    R (>= 3.5.0)
 Imports:
     xlsx (>= 0.6.1),
     data.table (>= 1.12.2),
@@ -23,7 +23,9 @@ Imports:
     tools,
     knitr,
     digest,
-    magrittr
+    magrittr,
+    magick, 
+    pdftools
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -49,10 +51,13 @@ Collate:
     'write_excel.R'
     'write_pdf.R'
     'write_png.R'
+SystemRequirements: 
+    ImageMagick++: ImageMagick-c++-devel (rpm) or libmagick++-dev (deb), 
+    Poppler C++ API: libpoppler-cpp-dev (deb) or poppler-cpp-devel (rpm)
 Suggests:
     rmarkdown,
-    hexSticker,
-    dplyr (>= 0.7.6)
+    dplyr (>= 0.7.6),
+    tinytex
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
 URL: https://github.com/R-package/styledTables

@@ -2,7 +2,7 @@ wrap_latex_preamble <- function(st, resize) {
     paste(
         ifelse(
             resize,
-            "\\documentclass[tightpage]{standalone}",
+            "\\documentclass{standalone}",
             "\\documentclass[a4paper]{article}"
         ),
         "\\usepackage{ragged2e}",
@@ -47,7 +47,7 @@ write_pdf <- function(st, file = "table.pdf", resize = TRUE) {
     })
     writeLines(wrap_latex_preamble(st, resize), "table.tex")
     ## compile LaTeX file
-    system("pdflatex table.tex")
+    tinytex::pdflatex("table.tex")
     ## change back wd so relative paths for file are handled properly
     ## when copying
     setwd(oldWd)

@@ -25,8 +25,9 @@ write_png <- function(st, file = "table.png", resize = TRUE) {
     })
     writeLines(wrap_latex_preamble(st, resize), "table.tex")
     ## compile LaTeX file
-    texi2pdf("table.tex")
-    ghostconvert(x = "table.pdf", y = "table.png")
+    tinytex::pdflatex("table.tex")
+    magick::image_read_pdf("table.pdf") %>%
+        magick::image_write("table.png")
 
     ## change back wd so relative paths for file are handled properly
     ## when copying
