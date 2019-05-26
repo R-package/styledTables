@@ -21,6 +21,8 @@ install:
   ps: |
         Bootstrap
 
+COMPILER: MinGW-w64
+
 cache:
   - C:\RLibrary
 
