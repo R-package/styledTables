@@ -31,7 +31,6 @@ build_script:
   - R -e "tinytex:::install_prebuilt()"
 
 test_script:
-  - R CMD javareconf
   - travis-tool.sh run_tests
 
 on_failure:
