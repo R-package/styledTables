@@ -1,5 +1,13 @@
 # DO NOT CHANGE the "init" and "install" sections below
 
+# Download script file from GitHub
+init:
+  ps: |
+        $ErrorActionPreference = "Stop"
+        Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
+        Import-Module '..\appveyor-tool.ps1'
+        Invoke-WebRequest https://github.com/yihui/tinytex/raw/master/tools/install-windows.bat -OutFile install-windows.bat
+
 platform: x64
 
 environment:
@@ -9,17 +17,6 @@ environment:
   # see https://github.com/krlmlr/r-appveyor#readme for details
   # USE_RTOOLS: true
   # R_REMOTES_STANDALONE: true
-
-# Download script file from GitHub
-init:
-  ps: |
-        $ErrorActionPreference = "Stop"
-        Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
-        Import-Module '..\appveyor-tool.ps1'
-        Invoke-WebRequest https://github.com/yihui/tinytex/raw/master/tools/install-windows.bat -OutFile install-windows.bat
-
-before_install:
-  - R CMD javareconf ;
 
 install:
   ps: Bootstrap
@@ -56,5 +53,5 @@ artifacts:
   - path: '\*_*.tar.gz'
     name: Bits
 
-  - path: '\*_*.zip'
+  - path: '\*styledTables*.zip'
     name: Bits
