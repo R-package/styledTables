@@ -28,7 +28,7 @@ environment:
 
 build_script:
   - travis-tool.sh install_deps
-  - R -e "tinytex:::install_prebuilt()"
+  - R -e "tinytex:::install_prebuilt(); tinytex::tlmgr_install('standalone')"
 
 test_script:
   - travis-tool.sh run_tests
