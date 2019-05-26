@@ -16,6 +16,10 @@ init:
         $ErrorActionPreference = "Stop"
         Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
         Import-Module '..\appveyor-tool.ps1'
+        Invoke-WebRequest https://github.com/yihui/tinytex/raw/master/tools/install-windows.bat -OutFile install-windows.bat
+
+before_install:
+  - R CMD javareconf ;
 
 install:
   ps: Bootstrap
@@ -26,10 +30,10 @@ cache:
 # Adapt as necessary starting from here
 
 build_script:
+  - install-windows.bat
   - travis-tool.sh install_deps
 
 test_script:
-  - R -e "tinytex:::install_prebuilt()"
   - travis-tool.sh run_tests
 
 on_failure:
