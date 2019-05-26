@@ -35,6 +35,7 @@ build_script:
   - if not exist c:\miktex\texmfs\install\miktex\bin\pdflatex.exe 7z x miktex-portable.exe -oC:\miktex >NUL
   - set "PATH=%PATH%;c:\miktex\texmfs\install\miktex\bin"
   - initexmf --set-config-value "[MPM]AutoInstall=1"
+  - mpm --install=standalone
 
 test_script:
   - travis-tool.sh run_tests
