@@ -48,7 +48,7 @@ write_pdf <- function(st, file = "table.pdf", resize = TRUE) {
     })
     writeLines(wrap_latex_preamble(st, resize), "table.tex")
     ## compile LaTeX file
-    tinytex::pdflatex("table.tex")
+    tools::texi2pdf("table.tex")
     ## change back wd so relative paths for file are handled properly
     ## when copying
     setwd(oldWd)

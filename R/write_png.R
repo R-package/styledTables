@@ -25,7 +25,7 @@ write_png <- function(st, file = "table.png", resize = TRUE) {
     })
     writeLines(wrap_latex_preamble(st, resize), "table.tex")
     ## compile LaTeX file
-    tinytex::pdflatex("table.tex")
+    tools::texi2pdf("table.tex")
     magick::image_read_pdf("table.pdf") %>%
         magick::image_write("table.png")
 
