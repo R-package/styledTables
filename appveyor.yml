@@ -20,7 +20,6 @@ environment:
 install:
   ps: |
         Bootstrap
-        Invoke-WebRequest https://github.com/yihui/tinytex/raw/master/tools/install-windows.bat -OutFile install-windows.bat
 
 cache:
   - C:\RLibrary
@@ -28,8 +27,9 @@ cache:
 # Adapt as necessary starting from here
 
 build_script:
-  - install-windows.bat
   - travis-tool.sh install_deps
+  - R -e "tinytex:::install_prebuilt()"
+  - R CMD javareconf
 
 test_script:
   - travis-tool.sh run_tests
