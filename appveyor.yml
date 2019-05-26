@@ -29,9 +29,9 @@ cache:
 build_script:
   - travis-tool.sh install_deps
   - R -e "tinytex:::install_prebuilt()"
-  - R CMD javareconf
 
 test_script:
+  - R CMD javareconf
   - travis-tool.sh run_tests
 
 on_failure:
