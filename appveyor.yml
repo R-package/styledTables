@@ -6,7 +6,6 @@ init:
         $ErrorActionPreference = "Stop"
         Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
         Import-Module '..\appveyor-tool.ps1'
-        Invoke-WebRequest https://github.com/yihui/tinytex/raw/master/tools/install-windows.bat -OutFile install-windows.bat
 
 platform: x64
 
@@ -19,7 +18,9 @@ environment:
   # R_REMOTES_STANDALONE: true
 
 install:
-  ps: Bootstrap
+  ps: |
+        Bootstrap
+        Invoke-WebRequest https://github.com/yihui/tinytex/raw/master/tools/install-windows.bat -OutFile install-windows.bat
 
 cache:
   - C:\RLibrary
