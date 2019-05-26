@@ -34,8 +34,8 @@ build_script:
   - if not exist c:\miktex\texmfs\install\miktex\bin\pdflatex.exe appveyor DownloadFile https://ctan.org/tex-archive/systems/win32/miktex/setup/windows-x86/miktex-portable.exe
   - if not exist c:\miktex\texmfs\install\miktex\bin\pdflatex.exe 7z x miktex-portable.exe -oC:\miktex >NUL
   - set "PATH=%PATH%;c:\miktex\texmfs\install\miktex\bin"
-  - initexmf --set-config-value "[MPM]AutoInstall=1"
-  - mpm --install=standalone
+  - initexmf --admin --set-config-value "[MPM]AutoInstall=1"
+  - mpm --admin --install=standalone
 
 test_script:
   - travis-tool.sh run_tests
