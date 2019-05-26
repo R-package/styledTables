@@ -1,4 +1,5 @@
 wrap_latex_preamble <- function(st, resize) {
+    resize <- FALSE
     paste(
         ifelse(
             resize,
