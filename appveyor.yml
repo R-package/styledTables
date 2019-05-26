@@ -53,5 +53,5 @@ artifacts:
   - path: '\*_*.tar.gz'
     name: Bits
 
-  - path: '\*styledTables*.zip'
+  - path: '\*_*.zip'
     name: Bits
