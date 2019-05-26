@@ -26,7 +26,7 @@ build_script:
   - travis-tool.sh install_deps
 
 test_script:
-  - R -e "tinytex::install_tinytex()"
+  - R -e "tinytex:::install_prebuilt()"
   - travis-tool.sh run_tests
 
 on_failure:

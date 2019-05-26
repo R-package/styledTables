@@ -9,10 +9,10 @@ r_github_packages: r-lib/pkgdown
 
 apt_packages:
   - libmagick++-dev
-  - texlive-latex-extra
-  
+  - libpoppler-cpp-dev
+
 before_install:
-  - tlmgr install standalone
+  - R -e "tinytex::install_tinytex()"
 
 deploy:
   provider: script
