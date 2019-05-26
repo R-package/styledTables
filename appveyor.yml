@@ -31,8 +31,8 @@ environment:
 
 build_script:
   - travis-tool.sh install_deps
-  - if not exist c:\miktex\texmfs\install\miktex\bin\pdflatex.exe appveyor DownloadFile https://miktex.org/download/ctan/systems/win32/miktex/setup/windows-x64/setup-2.9.6942-x64.exe
-  - if not exist c:\miktex\texmfs\install\miktex\bin\pdflatex.exe 7z x setup-2.9.6942-x64.exe -oC:\miktex >NUL
+  - if not exist c:\miktex\texmfs\install\miktex\bin\pdflatex.exe appveyor DownloadFile https://ctan.org/tex-archive/systems/win32/miktex/setup/windows-x86/miktex-portable.exe
+  - if not exist c:\miktex\texmfs\install\miktex\bin\pdflatex.exe 7z x miktex-portable.exe -oC:\miktex >NUL
   - set "PATH=%PATH%;c:\miktex\texmfs\install\miktex\bin"
   - initexmf --set-config-value "[MPM]AutoInstall=1"
 
