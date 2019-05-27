@@ -48,7 +48,7 @@ already has cross table format.
 It uses the columns specified in sub_table_cols to separate the
 table body into several sub tables, where each sub table has the current
 value in the column defined by sub_table_cols as sub heading.
-The columns specified in y_cols, x_cols and value_cols
+The columns specified in y_cols_left, x_cols and value_cols
 define the cross table structure.
 The data.frame given in data has already s
 If the table should not be a cross table, but a normal table then the
@@ -86,7 +86,7 @@ The function is a recursive function that builds that subTables from inside out.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">styledTables</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.1</span>
       </span>
     </div>
 
@@ -152,7 +152,7 @@ already has cross table format.
 It uses the columns specified in <code>sub_table_cols</code> to separate the
 table body into several sub tables, where each sub table has the current
 value in the column defined by <code>sub_table_cols</code> as sub heading.
-The columns specified in <code>y_cols</code>, <code>x_cols</code> and <code>value_cols</code>
+The columns specified in <code>y_cols_left</code>, <code>x_cols</code> and <code>value_cols</code>
 define the cross table structure.
 The data.frame given in <code>data</code> has already s
 If the table should not be a cross table, but a normal table then the
@@ -161,8 +161,8 @@ The function is a recursive function that builds that subTables from inside out.
     
     </div>
 
-    <pre class="usage"><span class='fu'>create_sub_table</span>(<span class='no'>data</span>, <span class='no'>subLevel</span>, <span class='no'>sub_table_cols</span>,
-  <span class='kw'>sub_heading_stylings</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>body_styling</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>y_cols</span>,
+    <pre class="usage"><span class='fu'>create_sub_table</span>(<span class='no'>data</span>, <span class='no'>sub_level</span>, <span class='no'>sub_table_cols</span>,
+  <span class='kw'>sub_heading_stylings</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>body_styling</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>y_cols_left</span>,
   <span class='no'>y_cols_right</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -173,8 +173,8 @@ The function is a recursive function that builds that subTables from inside out.
       <td><p>A data.frame that should be used for the creation of the cross table.</p></td>
     </tr>
     <tr>
-      <th>subLevel</th>
-      <td><p>This is the recursive counter that gives the deepness of the recursive function execution. It points to the current sub heading level. So subLevel == 1 means that we look at the sub headings given by the different values in the data.frame column that has the name given in <code>sub_table_cols\[1\]</code>.</p></td>
+      <th>sub_level</th>
+      <td><p>This is the recursive counter that gives the deepness of the recursive function execution. It points to the current sub heading level. So sub_level == 1 means that we look at the sub headings given by the different values in the data.frame column that has the name given in <code>sub_table_cols\[1\]</code>.</p></td>
     </tr>
     <tr>
       <th>sub_table_cols</th>
@@ -189,12 +189,12 @@ The function is a recursive function that builds that subTables from inside out.
       <td><p>(optional) A styling function that is applied to the generated styled body of each sub table. A styling function is a function that takes a <a href='StyledTable-class.html'>StyledTable</a> object as its only argument and returns a styled function. In order to format the value columns of the resulting cross table use the argument <code>value_col_stylings</code>.</p></td>
     </tr>
     <tr>
-      <th>y_cols</th>
+      <th>y_cols_left</th>
       <td><p>A vector of column names that are unchanged by the cross table compuation. If the table should not be a cross table, but a normal table this argument can be omitted.</p></td>
     </tr>
     <tr>
       <th>y_cols_right</th>
-      <td><p>A vector of column names that are unchanged by the cross table compuation. This columns are of the same kind as the columns defined by the argument <code>y_cols</code>, but aligned to the right of the generated cross table.</p></td>
+      <td><p>A vector of column names that are unchanged by the cross table compuation. This columns are of the same kind as the columns defined by the argument <code>y_cols_left</code>, but aligned to the right of the generated cross table.</p></td>
     </tr>
     </table>
     
