@@ -36,6 +36,11 @@ build_script:
   - set "PATH=%PATH%;c:\miktex\texmfs\install\miktex\bin"
   - initexmf --set-config-value "[MPM]AutoInstall=1"
   - mpm --install=standalone
+  - npm --install=ms
+  - npm --install=pbox
+  - npm --install=xcolor
+  - npm --install=colortbl
+  - npm --install=mptopdf
 
 test_script:
   - travis-tool.sh run_tests
