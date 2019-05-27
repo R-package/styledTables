@@ -60,7 +60,7 @@ s_body <- create_cross_table_body(
     sub_table_cols = "country",
     sub_heading_styling = function(st) set_horizontal(st, "center"),
     body_styling = function(st) set_horizontal(st, "center"),
-    y_cols = c("year", "subject"),
+    y_cols_left = c("year", "subject"),
     x_cols = c("gender", "result"),
     value_cols = c("N", "rel"),
     value_col_stylings = list(

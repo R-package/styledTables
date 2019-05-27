@@ -240,7 +240,7 @@ setMethod(
                     if (fixedCellWidth) {
                         # calculate cell width
                         cellWidth <- as.character(sum(
-                            st@latex_col_width$widths[
+                            st@latex_col_width$width[
                                 st@latex_col_width$col_id %in% mergeCols
                             ]
                         ) / 2)

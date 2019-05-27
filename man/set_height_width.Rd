@@ -9,7 +9,7 @@ set_height_width(st, slot_name, id, value)
 \arguments{
 \item{st}{The \link{StyledTable} object whoose heights/widths should be changed}
 
-\item{slot_name}{The name of the S4-class slot that should be changed (\code{excel_row_height}, \code{latex_row_Heights}, \code{excel_col_width}, \code{latex_col_widths})}
+\item{slot_name}{The name of the S4-class slot that should be changed (\code{excel_row_height}, \code{latex_row_height}, \code{excel_col_width}, \code{latex_col_width})}
 
 \item{id}{The row/column ids that should be changed (subset of 1:N where N is the number of rows/cols of the \link{StyledTable} object).}
 

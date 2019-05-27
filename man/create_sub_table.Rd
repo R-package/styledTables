@@ -4,14 +4,14 @@
 \alias{create_sub_table}
 \title{Helper function that creates a styled sub table}
 \usage{
-create_sub_table(data, subLevel, sub_table_cols,
-  sub_heading_stylings = NULL, body_styling = NULL, y_cols,
+create_sub_table(data, sub_level, sub_table_cols,
+  sub_heading_stylings = NULL, body_styling = NULL, y_cols_left,
   y_cols_right)
 }
 \arguments{
 \item{data}{A data.frame that should be used for the creation of the cross table.}
 
-\item{subLevel}{This is the recursive counter that gives the deepness of the recursive function execution. It points to the current sub heading level. So subLevel == 1 means that we look at the sub headings given by the different values in the data.frame column that has the name given in \code{sub_table_cols\[1\]}.}
+\item{sub_level}{This is the recursive counter that gives the deepness of the recursive function execution. It points to the current sub heading level. So sub_level == 1 means that we look at the sub headings given by the different values in the data.frame column that has the name given in \code{sub_table_cols\[1\]}.}
 
 \item{sub_table_cols}{(optional) A vector of column names that should be used in order to separate the data.frame into several sub tables, that will be concatenated vertically. Each sub table will have a sub heading row above the sub table body. The sub heading text is just the corresponding value in the column defined by \code{sub_table_cols}. If no sub heading should be introduced at all, the argument \code{sub_table_cols} should be omitted. If the \code{sub_table_cols} is vector with more than one column name, then a hirachy level is introduced for the sub headings, where the first column has the highest and the column given by the last entry in \code{sub_table_cols} has the lowest hirachy level.}
 
@@ -19,9 +19,9 @@ create_sub_table(data, subLevel, sub_table_cols,
 
 \item{body_styling}{(optional) A styling function that is applied to the generated styled body of each sub table. A styling function is a function that takes a \link{StyledTable} object as its only argument and returns a styled function. In order to format the value columns of the resulting cross table use the argument \code{value_col_stylings}.}
 
-\item{y_cols}{A vector of column names that are unchanged by the cross table compuation. If the table should not be a cross table, but a normal table this argument can be omitted.}
+\item{y_cols_left}{A vector of column names that are unchanged by the cross table compuation. If the table should not be a cross table, but a normal table this argument can be omitted.}
 
-\item{y_cols_right}{A vector of column names that are unchanged by the cross table compuation. This columns are of the same kind as the columns defined by the argument \code{y_cols}, but aligned to the right of the generated cross table.}
+\item{y_cols_right}{A vector of column names that are unchanged by the cross table compuation. This columns are of the same kind as the columns defined by the argument \code{y_cols_left}, but aligned to the right of the generated cross table.}
 }
 \description{
 This function creates a styled cross table from a given data.frame that
@@ -29,7 +29,7 @@ already has cross table format.
 It uses the columns specified in \code{sub_table_cols} to separate the
 table body into several sub tables, where each sub table has the current
 value in the column defined by \code{sub_table_cols} as sub heading.
-The columns specified in \code{y_cols}, \code{x_cols} and \code{value_cols}
+The columns specified in \code{y_cols_left}, \code{x_cols} and \code{value_cols}
 define the cross table structure.
 The data.frame given in \code{data} has already s
 If the table should not be a cross table, but a normal table then the

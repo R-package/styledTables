@@ -86,7 +86,7 @@ setMethod(
         for (i in seq_len(length(st@excel_row_height$row_id))) {
             xlsx::setRowHeight(
                 rows = rows[as.character(first_row + st@excel_row_height$row_id[i] - 1L)],
-                st@excel_row_height$heights[i]
+                st@excel_row_height$height[i]
             )
         }
         # Set width of each column
@@ -94,7 +94,7 @@ setMethod(
             xlsx::setColumnWidth(
                 sheet,
                 first_col + st@excel_col_width$col_id[i] - 1L,
-                st@excel_col_width$widths[i]
+                st@excel_col_width$width[i]
             )
         }
         # Write values and styles to cells

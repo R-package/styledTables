@@ -10,8 +10,8 @@ create_cross_table_body(data, ...)
 
 \S4method{create_cross_table_body}{data.frame}(data,
   sub_table_cols = NULL, sub_heading_stylings = NULL,
-  body_styling = NULL, y_cols, y_cols_right = NULL, x_cols = NULL,
-  value_cols = NULL, value_col_stylings = NULL,
+  body_styling = NULL, y_cols_left = NULL, y_cols_right = NULL,
+  x_cols = NULL, value_cols = NULL, value_col_stylings = NULL,
   drop_missing_rows = TRUE, drop_missing_cols = FALSE,
   aggregation = NULL, fill_values = NULL)
 }
@@ -26,9 +26,9 @@ create_cross_table_body(data, ...)
 
 \item{body_styling}{(optional) A styling function that is applied to the generated styled body of each sub table. A styling function is a function that takes a \link{StyledTable} object as its only argument and returns a styled function. In order to format the value columns of the resulting cross table use the argument \code{value_col_stylings}.}
 
-\item{y_cols}{A vector of column names that are unchanged by the cross table compuation. If the table should not be a cross table, but a normal table this argument can be omitted.}
+\item{y_cols_left}{(optional) A vector of column names that are unchanged by the cross table compuation and are printed to the left of the resulting cross table columns. This argument can be omitted, if no Y columns to the left of the cross_table are needed, but it is not allowed to omit both \code{y_cols_left} and \code{y_cols_right}.}
 
-\item{y_cols_right}{A vector of column names that are unchanged by the cross table compuation. This columns are of the same kind as the columns defined by the argument \code{y_cols}, but aligned to the right of the generated cross table.}
+\item{y_cols_right}{(optional) A vector of column names that are unchanged by the cross table compuation and that are printed to the right of the cross table. This argument can be omitted, if no Y columns to the right of the cross_table are needed, but it is not allowed to omit both \code{y_cols_left} and \code{y_cols_right}.}
 
 \item{x_cols}{(optional) A vector of column names that are used for column name generation by the cross table compuation. If the table should not be a cross table, but a normal table this argument can be omitted.}
 
@@ -36,7 +36,7 @@ create_cross_table_body(data, ...)
 
 \item{value_col_stylings}{(optional) A single column styling function or a list of column styling functions that has the same length as \code{value_cols}. Each column styling function is applied to the corresponding value column (defined to the corresponding column defined by the \code{value_cols} argument) of the resulting styled cross table. If a single column styling function is passed, then the same column styling function is applied to all value columns defined in \code{value_cols}. If no value column specific styling should be applied, then the \code{value_col_stylings} argument should be omitted. If the resulting table should not be a cross table at all, but a normal table, then  this argument should also be omitted. A column styling function is a function of the type: function(st, cols) {...}, which returns a \link{StyledTable} object, where \code{st} is a \link{StyledTable} object and \code{col_id} is a numeric vector of column numbers.}
 
-\item{drop_missing_rows}{(optional) If set to \code{FALSE} and the \code{sub_table_cols} or \code{y_cols} are sparse factors then the missing factor levels introduce new rows filled filled with NAs. Otherwise no extra rows will be generated. Default value is \code{TRUE}.}
+\item{drop_missing_rows}{(optional) If set to \code{FALSE} and the \code{sub_table_cols} or \code{y_cols_left} are sparse factors then the missing factor levels introduce new rows filled filled with NAs. Otherwise no extra rows will be generated. Default value is \code{TRUE}.}
 
 \item{drop_missing_cols}{(optional) If set to \code{FALSE} and the \code{x_cols} are sparse factors then the missing factor levels introduce extra cross table columns filled with \code{NA}. Otherwise no extra columns will be generated. Default value is \code{FALSE}.}
 
@@ -53,7 +53,7 @@ This function works best in combination with the method \code{\link[=create_cros
 For the the creation of the styled cross table body the columns specified in \code{sub_table_cols} are used to separate the
 table body into several sub tables, where each sub table has the current
 value in the column defined by \code{sub_table_cols} as sub heading.
-The columns specified in \code{y_cols}, \code{x_cols} and \code{value_cols}
+The columns specified in \code{y_cols_left}, \code{x_cols} and \code{value_cols}
 will be used for the cross table calculation.
 If the table should not be a cross table, but a normal table then the
 arguments \code{x_cols} and \code{value_cols} should be omitted.
@@ -87,7 +87,7 @@ s_body <- create_cross_table_body(
     sub_table_cols = "country",
     sub_heading_styling = function(st) set_horizontal(st, "center"),
     body_styling = function(st) set_horizontal(st, "center"),
-    y_cols = c("year", "subject"),
+    y_cols_left = c("year", "subject"),
     x_cols = c("gender", "result"),
     value_cols = c("N", "rel"),
     value_col_stylings = list(

@@ -1,7 +1,7 @@
 #' Function to set the excel_row_height/latex_row_height/excel_col_width/latex_col_width
 #'
 #' @param st The [StyledTable] object whoose heights/widths should be changed
-#' @param slot_name The name of the S4-class slot that should be changed (\code{excel_row_height}, \code{latex_row_Heights}, \code{excel_col_width}, \code{latex_col_widths})
+#' @param slot_name The name of the S4-class slot that should be changed (\code{excel_row_height}, \code{latex_row_height}, \code{excel_col_width}, \code{latex_col_width})
 #' @param id The row/column ids that should be changed (subset of 1:N where N is the number of rows/cols of the [StyledTable] object).
 #' @param value A vector holding the row height/col width that should be applied
 set_height_width <- function(st, slot_name, id, value) {

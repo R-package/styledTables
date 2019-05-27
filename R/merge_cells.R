@@ -24,8 +24,8 @@ setMethod(
                 description
             ), call. = FALSE)
         # Substitute n_col and n_row in the rows and columns selector
-        row_id <- substitute_row_id(st, substitute(row_id), stack_level = 1, errHandler)
-        col_id <- substitute_col_id(st, substitute(col_id), stack_level = 1, errHandler)
+        row_id <- substitute_row_id(st, substitute(row_id), stack_level = 3, errHandler)
+        col_id <- substitute_col_id(st, substitute(col_id), stack_level = 3, errHandler)
         if (is.null(row_id))
             row_id <- 1:count_rows(st)
         if (!all(diff(row_id) == 1))
@@ -91,8 +91,8 @@ setMethod(
                 description
             ), call. = FALSE)
         # Substitute n_col and n_row in the rows and columns selector
-        row_id <- substitute_row_id(st, substitute(row_id), stack_level = 1, errHandler)
-        col_id <- substitute_col_id(st, substitute(col_id), stack_level = 1, errHandler)
+        row_id <- substitute_row_id(st, substitute(row_id), stack_level = 3, errHandler)
+        col_id <- substitute_col_id(st, substitute(col_id), stack_level = 3, errHandler)
         if (is.null(row_id))
             row_id <- 1:count_rows(st)
         if (!all(diff(row_id) == 1))

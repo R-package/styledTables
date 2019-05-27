@@ -45,14 +45,14 @@ setMethod(
         st@styles <- lapply(st@styles, function(row) row[remainingCols])
         # remove columns from excel_col_width slot
         colIndex <- which(!st@excel_col_width$col_id %in% col_id)
-        st@excel_col_width$widths <- st@excel_col_width$widths[colIndex]
+        st@excel_col_width$width <- st@excel_col_width$width[colIndex]
         st@excel_col_width$col_id <- sapply(
                 st@excel_col_width$col_id[colIndex],
                 function(x) x - sum(col_id < x)
             )
         # remove columns from latex_col_width slot
         colIndex <- which(!st@latex_col_width$col_id %in% col_id)
-        st@latex_col_width$widths <- st@latex_col_width$widths[colIndex]
+        st@latex_col_width$width <- st@latex_col_width$width[colIndex]
         st@latex_col_width$col_id <- sapply(
                 st@latex_col_width$col_id[colIndex],
                 function(x) x - sum(col_id < x)
@@ -123,14 +123,14 @@ setMethod(
         st@styles <- st@styles[remainingRows]
         # remove rows from excel_row_height slot
         rowIndex <- which(!st@excel_row_height$row_id %in% row_id)
-        st@excel_row_height$widths <- st@excel_row_height$widths[rowIndex]
+        st@excel_row_height$width <- st@excel_row_height$width[rowIndex]
         st@excel_row_height$row_id <- sapply(
                 st@excel_row_height$row_id[rowIndex],
                 function(x) x - sum(row_id < x)
             )
         # remove rows from latex_row_height slot
         rowIndex <- which(!st@latex_row_height$row_id %in% row_id)
-        st@latex_row_height$widths <- st@latex_row_height$widths[rowIndex]
+        st@latex_row_height$width <- st@latex_row_height$width[rowIndex]
         st@latex_row_height$row_id <- sapply(
                 st@latex_row_height$row_id[rowIndex],
                 function(x) x - sum(row_id < x)
