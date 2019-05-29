@@ -12,7 +12,7 @@ Authors@R:
              email = "Gregor.deCillia@statistik.gv.at"))
 Description: This R package offers an easy to use frame work for creating beautiful tables in LaTeX, Excel, PDF and PNG. It offers the full spectrum of formatting possibilities. Generate LaTeX and Excel tables in one go.
 Depends:
-    R (>= 3.6.0)
+    R (>= 3.5.0)
 Imports:
     xlsx (>= 0.6.1),
     data.table (>= 1.12.2),
