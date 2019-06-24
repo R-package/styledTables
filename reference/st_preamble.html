@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Method get_xlsx_border — get_xlsx_border • styledTables</title>
+<title>Get the preamble code necessary to compile a stiled table — st_preamble • styledTables</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -41,9 +41,10 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Method get_xlsx_border — get_xlsx_border" />
+<meta property="og:title" content="Get the preamble code necessary to compile a stiled table — st_preamble" />
 
-<meta property="og:description" content="Method get_xlsx_border" />
+<meta property="og:description" content="Generate a string that can be included in the preamble of a latex document
+to compile a styledtable object." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -135,37 +136,25 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Method get_xlsx_border</h1>
-    <small class="dont-index">Source: <a href='https://github.com/R-package/styledTables/blob/master/R/get_xlsx_cell_styles.R'><code>R/get_xlsx_cell_styles.R</code></a></small>
-    <div class="hidden name"><code>get_xlsx_border-methods.Rd</code></div>
+    <h1>Get the preamble code necessary to compile a stiled table</h1>
+    <small class="dont-index">Source: <a href='https://github.com/R-package/styledTables/blob/master/R/knit_print.R'><code>R/knit_print.R</code></a></small>
+    <div class="hidden name"><code>st_preamble.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Method get_xlsx_border</p>
+    <p>Generate a string that can be included in the preamble of a latex document
+to compile a styledtable object.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>get_xlsx_border</span>(<span class='no'>sc</span>)
-
-<span class='co'># S4 method for StyledCell</span>
-<span class='fu'>get_xlsx_border</span>(<span class='no'>sc</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>sc</th>
-      <td><p>A StyledCell object</p></td>
-    </tr>
-    </table>
-    
+    <pre class="usage"><span class='fu'>st_preamble</span>()</pre>
+        
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
                 </ul>
 
   </div>
