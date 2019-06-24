@@ -15,14 +15,7 @@ knit_print_rmd_html <- function(x, ...) {
 
 inject_preamble <- function() {
   knitr::set_header(
-    styledTables = paste(
-      "\\usepackage{ragged2e}",
-      "\\usepackage{multirow}",
-      "\\usepackage{pbox}",
-      "\\usepackage{hhline}",
-      "\\usepackage[table]{xcolor}",
-      sep = "\n"
-    )
+    styledTables = st_preamble()
   )
 }
 
@@ -57,4 +50,22 @@ knit_print.StyledTable <- function(x, ...) {
     latex = knit_print_rmd_latex(x),
     html = knit_print_rmd_html(x)
   )
+}
+
+#' Get the preamble code necessary to compile a stiled table
+#'
+#' Generate a string that can be included in the preamble of a latex document
+#' to compile a styledtable object.
+#'
+#' @export
+st_preamble <- function() {
+  paste(
+    "\\usepackage{ragged2e}",
+    "\\usepackage{multirow}",
+    "\\usepackage{pbox}",
+    "\\usepackage{hhline}",
+    "\\usepackage[table]{xcolor}",
+    sep = "\n"
+  )
+
 }

@@ -3,6 +3,7 @@
 S3method(knit_print,StyledTable)
 export("%>%")
 export(compare_styles)
+export(st_preamble)
 export(write_pdf)
 export(write_png)
 exportClasses(MissingOrNull)
