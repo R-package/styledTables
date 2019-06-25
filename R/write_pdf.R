@@ -21,6 +21,29 @@ wrap_latex_preamble <- function(st, resize) {
     )
 }
 
+compile_tex <- function(tex_string, tex_file = "table.tex") {
+    writeLines(tex_string, tex_file)
+    res <- suppressWarnings(system(
+        paste("pdflatex -interaction=nonstopmode", tex_file),
+        intern = TRUE
+    ))
+    if (!is.null(attr(res, "status"))) {
+        message(paste(res, collapse = "\n"))
+        stop("could not compile ", tex_file)
+    }
+    return(paste0(tools::file_path_sans_ext(tex_file), ".pdf"))
+}
+
+# see withr::with_dir() for reference
+with_tempdir <- function(code) {
+    new <- tempfile()
+    dir.create(new)
+    old <- setwd(dir = new)
+    on.exit(setwd(old))
+    force(code)
+    new
+}
+
 #' Write a styledTable object to pdf
 #'
 #' Use [tools::texi2pdf()] to compile the output from
@@ -39,17 +62,13 @@ wrap_latex_preamble <- function(st, resize) {
 #' @export
 #' @seealso [write_png()], [write_excel()], [create_latex_table()], [append_latex_table()], [create_latex_table_body()]
 write_pdf <- function(st, file = "table.pdf", resize = TRUE) {
-    dir.create(tmp <- tempfile())
-    oldWd <- setwd(tmp)
-    on.exit({
-        setwd(oldWd)
-        unlink(tmp, recursive = TRUE)
+    render_dir <- with_tempdir({
+        generated_pdf <- st %>%
+            wrap_latex_preamble(resize) %>%
+            compile_tex() %>%
+            normalizePath()
     })
-    writeLines(wrap_latex_preamble(st, resize), "table.tex")
-    ## compile LaTeX file
-    system("pdflatex table.tex")
+    on.exit(unlink(render_dir))
     ## change back wd so relative paths for file are handled properly
-    ## when copying
-    setwd(oldWd)
-    invisible(file.copy(file.path(tmp, "table.pdf"), file, overwrite = TRUE))
+    invisible(file.copy(generated_pdf, file, overwrite = TRUE))
 }
