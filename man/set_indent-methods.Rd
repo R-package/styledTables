@@ -34,5 +34,28 @@ The modified \link{StyledTable} object
 Set indentation of cell content
 }
 \seealso{
-\code{\link[=set_excel_font_name]{set_excel_font_name()}}, \code{\link[=set_latex_font_name]{set_latex_font_name()}}, \code{\link[=set_excel_font_size]{set_excel_font_size()}}, \code{\link[=set_latex_font_size]{set_latex_font_size()}}, \code{\link[=set_font_color]{set_font_color()}}, \code{\link[=set_bold]{set_bold()}}, \code{\link[=set_excel_boldweight]{set_excel_boldweight()}}, \code{\link[=set_italic]{set_italic()}}, \code{\link[=set_underline]{set_underline()}}, \code{\link[=set_strikeout]{set_strikeout()}}, \code{\link[=set_rotation]{set_rotation()}}, \code{\link[=set_indent]{set_indent()}}, \code{\link[=set_fill_color]{set_fill_color()}}, \code{\link[=set_horizontal]{set_horizontal()}}, \code{\link[=set_excel_vertical]{set_excel_vertical()}}, \code{\link[=set_latex_vertical_move]{set_latex_vertical_move()}}, \code{\link[=set_latex_vertical_move]{set_latex_vertical_move()}}, \code{\link[=set_excel_row_height]{set_excel_row_height()}}, \code{\link[=set_latex_row_height]{set_latex_row_height()}}, \code{\link[=set_excel_col_width]{set_excel_col_width()}}, \code{\link[=set_latex_col_width]{set_latex_col_width()}}, \code{\link[=set_border_position]{set_border_position()}}, \code{\link[=set_border_color]{set_border_color()}}, \code{\link[=set_excel_border_pen]{set_excel_border_pen()}}, \code{\link[=set_excel_data_format]{set_excel_data_format()}}, \code{\link[=set_excel_pre_process]{set_excel_pre_process()}}, \code{\link[=set_latex_pre_process]{set_latex_pre_process()}}, \code{\link[=set_excel_wrapped]{set_excel_wrapped()}}, \code{\link[=set_excel_locked]{set_excel_locked()}}, \code{\link[=set_excel_hidden]{set_excel_hidden()}}
+Other styledtable setters: \code{\link{set_bold}},
+  \code{\link{set_border_color}},
+  \code{\link{set_border_position}},
+  \code{\link{set_excel_boldweight}},
+  \code{\link{set_excel_border_pen}},
+  \code{\link{set_excel_data_format}},
+  \code{\link{set_excel_font_name}},
+  \code{\link{set_excel_font_size}},
+  \code{\link{set_excel_hidden}},
+  \code{\link{set_excel_locked}},
+  \code{\link{set_excel_pre_process}},
+  \code{\link{set_excel_vertical}},
+  \code{\link{set_excel_wrapped}},
+  \code{\link{set_fill_color}},
+  \code{\link{set_font_color}},
+  \code{\link{set_horizontal}}, \code{\link{set_italic}},
+  \code{\link{set_latex_font_name}},
+  \code{\link{set_latex_font_size}},
+  \code{\link{set_latex_pre_process}},
+  \code{\link{set_latex_vertical_move}},
+  \code{\link{set_rotation}},
+  \code{\link{set_specific_style}},
+  \code{\link{set_strikeout}}, \code{\link{set_underline}}
 }
+\concept{styledtable setters}

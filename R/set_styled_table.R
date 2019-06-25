@@ -25,7 +25,7 @@ setGeneric(
 #' @param condition_text An character string holding an equation that is evaluated on the data.frame \code{data} in order to decide on which rows or cells the change should be applied. In the equation the column names of the [StyledTable] object should be used. Be aware that the [StyledTable] object columns have the names \code{X1}, ..., \code{XN}, where \code{N} is the total number of columns. If you do not want to apply the change to all columns given in the \code{col_id} argument, but only to single cells which fullfill a special condition you can use also the variable name \code{X} which is substituted by each column name separately. The arguments \code{condition_text} and \code{condition} cannot be passed at the same time.
 #' @param append_mode A character string that defines if the styling value of the cell should be replaced (append_mode = "replace"), if the new styling should be appended at the end of the current styling value of the cell (append_mode = "appendBehind"), if the new styling should be appended in front of the current styling value of the cell (append_mode = "appendBefore")
 #' @return The modified [StyledTable] object
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @family styledtable setters
 setMethod(
     "set_specific_style",
     signature(
@@ -129,7 +129,7 @@ setGeneric("set_latex_font_name", function(st, value, ...) standardGeneric("set_
 #' @aliases set_latex_font_name,StyledTable,character-method
 #' @inheritParams set_specific_style
 #' @return The modified [StyledTable] object
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @family styledtable setters
 setMethod(
     "set_latex_font_name",
     signature(st = "StyledTable", value = "ANY"),
@@ -152,7 +152,7 @@ setGeneric("set_excel_font_name", function(st, value, ...) standardGeneric("set_
 #' @aliases set_excel_font_name,StyledTable,character-method
 #' @inheritParams set_specific_style
 #' @return The modified [StyledTable] object
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @family styledtable setters
 setMethod(
     "set_excel_font_name",
     signature(st = "StyledTable", value = "ANY"),
@@ -175,7 +175,7 @@ setGeneric("set_latex_font_size", function(st, value, ...) standardGeneric("set_
 #' @aliases set_latex_font_size,StyledTable,character-method
 #' @inheritParams set_specific_style
 #' @return The modified [StyledTable] object
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @family styledtable setters
 setMethod(
     "set_latex_font_size",
     signature(st = "StyledTable", value = "ANY"),
@@ -198,7 +198,7 @@ setGeneric("set_excel_font_size", function(st, value, ...) standardGeneric("set_
 #' @aliases set_excel_font_size,StyledTable,character-method
 #' @inheritParams set_specific_style
 #' @return The modified [StyledTable] object
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @family styledtable setters
 setMethod(
     "set_excel_font_size",
     signature(st = "StyledTable", value = "ANY"),
@@ -221,7 +221,7 @@ setGeneric("set_font_color", function(st, value, ...) standardGeneric("set_font_
 #' @aliases set_font_color,StyledTable,character-method
 #' @inheritParams set_specific_style
 #' @return The modified [StyledTable] object
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @family styledtable setters
 setMethod(
     "set_font_color",
     signature(st = "StyledTable", value = "ANY"),
@@ -244,7 +244,7 @@ setGeneric("set_bold", function(st, ...) standardGeneric("set_bold"))
 #' @aliases set_bold,StyledTable,character-method
 #' @inheritParams set_specific_style
 #' @return The modified [StyledTable] object
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @family styledtable setters
 setMethod(
     "set_bold",
     signature(st = "StyledTable"),
@@ -267,7 +267,7 @@ setGeneric("set_italic", function(st, ...) standardGeneric("set_italic"))
 #' @aliases set_italic,StyledTable,character-method
 #' @inheritParams set_specific_style
 #' @return The modified [StyledTable] object
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @family styledtable setters
 setMethod(
     "set_italic",
     signature(st = "StyledTable"),
@@ -290,7 +290,7 @@ setGeneric("set_strikeout", function(st, ...) standardGeneric("set_strikeout"))
 #' @aliases set_strikeout,StyledTable,character-method
 #' @inheritParams set_specific_style
 #' @return The modified [StyledTable] object
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @family styledtable setters
 setMethod(
     "set_strikeout",
     signature(st = "StyledTable"),
@@ -313,7 +313,7 @@ setGeneric("set_underline", function(st, ...) standardGeneric("set_underline"))
 #' @aliases set_underline,StyledTable,character-method
 #' @inheritParams set_specific_style
 #' @return The modified [StyledTable] object
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @family styledtable setters
 setMethod(
     "set_underline",
     signature(st = "StyledTable"),
@@ -336,7 +336,7 @@ setGeneric("set_excel_boldweight", function(st, value, ...) standardGeneric("set
 #' @aliases set_excel_boldweight,StyledTable,character-method
 #' @inheritParams set_specific_style
 #' @return The modified [StyledTable] object
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @family styledtable setters
 setMethod(
     "set_excel_boldweight",
     signature(st = "StyledTable", value = "ANY"),
@@ -359,7 +359,7 @@ setGeneric("set_excel_wrapped", function(st, ...) standardGeneric("set_excel_wra
 #' @aliases set_excel_wrapped,StyledTable,character-method
 #' @inheritParams set_specific_style
 #' @return The modified [StyledTable] object
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @family styledtable setters
 setMethod(
     "set_excel_wrapped",
     signature(st = "StyledTable"),
@@ -382,7 +382,7 @@ setGeneric("set_horizontal", function(st, value, ...) standardGeneric("set_horiz
 #' @aliases set_horizontal,StyledTable,character-method
 #' @inheritParams set_specific_style
 #' @return The modified [StyledTable] object
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @family styledtable setters
 setMethod(
     "set_horizontal",
     signature(st = "StyledTable", value = "ANY"),
@@ -405,7 +405,7 @@ setGeneric("set_excel_vertical", function(st, value, ...) standardGeneric("set_e
 #' @aliases set_excel_vertical,StyledTable,character-method
 #' @inheritParams set_specific_style
 #' @return The modified [StyledTable] object
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @family styledtable setters
 setMethod(
     "set_excel_vertical",
     signature(st = "StyledTable", value = "ANY"),
@@ -428,7 +428,7 @@ setGeneric("set_rotation", function(st, value, ...) standardGeneric("set_rotatio
 #' @aliases set_rotation,StyledTable,character-method
 #' @inheritParams set_specific_style
 #' @return The modified [StyledTable] object
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @family styledtable setters
 setMethod(
     "set_rotation",
     signature(st = "StyledTable", value = "ANY"),
@@ -451,7 +451,7 @@ setGeneric("set_indent", function(st, value, ...) standardGeneric("set_indent"))
 #' @aliases set_indent,StyledTable,character-method
 #' @inheritParams set_specific_style
 #' @return The modified [StyledTable] object
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @family styledtable setters
 setMethod(
     "set_indent",
     signature(st = "StyledTable", value = "ANY"),
@@ -474,7 +474,7 @@ setGeneric("set_border_position", function(st, value, ...) standardGeneric("set_
 #' @aliases set_border_position,StyledTable,character-method
 #' @inheritParams set_specific_style
 #' @return The modified [StyledTable] object
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @family styledtable setters
 setMethod(
     "set_border_position",
     signature(st = "StyledTable", value = "ANY"),
@@ -499,7 +499,7 @@ setGeneric("set_border_color", function(st, value, ...) standardGeneric("set_bor
 #' @aliases set_border_color,StyledTable,character-method
 #' @inheritParams set_specific_style
 #' @return The modified [StyledTable] object
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @family styledtable setters
 setMethod(
     "set_border_color",
     signature(st = "StyledTable", value = "ANY"),
@@ -522,7 +522,7 @@ setGeneric("set_excel_border_pen", function(st, value, ...) standardGeneric("set
 #' @aliases set_excel_border_pen,StyledTable,character-method
 #' @inheritParams set_specific_style
 #' @return The modified [StyledTable] object
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @family styledtable setters
 setMethod(
     "set_excel_border_pen",
     signature(st = "StyledTable", value = "ANY"),
@@ -545,7 +545,7 @@ setGeneric("set_fill_color", function(st, value, ...) standardGeneric("set_fill_
 #' @aliases set_fill_color,StyledTable,character-method
 #' @inheritParams set_specific_style
 #' @return The modified [StyledTable] object
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @family styledtable setters
 setMethod(
     "set_fill_color",
     signature(st = "StyledTable", value = "ANY"),
@@ -571,7 +571,7 @@ setGeneric("set_excel_data_format", function(st, value, ...) standardGeneric("se
 #' @aliases set_excel_data_format,StyledTable,character-method
 #' @inheritParams set_specific_style
 #' @return The modified [StyledTable] object
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @family styledtable setters
 setMethod(
     "set_excel_data_format",
     signature(st = "StyledTable", value = "ANY"),
@@ -594,7 +594,7 @@ setGeneric("set_excel_locked", function(st, ...) standardGeneric("set_excel_lock
 #' @aliases set_excel_locked,StyledTable,character-method
 #' @inheritParams set_specific_style
 #' @return The modified [StyledTable] object
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @family styledtable setters
 setMethod(
     "set_excel_locked",
     signature(st = "StyledTable"),
@@ -617,7 +617,7 @@ setGeneric("set_excel_hidden", function(st, ...) standardGeneric("set_excel_hidd
 #' @aliases set_excel_hidden,StyledTable,character-method
 #' @inheritParams set_specific_style
 #' @return The modified [StyledTable] object
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @family styledtable setters
 setMethod(
     "set_excel_hidden",
     signature(st = "StyledTable"),
@@ -641,7 +641,7 @@ setGeneric("set_latex_vertical_move", function(st, value, ...) standardGeneric("
 #' @inheritParams set_specific_style
 #' @param value The function that should be used for pre processing
 #' @return The modified [StyledTable] object
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @family styledtable setters
 setMethod(
     "set_latex_vertical_move",
     signature(st = "StyledTable", value = "ANY"),
@@ -665,7 +665,7 @@ setGeneric("set_latex_pre_process", function(st, value, ...) standardGeneric("se
 #' @inheritParams set_specific_style
 #' @param value The function that should be used for pre processing
 #' @return The modified [StyledTable] object
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @family styledtable setters
 setMethod(
     "set_latex_pre_process",
     signature(st = "StyledTable", value = "ANY"),
@@ -689,7 +689,7 @@ setGeneric("set_excel_pre_process", function(st, value, ...) standardGeneric("se
 #' @inheritParams set_specific_style
 #' @param value The function that should be used for pre processing
 #' @return The modified [StyledTable] object
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @family styledtable setters
 setMethod(
     "set_excel_pre_process",
     signature(st = "StyledTable", value = "ANY"),
