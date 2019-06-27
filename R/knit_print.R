@@ -48,7 +48,8 @@ knit_print.StyledTable <- function(x, ...) {
   switch(
     pt,
     latex = knit_print_rmd_latex(x),
-    html = knit_print_rmd_html(x)
+    html = knit_print_rmd_html(x),
+    knit_print_rmd_html(x)
   )
 }
 
