@@ -13,28 +13,42 @@ knit_print_rmd_html <- function(x, ...) {
   knitr::include_graphics(fig_name)
 }
 
-inject_preamble <- function() {
+inject_preamble <- function(pkgs) {
+  user_pkgs <- knitr::opts_knit$get("header")["styledTables_userpkgs"]
+  if (is.na(user_pkgs))
+    user_pkgs <- NULL
   knitr::set_header(
-    styledTables = st_preamble()
+    styledTables = st_preamble(),
+    styledTables_userpkgs = paste(
+      user_pkgs,
+      "\n",
+      rmarkdown:::latex_dependencies_as_string(pkgs)
+    )
   )
 }
 
 knit_print_rnw <- function(obj) {
   stopifnot(inherits(obj, "StyledTable"))
-  inject_preamble()
+  inject_preamble(attr(obj, "packages"))
   knitr::asis_output(create_latex_table(obj))
 }
 
 knit_print_rmd_latex <- function(obj) {
-  inject_preamble()
-  knitr::raw_block(type = "latex", create_latex_table(obj), meta = list(
-    rmarkdown::latex_dependency("ragged2e"),
-    rmarkdown::latex_dependency("multirow"),
-    rmarkdown::latex_dependency("pbox"),
-    rmarkdown::latex_dependency("hhline"),
-    rmarkdown::latex_dependency("xcolor", options = "table"),
-    rmarkdown::latex_dependency("geometry")
-  ))
+  knitr::raw_block(
+    type = "latex",
+    create_latex_table(obj),
+    meta = c(
+      list(
+        rmarkdown::latex_dependency("ragged2e"),
+        rmarkdown::latex_dependency("multirow"),
+        rmarkdown::latex_dependency("pbox"),
+        rmarkdown::latex_dependency("hhline"),
+        rmarkdown::latex_dependency("xcolor", options = "table"),
+        rmarkdown::latex_dependency("geometry")
+      ),
+      attr(obj, "packages")
+    )
+  )
 }
 
 pandoc_to <- getFromNamespace("pandoc_to", "knitr")
@@ -68,5 +82,11 @@ st_preamble <- function() {
     "\\usepackage[table]{xcolor}",
     sep = "\n"
   )
+}
 
+inject_package <- function(obj, package, options = NULL, extra_lines = NULL) {
+  new_dependency <- rmarkdown::latex_dependency(package, options, extra_lines)
+  current_dependencies <- attr(obj, "packages")
+  attr(obj, "packages") <- c(current_dependencies, list(new_dependency))
+  obj
 }
