@@ -21,7 +21,7 @@ of various kinds (`.tex`, `.Rmd` and `Rnw`). For all subsequent examples, we
 will use a subset of the mtcars dataset.
 
 ```{r}
-library(styledTables)
+library(styledtable)
 mytable <- styled_table(mtcars[1:2, 1:4], keep_header = TRUE)
 ```
 

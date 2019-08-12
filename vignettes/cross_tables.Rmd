@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
 Creating nicely styled **cross tables** in **R** can be tedios, even when you
-use the `styledTables` package. Therefore, we implemented the following functions,
+use the `styledtable` package. Therefore, we implemented the following functions,
 which make it very easy to create cross tables from [tidy data sets]:
 
 -   `create_cross_table_header()`: 
@@ -30,7 +30,7 @@ which make it very easy to create cross tables from [tidy data sets]:
     with the generated styled cross table body.
   
 ## Creation of a tidy data set
-We will need a [tidy data set] to illustrate the power of `styledTables` cross table creation.
+We will need a [tidy data set] to illustrate the power of `styledtable` cross table creation.
 Therefore, we create a `data.frame` named `students`, which holds some fictional test results
 of students coming from **Germany** and **Austria** in subjects **Mathematics** and **Statistics** over several **years**. 
 In the column `N` the number of cases and in the column `rel` the portion in percent is given.

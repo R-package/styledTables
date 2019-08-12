@@ -18,14 +18,14 @@ fig_path <- function(file) {
 
 pkgdown_link <- function(text, file) {
   url <- file.path(
-    "https://r-package.github.io/styledTables/articles/styledTables_files",
+    "https://r-package.github.io/styledtable/articles/styledtable_files",
     "figure-html", file
   )
   paste0("[", text, "](", url, ")")
 }
 ```
 
-`styledTables` is an **R** package that makes it possible to export a
+`styledtable` is an **R** package that makes it possible to export a
 `data.frame` as beautifully styled **Excel** and **LaTeX** table.
 
 > Produce tables, which you want to look at.
@@ -34,7 +34,7 @@ pkgdown_link <- function(text, file) {
 
 ```{r, eval = FALSE}
 # Install development version from GitHub
-devtools::install_github('R-package/styledTables', build_vignettes = TRUE)
+devtools::install_github('R-package/styledtable', build_vignettes = TRUE)
 ```
 
 ## Create your first styled table
@@ -43,10 +43,10 @@ Use the `styled_table()` function to turn a `data.frame` or `matrix` into a
 `StyledTable` class object.
 Then apply all the [styling functions] you want to by using the [pipe operator] `%>%`
 and return the `StyledTable` object at the end of your `Rmd` chunk so that `knitr` can
-do the printing (the `print()` function of `knitr` is overloaded by `styledTables`).
+do the printing (the `print()` function of `knitr` is overloaded by `styledtable`).
 
 ```{r, out.width = "100%"}
-library(styledTables)
+library(styledtable)
 set.seed(42)
 
 # Create the styled table
@@ -72,7 +72,7 @@ and `merge_equal_cells()` multiple cells of a `StyledTable` object can be
 merged together.
 
 ```{r, out.width = "70%", fig.align="center"}
-library(styledTables)
+library(styledtable)
 
 # Create the styled table body
 st_body <- iris[sample(seq_len(nrow(iris)), 10),] %>%

@@ -3,7 +3,7 @@
 \begin{document}
 
 <<>>=
-library(styledTables)
+library(styledtable)
 
 # Create the styled table
 st1 <- iris[sample(seq_len(nrow(iris)), 10),] %>%

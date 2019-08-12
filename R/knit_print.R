@@ -14,12 +14,12 @@ knit_print_rmd_html <- function(x, ...) {
 }
 
 inject_preamble <- function(pkgs) {
-  user_pkgs <- knitr::opts_knit$get("header")["styledTables_userpkgs"]
+  user_pkgs <- knitr::opts_knit$get("header")["styledtable_userpkgs"]
   if (is.na(user_pkgs))
     user_pkgs <- NULL
   knitr::set_header(
-    styledTables = st_preamble(),
-    styledTables_userpkgs = paste(
+    styledtable = st_preamble(),
+    styledtable_userpkgs = paste(
       user_pkgs,
       "\n",
       rmarkdown:::latex_dependencies_as_string(pkgs)

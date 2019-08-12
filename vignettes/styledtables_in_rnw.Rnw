@@ -3,23 +3,23 @@
 \geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=2.5cm,rmargin=2.5cm}
 
 \makeatletter
-% \VignetteIndexEntry{styledTables in Rnw files}
+% \VignetteIndexEntry{styledtable in Rnw files}
 % \VignetteEngine{knitr::knitr}
 
 \makeatother
 
-\title{styledTables in Rnw files}
+\title{styledtable in Rnw files}
 \author{Adrian Maldet \and Gregor de Cillia}
 
 \begin{document}
 \maketitle
 
-\noindent In order to use \texttt{styledTables} in sweave (Rnw) documents, the resulting object
+\noindent In order to use \texttt{styledtable} in sweave (Rnw) documents, the resulting object
 can be printed in the chunk. Note that the below method only works with the knitr engine, but
 not with sweave.
 
 <<>>=
-library(styledTables)
+library(styledtable)
 set.seed(42)
 
 # Create the styled table

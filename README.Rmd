@@ -2,29 +2,29 @@
 output: github_document
 ---
 
-# styledTables <img src="man/figures/logo.png" align="right" alt="" width=140 height=162 />
+# styledtable <img src="man/figures/logo.png" align="right" alt="" width=140 height=162 />
 
 <!-- badges: start -->
-[![Travis build status](https://travis-ci.org/R-package/styledTables.svg?branch=master)](https://travis-ci.org/R-package/styledTables)
-[![GitHub last commit](https://img.shields.io/github/last-commit/R-package/styledTables.svg?logo=github)](https://github.com/R-package/styledTables/commits/master)
-[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/R-package/styledTables.svg?logo=github)](https://github.com/R-package/styledTables)
+[![Travis build status](https://travis-ci.org/R-package/styledtable.svg?branch=master)](https://travis-ci.org/R-package/styledtable)
+[![GitHub last commit](https://img.shields.io/github/last-commit/R-package/styledtable.svg?logo=github)](https://github.com/R-package/styledtable/commits/master)
+[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/R-package/styledtable.svg?logo=github)](https://github.com/R-package/styledtable)
 
 
-`styledTables` is an **R** package that makes it possible to export a
+`styledtable` is an **R** package that makes it possible to export a
 `data.frame` as beautifully styled **Excel** and **LaTeX** table.
 
 > Produce tables, which you want to look at.
 
-Have a look at the [get started vignette] to see `styledTables` in action.
+Have a look at the [get started vignette] to see `styledtable` in action.
 
 ## Installation
 
 ```{r, eval = FALSE}
 # Install development version from GitHub
-devtools::install_github('R-package/styledTables', build_opts = NULL)
+devtools::install_github('R-package/styledtable', build_opts = NULL)
 ```
 
-styledTables needs certain LaTeX packages in order to support export to `tex`,
+styledtable needs certain LaTeX packages in order to support export to `tex`,
 `png` and `pdf`. To install those dependencies on ubuntu, the following terminal
 commands can be used:
 
@@ -53,7 +53,7 @@ When you are finished, you can export your `StyledTable` to:
 
 ## Further reading
 
-More information can be found on the [github-pages site] for `styledTables` 
+More information can be found on the [github-pages site] for `styledtable` 
 
 * A simple guide is given in the [get started vignette].
 * A vast list of available styling functions will soon be available through the [styling functions vignette].
@@ -65,9 +65,9 @@ More information can be found on the [github-pages site] for `styledTables`
 
 [GPL-3]
   
-[get started vignette]:  https://R-package.github.io/styledTables/articles/styledTables.html
-[styling functions vignette]:  https://R-package.github.io/styledTables/articles/styling_functions.html
-[cross table vignette]: https://R-package.github.io/styledTables/articles/cross_table_creation.html
-[github-pages site]: https://R-package.github.io/styledTables
+[get started vignette]:  https://R-package.github.io/styledtable/articles/styledtable.html
+[styling functions vignette]:  https://R-package.github.io/styledtable/articles/styling_functions.html
+[cross table vignette]: https://R-package.github.io/styledtable/articles/cross_table_creation.html
+[github-pages site]: https://R-package.github.io/styledtable
 [xlsx package]: https://cran.r-project.org/web/packages/xlsx/xlsx.pdf
-[GPL-3]: https://R-package.github.io/styledTables/LICENSE
+[GPL-3]: https://R-package.github.io/styledtable/LICENSE
