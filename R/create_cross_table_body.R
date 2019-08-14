@@ -50,7 +50,7 @@ setGeneric("create_cross_table_body", function(data, ...) standardGeneric("creat
 #' # setup styled header
 #' s_header <- create_cross_table_header(
 #'     y_col_headings = c("Year", "Subject"),
-#'     cross_table_heading = "Comparison of test results",
+#'     "Comparison of test results",
 #'     c("Male", "Female"),
 #'     c("Positive", "Negative"),
 #'     c("count", "in %")
@@ -339,6 +339,7 @@ setMethod(
         }
 
         #### Calculate cross table data
+        y_cols <- unique(c(y_cols_left, y_cols_right))
         if (length(value_cols) > 0) {
             # The data.frame has one or more value columns that should be used for cross table calculation
             # Solution:
@@ -358,18 +359,18 @@ setMethod(
             KEYCOL <- "KEYCOL"
             VALUECOL <- "VALUECOL"
             dcastFormula <- as.formula(paste0(
-                    paste0(c(sub_table_cols, y_cols_left, y_cols_right), collapse = " + "), 
+                    paste0(c(sub_table_cols, y_cols), collapse = " + "), 
                     " ~ ", 
                     paste0(c(x_cols, KEYCOL), collapse = " + ")
                 ))
-            dataCross <- melt(
+            data_cross <- melt(
                     data = copy(data)[, (value_cols) := .I], # replace the value columns by the row indices of the values
                     variable.name = KEYCOL,
                     value.name = VALUECOL,
                     measure.vars = value_cols
                 )
             args <- list(
-                    data = dataCross,
+                    data = data_cross,
                     formula = dcastFormula,
                     fun.aggregate = aggregation,
                     value.var = VALUECOL,
@@ -377,13 +378,13 @@ setMethod(
                     drop = c(drop_missing_rows, drop_missing_cols)
                 )
             args <- args[sapply(args, function(x) !is.null(x))]
-            dataCross <- do.call(
+            data_cross <- do.call(
                 dcast,
                 args = args
             )
 
             # replace the value indices in the generated value columns by their original values
-            value_colsCross <- setdiff(colnames(dataCross), c(sub_table_cols, y_cols_left, y_cols_right))
+            value_colsCross <- setdiff(colnames(data_cross), c(sub_table_cols, y_cols))
             for (i in seq_len(length(value_colsCross))) {
                 # name of the value column in the crossTable
                 vColCross <- value_colsCross[i]
@@ -391,37 +392,42 @@ setMethod(
                 iOrig <- ((i - 1L) %% length(value_cols)) + 1L
                 vCol <- value_cols[iOrig]
                 # replace the value indices by their original values
-                setnames(dataCross, vColCross, "VALUEIDS_")
+                setnames(data_cross, vColCross, "VALUEIDS_")
                 if (!is.null(fill_values)) {
                     valueMap <- c(data[[vCol]], fill_values[[iOrig]])
-                    dataCross[is.na(VALUEIDS_), VALUEIDS_ := length(valueMap)]
+                    data_cross[is.na(VALUEIDS_), VALUEIDS_ := length(valueMap)]
                 } else {
                     valueMap <- data[[vCol]]
                 }
-                dataCross[, (vColCross) := valueMap[VALUEIDS_]]
-                dataCross[, VALUEIDS_ := NULL]
+                data_cross[, (vColCross) := valueMap[VALUEIDS_]]
+                data_cross[, VALUEIDS_ := NULL]
             }
-            colNamesNew <- colnames(dataCross)
+            new_names <- colnames(data_cross)
             # all remaining rows are Cross Table Columns
-            xColIds <- match(
-                setdiff(colNamesNew, c(sub_table_cols, y_cols_left, y_cols_right)), 
-                colNamesNew
+            x_cols_id <- match(
+                setdiff(new_names, c(sub_table_cols, y_cols)), 
+                new_names
             )
         } else {
             # no X columns or value colums are given
             # only print Y columns (no cross table)
-            dataCross <- data
-            colNamesNew <- colnames(dataCross)
+            data_cross <- data
+            new_names <- colnames(data_cross)
             # No cross table columns
-            xColIds <- NULL
+            x_cols_id <- NULL
         }
-        # Pick the columns from the generated dataCross
+        # Pick the columns from the generated data_cross
         # [sub_table_cols, y_cols_left, #cross_table#, y_cols_right]
-        subTableColIds <- match(sub_table_cols, colNamesNew)
-        yColIds <- match(y_cols_left, colNamesNew)
-        yColRightIds <- match(y_cols_right, colNamesNew)
-        dataCross <- dataCross[, c(subTableColIds, yColIds, xColIds, yColRightIds), with = FALSE]
-        dataCross <- setorderv(dataCross, c(y_cols_left, y_cols_right))
+        sub_table_cols_id <- match(sub_table_cols, new_names)
+        y_cols_left_id <- match(y_cols_left, new_names)
+        y_cols_right_id <- match(y_cols_right, new_names)
+        data_cross <- data_cross[, c(sub_table_cols_id, y_cols_left_id, x_cols_id, y_cols_right_id), with = FALSE]
+        new_names <- paste0("X", seq_len(ncol(data_cross)))
+        colnames(data_cross) <- new_names
+        sub_table_cols <- new_names[seq_len(length(sub_table_cols))]
+        y_cols_left <- new_names[length(sub_table_cols) + seq_len(length(y_cols_left))]
+        y_cols_right <- new_names[length(new_names) - length(y_cols_right) + seq_len(length(y_cols_right))]
+        data_cross <- setorderv(data_cross, c(y_cols_left, y_cols_right))
 
         # define a list of styling function that implements the styling of the value columns
         if (!is.null(value_col_stylings)) {
@@ -466,7 +472,7 @@ setMethod(
 
         ### generate styled cross table body
         create_sub_table(
-            data = dataCross,
+            data = data_cross,
             sub_level = 1,
             sub_table_cols = sub_table_cols,
             sub_heading_stylings = sub_heading_stylings,
@@ -512,12 +518,12 @@ create_sub_table <- function(
         # this means we have to generate the sub table body
         # the data.frame has subTableColumns which should not displayed
         #  => remove the columns
+        setorderv(data, c(y_cols_left, y_cols_right))
         if (length(sub_table_cols) > 0)
             data <- data[,
-                    setdiff(colnames(data), sub_table_cols),
+                    seq(length(sub_table_cols) + 1, ncol(data)),
                     with = FALSE
                 ]
-        setorderv(data, c(y_cols_left, y_cols_right))
         # create styled subTable
         st <- styled_table(data)
         # apply body styling

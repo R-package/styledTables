@@ -1,6 +1,6 @@
 Package: styledtable
 Title: R package for easy export of beautifully styled tables to Excel, LaTeX, PNG and PDF
-Version: 2.1.2
+Version: 0.0.0
 Authors@R:
     c(person(given = "Adrian",
              family = "Maldet",

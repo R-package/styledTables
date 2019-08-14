@@ -75,7 +75,7 @@ students_data <- data.frame(
 # setup styled header
 s_header <- create_cross_table_header(
     y_col_headings = c("Year", "Subject"),
-    cross_table_heading = "Comparison of test results",
+    "Comparison of test results",
     c("Male", "Female"),
     c("Positive", "Negative"),
     c("count", "in \%")

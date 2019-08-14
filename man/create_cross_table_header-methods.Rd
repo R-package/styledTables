@@ -7,17 +7,17 @@
 \alias{create_cross_table_header,character,character,character,character,character,character-method}
 \title{Method create_cross_table_header}
 \usage{
-create_cross_table_header(y_col_headings, ...)
+create_cross_table_header(y_headings_left, ...)
 
-\S4method{create_cross_table_header}{character}(y_col_headings,
-  cross_table_heading = NULL, ...)
+\S4method{create_cross_table_header}{character}(y_headings_left, ...,
+  y_headings_right = NULL)
 }
 \arguments{
-\item{y_col_headings}{A character vector that holds the header texts for the Y columns of the cross table. If no other arguments are given the resulting is not a cross table, but a normal table.}
+\item{y_headings_left}{A character vector that holds the header texts for the Y columns at the left side of the cross table. If no other arguments are given the resulting is not a cross table, but a normal table.}
 
 \item{...}{(optional) One or more vectors of character strings that hold the levels of the first/second/third/... cross table X column headings. These levels are used as header texts in the first/second/third/... row of the generated cross table columns. If no character vector is supplied, then the resulting table is not a cross table, but a normal table.}
 
-\item{cross_table_heading}{(optional) A single character string that is printed in a merged cell above the Y cross table cols.}
+\item{y_headings_right}{A character vector that holds the header texts for the Y columns at the right side of the cross table.}
 }
 \value{
 The generated \link{StyledTable} object holding the styled table header rows
@@ -47,8 +47,8 @@ students_data <- data.frame(
   ungroup
 # setup styled header
 s_header <- create_cross_table_header(
-    y_col_headings = c("Year", "Subject"),
-    cross_table_heading = "Comparison of test results",
+    y_headings_left = c("Year", "Subject"),
+    "Comparison of test results",
     c("Male", "Female"),
     c("Positive", "Negative"),
     c("count", "in \%")
@@ -70,10 +70,10 @@ s_body <- create_cross_table_body(
     fill_values = list(0L, 0)
   )
 # Concat styled header and styled body into a single styled table
-s_tbl <- styled_table(
+st <- styled_table(
     s_header,
     s_body
   )
-s_tbl \%>\%
+st \%>\%
   write_png
 }
