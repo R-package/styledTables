@@ -14,9 +14,9 @@ Have a look at the [get started vignette](https://R-package.github.io/styledtabl
 Caution
 -------
 
-Currently is `styledtable` under heavy development. Unfortunately, the current state is not fully stable.
+`styledtable` is currently under heavy development. Unfortunately, the current version is not fully stable.
 
-If you want to use `styledtable`, we recommend the **last stable version**, which came under the **old package name** `styledTables`:
+If you want to use `styledtable`, we recommend installing the **last stable version**, which came under the **old package name** `styledTables`:
 
 ``` r
 # Install last stable version from GitHub
