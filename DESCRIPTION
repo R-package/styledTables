@@ -5,7 +5,7 @@ Authors@R:
     c(person(given = "Adrian",
              family = "Maldet",
              role = c("aut", "cre"),
-             email = "adrian.maldet@statistik.gv.at"),
+             email = "maldet@posteo.at"),
       person(given = "Gregor", 
              family = "de Cillia",
              role = "aut",
