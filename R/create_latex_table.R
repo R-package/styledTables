@@ -69,6 +69,16 @@ setMethod(
     }
 )
 
+get_merged_cell <- function(st, i, j) {
+  ind <- sapply(
+      st$merges, 
+      function(m) between_vec(i, m$row_id) && between_vec(j, m$col_id)
+    )
+  if (!any(ind))
+    return(NULL)
+  st$merges[[min(which(ind))]]
+}
+
 #' Generate the LaTeX code for a StyledTable without begin{tabular} and end{tabular}
 #'
 #' @name create_latex_table_body
@@ -98,6 +108,27 @@ setMethod(
         }
         nRow <- count_rows(st)
         nCol <- count_cols(st)
+        columns_have_left_border <- sapply(
+          seq_len(nCol),
+          function(j) {
+            any(sapply(
+              seq_len(nRow),
+              function(i) {
+                borders <- getStyledCell(
+                  st$style[[i]][[j]],
+                  "border_position"
+                )
+                if (!"LEFT" in borders)
+                  return(FALSE)
+                m <- get_merged_cell(st, i, j)
+                if (!is.null(m) && m$col_id < j)
+                  return(FALSE)
+
+                merge <- get_merged_cell(st, i, j)
+              }
+            ))
+          }
+        )
         # ---- hhline color definitions ----
         # hhline colors must have names and must therefore be defined
         # before the \begin{tabular}
@@ -255,7 +286,11 @@ setMethod(
                         if (diff(merge$col_id) > 0)
                             cellWidth <- paste0(
                                 cellWidth,
-                                as.character(- 2 * diff(merge$col_id)),
+                                "+",
+                                sum(columns_have_left_border[seq(merge$col_id[1] + 1L, merge$col_id[2])]),
+                                "\\arrayrulewidth",
+                                "+",
+                                as.character(2 * diff(merge$col_id)),
                                 "\\tabcolsep"
                             )
                         # Width of the \multirow column
