@@ -9,7 +9,7 @@ styledtable <img src="man/figures/logo.png" align="right" alt="" width=140 heigh
 
 > Produce tables, which you want to look at.
 
-Have a look at the [get started vignette](https://R-package.github.io/styledtable/articles/styledtable.html) to see `styledtable` in action.
+Have a look at the [get started vignette](https://R-package.github.io/styledtable/articles/styledTables.html) to see `styledtable` in action.
 
 Caution
 -------
