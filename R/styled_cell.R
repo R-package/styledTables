@@ -313,7 +313,7 @@ setMethod("initialize", signature(.Object = "StyledCell"),
         if (!missing(excel_pre_process)) {
             .Object@excel_pre_process <- excel_pre_process
         } else {
-            .Object@excel_pre_process <- function(x) x
+            .Object@excel_pre_process <- base::identity
         }
         if (!missing(latex_pre_process)) {
             .Object@latex_pre_process <- latex_pre_process
@@ -404,7 +404,7 @@ setMethod("getStyledCell", signature(sc = "StyledCell"),
 setMethod("getStyledCell", signature(sc = "MissingOrNull"),
     function(sc, style_name) {
         if (style_name %in% c("excel_pre_process", "latex_pre_process"))
-            return(function(x) x)
+            return(base::identity)
         NULL
     }
 )

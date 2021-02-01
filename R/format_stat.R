@@ -216,9 +216,7 @@ setMethod(
                     ))
         }
         st <- set_excel_data_format(st, "#,##0", row_id = row_id, col_id = col_id)
-        set_latex_pre_process(
-            st,
-            function(x) {
+        latex_pre_proc = function(x) {
                 if (!is.na(x) && x != 0) {
                     format(round(x, 0), nsmall = 0, big.mark = ".", decimal.mark = ",")
                 } else if (!is.na(x) && x == 0) {
@@ -226,7 +224,11 @@ setMethod(
                 } else {
                     "$\\cdot$"
                 }
-            },
+            }
+        environment(latex_pre_proc) <- .GlobalEnv
+        set_latex_pre_process(
+            st,
+            latex_pre_proc,
             row_id = row_id,
             col_id = col_id)
     }
@@ -286,9 +288,7 @@ setMethod(
                     ))
         }
         st <- set_excel_data_format(st, "#,##0.0", row_id = row_id, col_id = col_id)
-        set_latex_pre_process(
-            st,
-            function(x) {
+        latex_pre_proc = function(x) {
                 if (!is.na(x) && x != 0) {
                     format(round(x, 1), nsmall = 1, decimal.mark = ",")
                 } else if (!is.na(x) && x == 0) {
@@ -296,7 +296,11 @@ setMethod(
                 } else {
                     "$\\cdot$"
                 }
-            },
+            }
+        environment(latex_pre_proc) <- .GlobalEnv
+        set_latex_pre_process(
+            st,
+            latex_pre_proc,
             row_id = row_id,
             col_id = col_id)
     }
