@@ -4,11 +4,23 @@
 \alias{ghostconvert}
 \title{Call Ghostscript.}
 \usage{
-ghostconvert(x, y = file.path(gdir, out), gdir = dirname(x),
-  out = sub("\\\\.[^.]+$", paste0(if (multipage) multifix else NULL, ".",
-  suffix), basename(x)), gs_cmd = "", device = "pngalpha",
-  multipage = FALSE, multifix = "-\%03d", suffix = "png",
-  antialias = 4, resolution = 300, replace = TRUE, other = "", ...)
+ghostconvert(
+  x,
+  y = file.path(gdir, out),
+  gdir = dirname(x),
+  out = sub("\\\\.[^.]+$", paste0(if (multipage) multifix else NULL, ".", suffix),
+    basename(x)),
+  gs_cmd = "",
+  device = "pngalpha",
+  multipage = FALSE,
+  multifix = "-\%03d",
+  suffix = "png",
+  antialias = 4,
+  resolution = 300,
+  replace = TRUE,
+  other = "",
+  ...
+)
 }
 \arguments{
 \item{x}{path for file to be converted}
@@ -43,14 +55,14 @@ ghostconvert(x, y = file.path(gdir, out), gdir = dirname(x),
 the name of the file created
 }
 \description{
-THIS CODE WAS TAKEN FROM \pkg{latexpdf} \cr
-CRAN URL: \url{https://CRAN.R-project.org/package=latexpdf} \cr
-File: \code{R/png.R} \cr
-Version:  0.1.6 \cr
-Published:  2018-10-26 \cr
-Author:   Tim Bergsma \cr
-Maintainer:   Tim Bergsma <bergsmat at gmail.com> \cr
-License:  GPL-3 \cr
+THIS CODE WAS TAKEN FROM \pkg{latexpdf}
+CRAN URL: \url{https://CRAN.R-project.org/package=latexpdf}
+File: \code{R/png.R}
+Version:  0.1.6
+Published:  2018-10-26
+Author:   Tim Bergsma
+Maintainer:   Tim Bergsma (bergsmat at gmail.com)
+License:  GPL-3
 }
 \details{
 Call Ghostscript, converting by default from PDF to PNG.

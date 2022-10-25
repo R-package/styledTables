@@ -1,11 +1,11 @@
-Package: styledtable
+Package: styledTables
 Title: R package for easy export of beautifully styled tables to Excel, LaTeX, PNG and PDF
-Version: 0.0.0
+Version: 2.3.2
 Authors@R:
     c(person(given = "Adrian",
              family = "Maldet",
              role = c("aut", "cre"),
-             email = "maldet@posteo.at"),
+             email = "adrian.maldet@statistik.gv.at"),
       person(given = "Gregor", 
              family = "de Cillia",
              role = "aut",
@@ -16,6 +16,11 @@ Depends:
 Imports:
     xlsx (>= 0.6.1),
     data.table (>= 1.12.2),
+    tinytools (>= 2.3.2),
+    funky (>= 1.1.1),
+    htmltools (>= 0.5.2),
+    rmarkdown (>= 2.14),
+    rlang (>= 1.0.2),
     methods,
     stats,
     grDevices,
@@ -27,11 +32,12 @@ Imports:
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1
 Collate:
     'alignment.R'
     'create_cross_table_body.R'
     'create_cross_table_header.R'
+    'create_html.R'
     'styled_cell.R'
     'styled_table.R'
     'create_latex_table.R'
@@ -44,16 +50,16 @@ Collate:
     'imports.R'
     'knit_print.R'
     'remove_row_col.R'
+    'set_html.R'
     'utilities.R'
     'utils-pipe.R'
     'write_excel.R'
     'write_pdf.R'
     'write_png.R'
 Suggests:
-    rmarkdown,
     hexSticker,
     dplyr (>= 0.7.6)
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
-URL: https://github.com/R-package/styledtable
-BugReports: https://github.com/R-package/styledtable/issues
+URL: https://github.com/R-package/styledTables
+BugReports: https://github.com/R-package/styledTables/issues

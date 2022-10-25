@@ -8,7 +8,7 @@
 #' @include styled_cell.R
 #' @seealso [styled_table()]
 #' @seealso [write_pdf()], [write_png()], [write_excel()], [create_latex_table()], [append_latex_table()], [create_latex_table_body()]
-#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_row_height()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
+#' @seealso [set_excel_font_name()], [set_latex_font_name()], [set_excel_font_size()], [set_latex_font_size()], [set_font_color()], [set_bold()], [set_excel_boldweight()], [set_italic()], [set_underline()], [set_strikeout()], [set_rotation()], [set_indent()], [set_fill_color()], [set_horizontal()], [set_excel_vertical()], [set_latex_vertical_move()], [set_latex_vertical_move()], [set_excel_row_height()], [set_latex_padding_top()], [set_latex_padding_bottom()], [set_excel_col_width()], [set_latex_col_width()], [set_border_position()], [set_border_color()], [set_excel_border_pen()], [set_excel_data_format()], [set_excel_pre_process()], [set_latex_pre_process()], [set_excel_wrapped()], [set_excel_locked()], [set_excel_hidden()]
 #' @seealso [remove_col()], [remove_row()]
 #' @seealso [merge_cells()], [merge_equal_cells()]
 #' @seealso [format_stat_header()], [format_stat_body()], [format_stat_sub_heading()], [format_stat_absolute()], [format_stat_relative()]
@@ -22,7 +22,10 @@ setClass(
         styles = "list",
         excel_row_height = "list",
         excel_col_width = "list",
-        latex_row_height = "list",
+        html = "list",
+        html_dependencies = "list",
+        latex_padding_top = "list",
+        latex_padding_bottom = "list",
         latex_col_width = "list"
     )
 )
@@ -48,10 +51,13 @@ setMethod("initialize", signature(.Object = "StyledTable"), function(.Object, ..
     ######### read data ###########
     if (!"data" %in% names(args))
         errHandler("Argument 'data' must not be empty.")
-    if (!is.data.frame(args$data) && !is.matrix(args$data))
+    if (!is.atomic(args$data) && !is.data.frame(args$data) && !is.matrix(args$data))
         errHandler("The argument 'data' has to be a non empty matrix or data.frame.")
-    if (is.matrix(args$data))
+    if (is.matrix(args$data)) {
         args$data <- data.frame(args$data)
+    } else if (is.atomic(args$data)) {
+        args$data 
+    }
     # number of data rows
     nRow <- nrow(args$data)
     # number of data cols
@@ -195,37 +201,58 @@ setMethod("initialize", signature(.Object = "StyledTable"), function(.Object, ..
     } else {
         .Object@excel_col_width <- list(col_id = numeric(0), width = numeric(0))
     }
-    ######### read latex_row_height ###########
-    if ("latex_row_height" %in% names(args)) {
-        # Check if latex_row_height$row_id and $height have correct types and same length
+    
+    ######### read latex_padding_top ###########
+    if ("latex_padding_top" %in% names(args)) {
+        # Check if latex_padding_top$row_id and $height have correct types and same length
         if (
-                !is.list(args$latex_row_height) ||
-                !is.numeric(args$latex_row_height$row_id) ||
-                !is.numeric(args$latex_row_height$height) ||
-                length(args$latex_row_height$row_id) != length(args$latex_row_height$height)
+                !is.list(args$latex_padding_top) ||
+                !is.numeric(args$latex_padding_top$row_id) ||
+                !is.character(args$latex_padding_top$height) ||
+                length(args$latex_padding_top$row_id) != length(args$latex_padding_top$height)
             )
             errHandler(paste0(
-                    "The slot 'latex_row_height' must contain a list ",
-                    "which holds numeric vectors 'row_id' and ",
+                    "The slot 'latex_padding_top' must contain a list ",
+                    "which holds vectors 'row_id' and ",
                     "'height' of the same length."
                 ))
-        # Check if latex_row_height$row_id is a subset of 1:N
-        if (any(!args$latex_row_height$row_id %in% 1:nRow))
+        # Check if latex_padding_top$row_id is a subset of 1:N
+        if (any(!args$latex_padding_top$row_id %in% 1:nRow))
             errHandler(paste0(
-                    "The list element 'row_id' in the 'latex_row_height' slot ",
+                    "The list element 'row_id' in the 'latex_padding_top' slot ",
                     "must be a subset of possible row indices of the ",
                     "data list in 'data'."
                 ))
-        # Check if latex_row_height$height >0
-        if (any(!args$latex_row_height$height <= 0))
-            errHandler(paste0(
-                    "The list element 'height' in the 'latex_row_height' slot ",
-                    "must be a vector of positive numbers."
-                ))
-        # assign latex_row_height
-        .Object@latex_row_height <- args$latex_row_height
+        # assign latex_padding_top
+        .Object@latex_padding_top <- args$latex_padding_top
     } else {
-        .Object@latex_row_height <- list(row_id = numeric(0), height = numeric(0))
+        .Object@latex_padding_top <- list(row_id = numeric(0), height = character(0))
+    }
+    ######### read latex_padding_bottom ###########
+    if ("latex_padding_bottom" %in% names(args)) {
+        # Check if latex_padding_bottom$row_id and $height have correct types and same length
+        if (
+            !is.list(args$latex_padding_bottom) ||
+            !is.numeric(args$latex_padding_bottom$row_id) ||
+            !is.character(args$latex_padding_bottom$height) ||
+            length(args$latex_padding_bottom$row_id) != length(args$latex_padding_bottom$height)
+        )
+            errHandler(paste0(
+                "The slot 'latex_padding_bottom' must contain a list ",
+                "which holds vectors 'row_id' and ",
+                "'height' of the same length."
+            ))
+        # Check if latex_padding_bottom$row_id is a subset of 1:N
+        if (any(!args$latex_padding_bottom$row_id %in% 1:nRow))
+            errHandler(paste0(
+                "The list element 'row_id' in the 'latex_padding_bottom' slot ",
+                "must be a subset of possible row indices of the ",
+                "data list in 'data'."
+            ))
+        # assign latex_padding_bottom
+        .Object@latex_padding_bottom <- args$latex_padding_bottom
+    } else {
+        .Object@latex_padding_bottom <- list(row_id = numeric(0), height = character(0))
     }
     ######### read latex_col_width ###########
     if ("latex_col_width" %in% names(args)) {
@@ -259,6 +286,37 @@ setMethod("initialize", signature(.Object = "StyledTable"), function(.Object, ..
     } else {
         .Object@latex_col_width <- list(col_id = numeric(0), width = numeric(0))
     }
+    ######### read excel_row_height ###########
+    if ("html" %in% names(args)) {
+        # TODO: Implement validation
+        .Object@html <- args$html
+    } else {
+        .Object@html <- list(
+            colheader_row_id = numeric(0),
+            rowheader_col_id = numeric(0),
+            subheading_row_id = numeric(0),
+            table_id = character(0),
+            table_class = character(0),
+            tr_class = list(
+                row_id = numeric(0),
+                row_class = character(0)
+            )
+        )
+    }
+    .Object@html_dependencies <- append(
+      list(
+        htmltools::htmlDependency(
+          "styledtable_basic",
+          "1.0.0",
+          src = system.file(
+            "stylesheets",
+            package = "styledTables"
+          ),
+          stylesheet = "styledtable_basic.min.css"
+        )
+      ),
+      args$html_dependencies
+    )
     .Object
 })
 
@@ -308,7 +366,7 @@ setMethod(
 #' @name styled_table
 #' @rdname StyledTable-styled_table-method
 #' @exportMethod styled_table
-setGeneric("styled_table", function(..., keep_header = FALSE) standardGeneric("styled_table"))
+setGeneric("styled_table", function(..., keep_header = FALSE, nrow = NULL) standardGeneric("styled_table"))
 
 #' @rdname StyledTable-styled_table-method
 #' @aliases styled_table-method
@@ -316,11 +374,14 @@ setGeneric("styled_table", function(..., keep_header = FALSE) standardGeneric("s
 #' @param keep_header (optional) A logical flag, if the column names of passed
 #'    \code{data.frame} should be written in the first line of the resulting
 #'    [StyledTable] object object.
+#' @param nrow (optional) If the passed object is an atomic vector, then the
+#'   it can be transformed into a [matrix()] by defining the number of rows it
+#'   should be split into.
 #' @return A [StyledTable] object object
 setMethod(
     "styled_table",
     signature(),
-    function(..., keep_header = FALSE) {
+    function(..., keep_header = FALSE, nrow = NULL) {
         st <- NULL
         tbl_list <- list(...)
         if (keep_header && length(tbl_list) > 0 && is.data.frame(tbl_list[[1]]))
@@ -338,8 +399,10 @@ setMethod(
                     ), call. = FALSE)
                 if (!is.null(x)) {
                     flagIsStyledTable <- is(x, "StyledTable")
-                    if (!is.matrix(x) && !is.data.frame(x) && !flagIsStyledTable)
-                        errHandler("All sts have to be of the class 'matrix', 'data.frame' or 'StyledTable'.")
+                    if (!is.atomic(x) && !is.matrix(x) && !is.data.frame(x) && !flagIsStyledTable)
+                        errHandler("All sts have to be of the class 'atomic', 'matrix', 'data.frame' or 'StyledTable'.")
+                    if (is.atomic(x) && !is.matrix(x))
+                      x <- matrix(x, nrow = if(is.null(nrow)) 1 else nrow, byrow = TRUE)
                     if (!flagIsStyledTable)
                         x <- new("StyledTable", data = x)
                     if (is.null(st)) {
@@ -359,9 +422,126 @@ setMethod(
                         colIds <- st@excel_col_width$col_id %in% x@excel_col_width$col_id
                         st@excel_col_width$col_id <<- c(st@excel_col_width$col_id[!colIds], x@excel_col_width$col_id)
                         st@excel_col_width$width <<- c(st@excel_col_width$width[!colIds], x@excel_col_width$width)
+                        # Concat latex row padding top
+                        st@latex_padding_top$row_id <<- c(st@latex_padding_top$row_id, x@latex_padding_top$row_id + nRow)
+                        st@latex_padding_top$height <<- c(st@latex_padding_top$height, x@latex_padding_top$height)
+                        # Concat latex row padding bottom
+                        st@latex_padding_bottom$row_id <<- c(st@latex_padding_bottom$row_id, x@latex_padding_bottom$row_id + nRow)
+                        st@latex_padding_bottom$height <<- c(st@latex_padding_bottom$height, x@latex_padding_bottom$height)
+                        # Concat latex col width
+                        colIds <- st@latex_col_width$col_id %in% x@latex_col_width$col_id
+                        st@latex_col_width$col_id <<- c(st@latex_col_width$col_id[!colIds], x@latex_col_width$col_id)
+                        st@latex_col_width$width <<- c(st@latex_col_width$width[!colIds], x@latex_col_width$width)
+                        # Concat html
+                        st@html$colheader_row_id <<- c(st@html$colheader_row_id, x@html$colheader_row_id + nRow)
+                        st@html$subheading_row_id <<- c(st@html$subheading_row_id, x@html$subheading_row_id + nRow)
+                        colIds <- st@html$rowheader_col_id %in% x@html$rowheader_col_id
+                        st@html$rowheader_col_id <<- c(st@html$rowheader_col_id[!colIds], x@html$rowheader_col_id)
+                        st@html$table_class <<- unique(c(st@html$table_class, x@html$table_class))
+                        st@html$table_id <<- unique(c(st@html$table_id, x@html$table_id))
+                        st@html$tr_class$row_id <<- c(st@html$tr_class$row_id, x@html$tr_class$row_id + nRow)
+                        st@html$tr_class$row_class <<- c(st@html$tr_class$row_class, x@html$tr_class$row_class)
+                        # Append html_dependencies
+                        st@html_dependencies <- append(st@html_dependencies, x@html_dependencies)
+                        st@html_dependencies <- st@html_dependencies[!duplicated(st@html_dependencies)]
                         # Concat merged cells
                         x@merges <- lapply(x@merges, function(y) list(row_id = nRow + y$row_id, col_id = y$col_id))
                         st@merges <<- c(st@merges, x@merges)
+                    }
+                }
+            }
+        )
+        st
+    }
+)
+
+#' Create a [StyledTable] object
+#'
+#' This function creates a [StyledTable] object from a single data.frame or multiple data.frames or other [StyledTable] objects. If multiple [StyledTable] objects or data.frames are supplied, then they are concatenated vertically. Therefore, all supplied data.frames and [StyledTable] objects must have the same number of columns.
+#' @name st_bind_cols
+#' @rdname StyledTable-st_bind_cols-method
+#' @exportMethod st_bind_cols
+setGeneric("st_bind_cols", function(..., keep_header = FALSE) standardGeneric("st_bind_cols"))
+
+#' @rdname StyledTable-st_bind_cols-method
+#' @aliases st_bind_cols-method
+#' @param ... Multiple matrices, data.frames or [StyledTable] objects that should be concatenated
+#' @param keep_header (optional) A logical flag, if the column names of passed
+#'    \code{data.frame} should be written in the first line of the resulting
+#'    [StyledTable] object object.
+#' @return A [StyledTable] object object
+setMethod(
+    "st_bind_cols",
+    signature(),
+    function(..., keep_header = FALSE) {
+        st <- NULL
+        tbl_list <- list(...)
+        if (keep_header && length(tbl_list) > 0 && is.data.frame(tbl_list[[1]]))
+            tbl_list <- c(
+                list(matrix(names(tbl_list[[1]]), nrow = 1)),
+                tbl_list
+            )
+        lapply(
+            tbl_list,
+            function(x) {
+                errHandler <- function(description)
+                    stop(paste0(
+                        "Error in 'st_bind_cols'-method: ",
+                        description
+                    ), call. = FALSE)
+                if (!is.null(x)) {
+                    flagIsStyledTable <- is(x, "StyledTable")
+                    if (!is.matrix(x) && !is.data.frame(x) && !flagIsStyledTable)
+                        errHandler("All sts have to be of the class 'matrix', 'data.frame' or 'StyledTable'.")
+                    if (!flagIsStyledTable)
+                        x <- new("StyledTable", data = x)
+                    if (is.null(st)) {
+                        st <<- x
+                    } else {
+                        if (count_cols(st) != count_cols(x))
+                            errHandler("All sts must have the same number of columns.")
+                        nCol <- count_cols(st)
+                        # Concat data
+                        st@data <<- c(st@data, x@data)
+                        # Concat styles
+                        st@styles <<- c(st@styles, x@styles)
+                        # Concat excel col width
+                        st@excel_col_width$col_id <<- c(st@excel_col_width$col_id, x@excel_col_width$col_id + nCol)
+                        st@excel_col_width$width <<- c(st@excel_col_width$width, x@excel_col_width$width)
+                        # Concat excel row height
+                        rowIds <- st@excel_row_height$row_id %in% x@excel_row_height$row_id
+                        st@excel_row_height$row_id <<- c(st@excel_row_height$row_id[!rowIds], x@excel_row_height$row_id)
+                        st@excel_row_height$height <<- c(st@excel_row_height$height[!rowIds], x@excel_row_height$height)
+                        # Concat latex col padding top
+                        rowIds <- st@latex_padding_top$row_id %in% x@latex_padding_top$row_id
+                        st@latex_padding_top$row_id <<- c(st@latex_padding_top$row_id[!rowIds], x@latex_padding_top$row_id)
+                        st@latex_padding_top$height <<- c(st@latex_padding_top$height[!rowIds], x@latex_padding_top$height)
+                        # Concat latex row padding bottom
+                        rowIds <- st@latex_padding_bottom$row_id %in% x@latex_padding_bottom$row_id
+                        st@latex_padding_bottom$row_id <<- c(st@latex_padding_bottom$row_id[!rowIds], x@latex_padding_bottom$row_id)
+                        st@latex_padding_bottom$height <<- c(st@latex_padding_bottom$height[!rowIds], x@latex_padding_bottom$height)
+                        # Concat latex col width
+                        st@latex_col_width$col_id <<- c(st@latex_col_width$col_id, x@latex_col_width$col_id + nCol)
+                        st@latex_col_width$width <<- c(st@latex_col_width$width, x@latex_col_width$width)
+                        # Concat html
+                        st@html$rowheader_col_id <<- c(st@html$rowheader_col_id, x@html$rowheader_col_id + nCol)
+                        row_id <- st@html$colheader_row_id %in% x@html$colheader_row_id
+                        st@html$colheader_row_id <<- c(st@html$colheader_row_id[!row_id], x@html$colheader_row_id)
+                        row_id <- st@html$subheading_row_id %in% x@html$subheading_row_id
+                        st@html$subheading_row_id <<- c(st@html$subheading_row_id[!row_id], x@html$subheading_row_id)
+                        st@html$table_class <<- unique(c(st@html$table_class, x@html$table_class))
+                        st@html$table_id <<- unique(c(st@html$table_id, x@html$table_id))
+                        row_id <- st@html$tr_class$row_id %in% x@html$tr_class$row_id
+                        st@html$tr_class$row_id <<- c(st@html$tr_class$row_id[!row_id], x@html$tr_class$row_id)
+                        st@html$tr_class$row_class <<- c(st@html$tr_class$row_class[!row_id], x@html$tr_class$row_class)
+                        # concat html_dependencies
+                        st@html_dependencies <- append(st@html_dependencies, x@html_dependencies)
+                        st@html_dependencies <- st@html_dependencies[!duplicated(st@html_dependencies)]
+                        # Concat merged cells
+                        st@merges <<- c(
+                            st@merges,
+                            lapply(x@merges, function(y) list(row_id = y$col_id, col_id = y$col_id + nCol))
+                        )
                     }
                 }
             }

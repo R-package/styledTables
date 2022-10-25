@@ -10,10 +10,12 @@
 #'
 #' @importFrom tools texi2pdf
 #' @examples
+#' \dontrun{
 #' library(dplyr)
 #' mtcars[1:5, 1:2] %>%
 #'   styled_table %>%
 #'   write_png("table_image.png")
+#' }
 #' @export
 #' @seealso [write_pdf()], [write_excel()], [create_latex_table()], [append_latex_table()], [create_latex_table_body()]
 write_png <- function(st, file = "table.png", resize = TRUE) {

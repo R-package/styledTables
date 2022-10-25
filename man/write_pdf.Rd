@@ -15,14 +15,16 @@ write_pdf(st, file = "table.pdf", resize = TRUE)
 the table? Default is \code{TRUE}.}
 }
 \description{
-Use \code{\link[tools:texi2pdf]{tools::texi2pdf()}} to compile the output from
+Use \code{\link[tools:texi2dvi]{tools::texi2pdf()}} to compile the output from
 \code{\link[=create_latex_table]{create_latex_table()}} to a pdf and save the file.
 }
 \examples{
+\dontrun{
 library(dplyr)
 mtcars[1:5, 1:2] \%>\%
   styled_table \%>\%
   write_pdf("table_image.pdf")
+}
 }
 \seealso{
 \code{\link[=write_png]{write_png()}}, \code{\link[=write_excel]{write_excel()}}, \code{\link[=create_latex_table]{create_latex_table()}}, \code{\link[=append_latex_table]{append_latex_table()}}, \code{\link[=create_latex_table_body]{create_latex_table_body()}}

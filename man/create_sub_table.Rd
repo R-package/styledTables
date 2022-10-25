@@ -4,9 +4,15 @@
 \alias{create_sub_table}
 \title{Helper function that creates a styled sub table}
 \usage{
-create_sub_table(data, sub_level, sub_table_cols,
-  sub_heading_stylings = NULL, body_styling = NULL, y_cols_left,
-  y_cols_right)
+create_sub_table(
+  data,
+  sub_level,
+  sub_table_cols,
+  sub_heading_stylings = NULL,
+  body_styling = NULL,
+  y_cols_left,
+  y_cols_right
+)
 }
 \arguments{
 \item{data}{A data.frame that should be used for the creation of the cross table.}

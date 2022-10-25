@@ -4,8 +4,13 @@
 \alias{Alignment}
 \title{Bug fix in xlsx package (indent != 0 is not supported)}
 \usage{
-Alignment(horizontal = NULL, vertical = NULL, wrapText = FALSE,
-  rotation = 0, indent = 0)
+Alignment(
+  horizontal = NULL,
+  vertical = NULL,
+  wrapText = FALSE,
+  rotation = 0,
+  indent = 0
+)
 }
 \arguments{
 \item{horizontal}{Character string for horizontal alignement}

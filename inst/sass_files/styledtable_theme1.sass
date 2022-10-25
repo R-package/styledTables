@@ -1,0 +1,79 @@
+/* A simple theme for styledTables */
+$theme1-border: solid #000 1px
+$theme1-space-small: 0.2em
+$theme1-space-medium: 0.4em
+$theme1-indent: 1em
+
+table.styledtable-table.styledtable-theme1
+  font-family: "Akagi Pro", Arial, Helvetica, sans-serif
+  display: block
+  max-width: 100%
+  
+  caption
+    display: block
+    text-align: left
+
+  th, td
+    font-family: "Arial Narrow", Arial, Helvetica, sans-serif
+    border: none
+    padding-top: 0.1em
+    padding-bottom: 0.1em
+    padding-left: 0.8em
+    padding-right: 0.8em
+    font-weight: normal
+    text-align: right
+    
+  tbody>tr:last-child
+    th, td
+      border-bottom: $theme1-border
+  
+  tr.styledtable-tr-colheader
+    th
+      border-top: $theme1-border
+      border-bottom: $theme1-border
+      padding-top: $theme1-space-medium
+      padding-bottom: $theme1-space-medium
+    
+    /* Border colheader - BEGIN */
+    > th
+      border-left: $theme1-border
+      border-right: $theme1-border
+
+    > th:first-child
+      border-left: none
+
+    > th:last-child
+      border-right: none
+    /* border colheader - END */
+  
+  tr.styledtable-tr-colheader, tr.styledtable-tr-subheading
+    th
+      font-weight: bold
+      text-align: center
+
+  .styledtable-tr-subheading th
+    padding-top: $theme1-space-medium
+
+  tr.styledtable-tr-colheader+tr.styledtable-tr-body > *
+    padding-top: $theme1-space-medium  
+  tr.styledtable-tr-subheading+tr.styledtable-tr-body > *
+    padding-top: $theme1-space-medium  
+  
+  tr.styledtable-tr-body > th
+    text-align: left
+    
+  tfoot
+    td
+      text-align: left
+
+    td
+      padding-top: 0.2em
+
+    >tr:first-child td
+      padding-top: 0.4em
+
+  td.styledtable-td-indent-1
+    padding-left: $theme1-indent
+    
+  td.styledtable-td-indent-2
+    padding-left: calc(2*$theme1-indent)

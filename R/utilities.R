@@ -319,3 +319,13 @@ substitute_row_id <- function(st, row_id, stack_level = 1, error_handler) {
     }
     row_id
 }
+
+get_merged_cell <- function(st, row, col, fake_single_cell = FALSE) {
+  m_curr <- NULL
+  for (m in st@merges) {
+    if (between_vec(row, m$row_id) && between_vec(col, m$col_id)) m_curr <- m
+  }
+  if (isTRUE(fake_single_cell) && is.null(m_curr))
+    m_curr <- list(row_id = c(row, row), col_id = c(col, col))
+  m_curr
+}

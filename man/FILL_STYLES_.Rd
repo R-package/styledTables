@@ -4,7 +4,9 @@
 \name{FILL_STYLES_}
 \alias{FILL_STYLES_}
 \title{Import the non-exported FILL_STYLES_ from the xlsx package namespace}
-\format{An object of class \code{numeric} of length 19.}
+\format{
+An object of class \code{numeric} of length 19.
+}
 \usage{
 FILL_STYLES_
 }

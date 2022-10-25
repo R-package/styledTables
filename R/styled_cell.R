@@ -96,7 +96,10 @@ setClass(
         latex_vertical_move = "character",
         excel_pre_process = "function",
         latex_pre_process = "function",
-        latex_font_size = "character"
+        html_pre_process = "function",
+        latex_font_size = "character",
+        html_class = "character",
+        html_id = "character"
     ),
     validity = function(object) {
         # Check if the values of the arguments are correct
@@ -175,6 +178,9 @@ setClass(
 #' @param excel_pre_process A function that can be used to pre process cell values for the Excel table generation
 #' @param latex_pre_process A function that can be used to pre process cell values for the LaTeX table generation
 #' @param latex_font_size The LaTeX command to set the font size
+#' @param html_class A character vector holding the html class names assigned to the table cell (`<td>` dom element)
+#' @param html_id A class vector holding html ids, which will be added to the table cells (`<td>` dom element)
+#' @param html_pre_process A function that can be used to pre process cell values for the HTML table generation
 setMethod("initialize", signature(.Object = "StyledCell"),
     function(
         .Object,
@@ -204,7 +210,10 @@ setMethod("initialize", signature(.Object = "StyledCell"),
         latex_vertical_move,
         excel_pre_process,
         latex_pre_process,
-        latex_font_size
+        html_pre_process,
+        latex_font_size,
+        html_class,
+        html_id
     ) {
         # check function for the slots
         check_slot <- function(style_name) {
@@ -313,16 +322,33 @@ setMethod("initialize", signature(.Object = "StyledCell"),
         if (!missing(excel_pre_process)) {
             .Object@excel_pre_process <- excel_pre_process
         } else {
-            .Object@excel_pre_process <- function(x) x
+            .Object@excel_pre_process <- funky::restrict_fn_env(
+              function(x) x,
+              parent_env = "styledTables"
+            )
         }
         if (!missing(latex_pre_process)) {
             .Object@latex_pre_process <- latex_pre_process
         } else {
             .Object@latex_pre_process <- sanitize
         }
+        if (!missing(html_pre_process)) {
+          .Object@html_pre_process <- html_pre_process
+        } else {
+          .Object@html_pre_process <- funky::restrict_fn_env(
+            function(x) x,
+            parent_env = "styledTables"
+          )
+        }
         if (!missing(latex_font_size)) {
             .Object@latex_font_size <- latex_font_size
             check_slot("latex_font_size")
+        }
+        if (!missing(html_class)) {
+            .Object@html_class <- html_class
+        }
+        if (!missing(html_id)) {
+          .Object@html_id <- html_id
         }
         .Object
 })
@@ -404,7 +430,7 @@ setMethod("getStyledCell", signature(sc = "StyledCell"),
 setMethod("getStyledCell", signature(sc = "MissingOrNull"),
     function(sc, style_name) {
         if (style_name %in% c("excel_pre_process", "latex_pre_process"))
-            return(function(x) x)
+            return(identity)
         NULL
     }
 )

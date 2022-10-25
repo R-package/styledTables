@@ -1,13 +1,13 @@
 #' Call Ghostscript.
 #'
-#' THIS CODE WAS TAKEN FROM \pkg{latexpdf} \cr
-#' CRAN URL: \url{https://CRAN.R-project.org/package=latexpdf} \cr
-#' File: \code{R/png.R} \cr
-#' Version:  0.1.6 \cr
-#' Published:  2018-10-26 \cr
-#' Author:   Tim Bergsma \cr
-#' Maintainer:   Tim Bergsma <bergsmat at gmail.com> \cr
-#' License:  GPL-3 \cr
+#' THIS CODE WAS TAKEN FROM \pkg{latexpdf}
+#' CRAN URL: \url{https://CRAN.R-project.org/package=latexpdf}
+#' File: \code{R/png.R} 
+#' Version:  0.1.6
+#' Published:  2018-10-26
+#' Author:   Tim Bergsma
+#' Maintainer:   Tim Bergsma (bergsmat at gmail.com)
+#' License:  GPL-3
 #'
 #' Call Ghostscript, converting by default from PDF to PNG.
 #' @importFrom tools find_gs_cmd

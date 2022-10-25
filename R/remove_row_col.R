@@ -40,9 +40,9 @@ setMethod(
             ))
         # remove columns from data slot
         remainingCols <- setdiff(1:count_cols(st), col_id)
-        st@data <- lapply(st@data, function(row) row[remainingCols])
+        st@data <- lapply(st@data, function(col) col[remainingCols])
         # remove columns from styles slot
-        st@styles <- lapply(st@styles, function(row) row[remainingCols])
+        st@styles <- lapply(st@styles, function(col) col[remainingCols])
         # remove columns from excel_col_width slot
         colIndex <- which(!st@excel_col_width$col_id %in% col_id)
         st@excel_col_width$width <- st@excel_col_width$width[colIndex]
@@ -57,6 +57,13 @@ setMethod(
                 st@latex_col_width$col_id[colIndex],
                 function(x) x - sum(col_id < x)
             )
+        # remove columns from the html slot
+        colIds <- which(!st@html$rowheader_col_id %in% col_id)
+        st@html$rowheader_col_id <<- sapply(
+          st@html$rowheader_col_id[!colIds],
+          function(x) x-sum(col_id < x)
+        )
+        
         # remove columns from merges slot
         st@merges <- lapply(
                 st@merges,
@@ -123,18 +130,41 @@ setMethod(
         st@styles <- st@styles[remainingRows]
         # remove rows from excel_row_height slot
         rowIndex <- which(!st@excel_row_height$row_id %in% row_id)
-        st@excel_row_height$width <- st@excel_row_height$width[rowIndex]
+        st@excel_row_height$height <- st@excel_row_height$height[rowIndex]
         st@excel_row_height$row_id <- sapply(
                 st@excel_row_height$row_id[rowIndex],
                 function(x) x - sum(row_id < x)
             )
-        # remove rows from latex_row_height slot
-        rowIndex <- which(!st@latex_row_height$row_id %in% row_id)
-        st@latex_row_height$width <- st@latex_row_height$width[rowIndex]
-        st@latex_row_height$row_id <- sapply(
-                st@latex_row_height$row_id[rowIndex],
+        # remove rows from latex_padding_top slot
+        rowIndex <- which(!st@latex_padding_top$row_id %in% row_id)
+        st@latex_padding_top$height <- st@latex_padding_top$height[rowIndex]
+        st@latex_padding_top$row_id <- sapply(
+                st@latex_padding_top$row_id[rowIndex],
                 function(x) x - sum(row_id < x)
             )
+        # remove rows from latex_padding_bottom slot
+        rowIndex <- which(!st@latex_padding_bottom$row_id %in% row_id)
+        st@latex_padding_bottom$height <- st@latex_padding_bottom$height[rowIndex]
+        st@latex_padding_bottom$row_id <- sapply(
+            st@latex_padding_bottom$row_id[rowIndex],
+            function(x) x - sum(row_id < x)
+        )
+        # remove rows from html slot
+        st@html$colheader_row_id <- sapply(
+          setdiff(st@html$colheader_row_id, row_id),
+          function(x) x - sum(row_id < x)
+        )
+        st@html$st@html$subheading_row_id <- sapply(
+          setdiff(st@html$st@html$subheading_row_id, row_id),
+          function(x) x - sum(row_id < x)
+        )
+        st@html$tr_class$row_class <- st@html$tr_class$row_class[
+          !st@html$tr_class$row_id %in% row_id
+        ]
+        st@html$tr_class$row_id <- sapply(
+          setdiff(st@html$tr_class$row_id, row_id),
+          function(x) x - sum(row_id < x)
+        )
         # remove row_id from merges slot
         st@merges <- lapply(
                 st@merges,

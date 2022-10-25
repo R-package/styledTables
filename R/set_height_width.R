@@ -1,7 +1,7 @@
-#' Function to set the excel_row_height/latex_row_height/excel_col_width/latex_col_width
+#' Function to set the excel_row_height/latex_padding_top/latex_padding_bottom/excel_col_width/latex_col_width
 #'
 #' @param st The [StyledTable] object whoose heights/widths should be changed
-#' @param slot_name The name of the S4-class slot that should be changed (\code{excel_row_height}, \code{latex_row_height}, \code{excel_col_width}, \code{latex_col_width})
+#' @param slot_name The name of the S4-class slot that should be changed (\code{excel_row_height}, \code{latex_padding_top}, \code{excel_col_width}, \code{latex_col_width})
 #' @param id The row/column ids that should be changed (subset of 1:N where N is the number of rows/cols of the [StyledTable] object).
 #' @param value A vector holding the row height/col width that should be applied
 set_height_width <- function(st, slot_name, id, value) {
@@ -13,11 +13,17 @@ set_height_width <- function(st, slot_name, id, value) {
             maxInd <- count_rows(st)
             fnName <- "set_excel_row_height"
         },
-        latex_row_height = {
+        latex_padding_top = {
             typeInd <- "row_id"
             typeVal <- "height"
             maxInd <- count_rows(st)
-            fnName <- "set_latex_row_height"
+            fnName <- "set_latex_padding_top"
+        },
+        latex_padding_bottom = {
+            typeInd <- "row_id"
+            typeVal <- "height"
+            maxInd <- count_rows(st)
+            fnName <- "set_latex_padding_bottom"
         },
         excel_col_width = {
             typeInd <- "col_id"
@@ -60,21 +66,6 @@ set_height_width <- function(st, slot_name, id, value) {
                     "."
                 ))
     }
-    # Check if values has the right type and length
-    if (
-            !is.numeric(value) ||
-            !length(value) %in% c(1, length(id)) ||
-            any(is.na(value))
-        )
-        errHandler(paste0(
-                "The argument 'value' has to be a numeric vector of length 1 ",
-                "or the same number of ",
-                typeInd,
-                "s as the styled table."
-            ))
-    # Check if values are all > 0
-    if (any(value <= 0))
-        errHandler("The argument 'value' must be a positive vector.")
     # If the value argument has length 1 then it should be applied to every indces
     if (length(value) == 1)
         value <- rep(value, length(id))
@@ -138,29 +129,55 @@ setMethod(
     }
 )
 
-#' Method set_latex_row_height.
+#' Method set_latex_padding_top.
 #'
-#' @name set_latex_row_height
-#' @rdname set_latex_row_height-methods
-#' @exportMethod set_latex_row_height
+#' @name set_latex_padding_top
+#' @export
+#' @rdname set_latex_padding_top
 #' @param ... Various arguments
 #' @include styled_table.R
-setGeneric("set_latex_row_height", function(st, value, ...) standardGeneric("set_latex_row_height"))
+setGeneric("set_latex_padding_top", function(st, value, ...) standardGeneric("set_latex_padding_top"))
 
-#' @rdname set_latex_row_height-methods
-#' @aliases setLatexRowHeiths,StyledTable,numeric-method
+#' @export
+#' @rdname set_latex_padding_top
 #' @param st A [StyledTable] object
-#' @param value A numeric vector (length 1 or same lengt as \code{row_id}) holding the row heights
+#' @param value A character vector (length 1 or same lengt as \code{row_id}) holding the row heights
 #' @param row_id A vector of row numbers (N is substituted as \code{count_rows(st)})
 #' @return The modified [StyledTable] object
 setMethod(
-    "set_latex_row_height",
+    "set_latex_padding_top",
     signature(
         st = "StyledTable",
-        value = "numeric"
+        value = "character"
     ),
     function(st, value, row_id = NULL) {
-        set_height_width(st, "latex_row_height", row_id, value)
+        set_height_width(st, "latex_padding_top", row_id, value)
+    }
+)
+
+#' Method set_latex_padding_bottom.
+#'
+#' @name set_latex_padding_bottom
+#' @export
+#' @rdname set_latex_padding_bottom
+#' @param ... Various arguments
+#' @include styled_table.R
+setGeneric("set_latex_padding_bottom", function(st, value, ...) standardGeneric("set_latex_padding_bottom"))
+
+#' @export
+#' @rdname set_latex_padding_bottom
+#' @param st A [StyledTable] object
+#' @param value A character vector (length 1 or same lengt as \code{row_id}) holding the row heights
+#' @param row_id A vector of row numbers (N is substituted as \code{count_rows(st)})
+#' @return The modified [StyledTable] object
+setMethod(
+    "set_latex_padding_bottom",
+    signature(
+        st = "StyledTable",
+        value = "character"
+    ),
+    function(st, value, row_id = NULL) {
+        set_height_width(st, "latex_padding_bottom", row_id, value)
     }
 )
 
@@ -173,9 +190,9 @@ setMethod(
 setGeneric("set_latex_col_width", function(st, value, ...) standardGeneric("set_latex_col_width"))
 
 #' @rdname set_latex_col_width-methods
-#' @aliases set_latex_col_width,StyledTable,numeric-method
+#' @aliases set_latex_col_width,StyledTable,character-method
 #' @param st A [StyledTable] object
-#' @param value A numeric vector (length 1 or same lengt as \code{col_id}) holding the column widths
+#' @param value A character vector (length 1 or same length as \code{col_id}) holding the column widths
 #' @param col_id A vector of column numbers (N is substituted as \code{count_cols(st)})
 #' @return The modified [StyledTable] object
 setMethod(

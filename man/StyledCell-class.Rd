@@ -7,13 +7,39 @@
 \alias{initialize,StyledCell-method}
 \title{Style class for single cells in \link{StyledTable} objects}
 \usage{
-\S4method{initialize}{StyledCell}(.Object, excel_font_name,
-  latex_font_name, excel_font_size, font_color, bold, italic, strikeout,
-  underline, excel_boldweight, excel_wrapped, horizontal, vertical,
-  rotation, indent, border_position, border_color, excel_border_pen,
-  fill_color, excel_background_color, excel_fill_pattern,
-  excel_data_format, excel_locked, excel_hidden, latex_vertical_move,
-  excel_pre_process, latex_pre_process, latex_font_size)
+\S4method{initialize}{StyledCell}(
+  .Object,
+  excel_font_name,
+  latex_font_name,
+  excel_font_size,
+  font_color,
+  bold,
+  italic,
+  strikeout,
+  underline,
+  excel_boldweight,
+  excel_wrapped,
+  horizontal,
+  vertical,
+  rotation,
+  indent,
+  border_position,
+  border_color,
+  excel_border_pen,
+  fill_color,
+  excel_background_color,
+  excel_fill_pattern,
+  excel_data_format,
+  excel_locked,
+  excel_hidden,
+  latex_vertical_move,
+  excel_pre_process,
+  latex_pre_process,
+  html_pre_process,
+  latex_font_size,
+  html_class,
+  html_id
+)
 }
 \arguments{
 \item{.Object}{A StyledCell object}
@@ -70,7 +96,13 @@
 
 \item{latex_pre_process}{A function that can be used to pre process cell values for the LaTeX table generation}
 
+\item{html_pre_process}{A function that can be used to pre process cell values for the HTML table generation}
+
 \item{latex_font_size}{The LaTeX command to set the font size}
+
+\item{html_class}{A character vector holding the html class names assigned to the table cell (\verb{<td>} dom element)}
+
+\item{html_id}{A class vector holding html ids, which will be added to the table cells (\verb{<td>} dom element)}
 }
 \description{
 This class holds all style settings for a single excel cell. The values are
