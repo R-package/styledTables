@@ -59,6 +59,10 @@ Collate:
 Suggests:
     hexSticker,
     dplyr (>= 0.7.6)
+Remotes:
+    a-maldet/funky,
+    GregorDeCillia/tinytools,
+    GregorDeCillia/composerr
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
 URL: https://github.com/R-package/styledTables
