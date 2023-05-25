@@ -21,5 +21,5 @@ If you want to use `styledtable`, we recommend installing the **last stable vers
 
 ``` r
 # Install last stable version from GitHub
-devtools::install_github('R-package/styledTables', ref = "v0.2.0", build_opts = NULL)
+devtools::install_github('R-package/styledtable', ref = "v0.2.0", build_opts = NULL)
 ```
