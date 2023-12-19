@@ -218,7 +218,7 @@ setMethod(
         st <- set_excel_data_format(st, "#,##0", row_id = row_id, col_id = col_id)
         set_latex_pre_process(
             st,
-            funky::restrict_fn_env(
+            restrict_fn_env(
               function(x) {
                 if (!is.na(x) && x != 0) {
                     format(round(x, 0), nsmall = 0, big.mark = ".", decimal.mark = ",")
@@ -291,7 +291,7 @@ setMethod(
         st <- set_excel_data_format(st, "#,##0.0", row_id = row_id, col_id = col_id)
         set_latex_pre_process(
             st,
-            funky::restrict_fn_env(
+            restrict_fn_env(
               function(x) {
                 if (!is.na(x) && x != 0) {
                     format(round(x, 1), nsmall = 1, decimal.mark = ",")

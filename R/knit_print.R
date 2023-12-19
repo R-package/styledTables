@@ -31,7 +31,9 @@ knit_print_rmd_html <- function(x, ...) {
               "",
               ":::",
               "",
-              .
+              "```{=html}",
+              .,
+              "```"
             ),
             collapse = "\n"
           )

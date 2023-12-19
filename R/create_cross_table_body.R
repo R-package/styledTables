@@ -428,7 +428,7 @@ setMethod(
         # define a list of styling function that implements the styling of the value columns
         if (!is.null(value_col_stylings)) {
             if (is.null(body_styling))
-                body_styling <- funky::restrict_fn_env(
+                body_styling <- restrict_fn_env(
                   function(st) st,
                   parent_env = "styledTables"
                 )
@@ -453,7 +453,7 @@ setMethod(
                 # and save it again as body_styling
                 # be careful this is a recursive definition, to get the scopes right
                 valueColStyling <- value_col_stylings[[i]]
-                body_styling <- funky::restrict_fn_env(
+                body_styling <- restrict_fn_env(
                     fn = function(st) {
                         valueColStyling(
                             body_styling(st),

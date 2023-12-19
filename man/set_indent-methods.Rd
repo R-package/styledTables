@@ -56,6 +56,7 @@ Other styledtable setters:
 \code{\link{set_fill_color}()},
 \code{\link{set_font_color}()},
 \code{\link{set_horizontal}()},
+\code{\link{set_html_pre_process}()},
 \code{\link{set_italic}()},
 \code{\link{set_latex_font_name}()},
 \code{\link{set_latex_font_size}()},

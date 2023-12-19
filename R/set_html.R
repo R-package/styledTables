@@ -41,7 +41,9 @@
 #' @param col_id A numeric vector holding the ids of the specified table columns.
 #' @rdname set_html
 #' @export
-set_html_rowheader <- function(st, col_id) {
+set_html_rowheader <- function(st, col_id = NULL) {
+  if (is.null(col_id))
+    col_id <- seq_len(count_cols(st))
   st@html$rowheader_col_id <- col_id
   st
 }
@@ -49,14 +51,18 @@ set_html_rowheader <- function(st, col_id) {
 #' @param row_id A numeric vector holding the ids of the specified table rows.
 #' @export
 #' @rdname set_html
-set_html_colheader <- function(st, row_id) {
+set_html_colheader <- function(st, row_id = NULL) {
+  if (is.null(row_id))
+    row_id <- seq_len(count_rows(st))
   st@html$colheader_row_id <- row_id
   st
 }
 
 #' @export
 #' @rdname set_html
-set_html_subheading <- function(st, row_id) {
+set_html_subheading <- function(st, row_id = NULL) {
+  if (is.null(row_id))
+    row_id <- seq_len(count_rows(st))
   st@html$subheading_row_id <- row_id
   st
 }
@@ -193,38 +199,6 @@ remove_html_td_class <- function(st, class, row_id = NULL, col_id = NULL) {
   st
 }
 
-#' @param fn A function, which takes a single argument (`function(x) {...}`).
-#'   If [create_html()] is called, then this function will be applied to the
-#'   value of each cell which is included in `col_id` and `row_id`.
-#' @export
-#' @rdname set_html
-set_html_pre_process <- function(st, fn, row_id = NULL, col_id = NULL, replace_mode = "append") {
-  # TODO: differentiate between append_inside and append_outside
-  if (is.null(row_id))
-    row_id <- seq_len(count_rows(st))
-  if (is.null(col_id))
-    col_id <- seq_len(count_cols(st))
-  for (i in row_id) {
-    for (j in col_id) {
-      if (isTRUE(replace_mode == "append")) {
-        fn_old <- st@styles[[i]][[j]]@html_pre_process
-        st@styles[[i]][[j]]@html_pre_process <- funky::restrict_fn_env(
-          fn = function(x)
-            fn(fn_old(x)),
-          vars = list(
-            fn_old = fn_old,
-            fn = fn
-          ),
-          parent_env = "styledTables"
-        )
-      } else if (isTRUE(replace_mode == "replace")) {
-        st@styles[[i]][[j]]@html_pre_process <- fn
-      }
-    }
-  }
-  st
-}
-
 random_name <- function(len = 10) {
   paste(sample(c(LETTERS, letters), len, replace = TRUE), collapse = "")
 }
@@ -234,7 +208,7 @@ random_name <- function(len = 10) {
 #' @param version A string holding the version of the stylesheet (has no effect on the output)
 #' @export
 #' @rdname set_html
-add_html_stylesheet <- function(st, file_path, name = random_name(), version = "0.0.0") {
+add_html_stylesheet <- function(st, file_path, name = "additional_stylesheets", version = "0") {
   err_h <- function(msg)
     stop(paste("Error while calling `add_html_stylesheet()`:", msg), call. = FALSE)
   if (grepl("\\.s(a|c)ss$", file_path))
@@ -247,7 +221,8 @@ add_html_stylesheet <- function(st, file_path, name = random_name(), version = "
       name = name,
       version = version,
       src = dirname(file_path),
-      stylesheet = basename(file_path)
+      stylesheet = basename(file_path),
+      all_files = FALSE
     )
   )
 }
@@ -278,7 +253,7 @@ apply_html_theme1 <- function(st) {
         package = "styledTables"
       ),
       name = "styledtable_theme1",
-      version = "1.0.0"
+      version = "1"
     ) %>%
     set_html_table_class("styledtable-theme1")
 }

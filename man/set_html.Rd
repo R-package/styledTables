@@ -13,17 +13,16 @@
 \alias{set_html_td_class}
 \alias{set_html_td_id}
 \alias{remove_html_td_class}
-\alias{set_html_pre_process}
 \alias{add_html_stylesheet}
 \alias{add_html_dependency}
 \alias{apply_html_theme1}
 \title{Define the HTML specific properties of a \link[=styled_table]{StyledTable} class object}
 \usage{
-set_html_rowheader(st, col_id)
+set_html_rowheader(st, col_id = NULL)
 
-set_html_colheader(st, row_id)
+set_html_colheader(st, row_id = NULL)
 
-set_html_subheading(st, row_id)
+set_html_subheading(st, row_id = NULL)
 
 set_html_table_class(st, class, replace_mode = "append")
 
@@ -49,15 +48,12 @@ set_html_td_id(st, id, row_id = NULL, col_id = NULL, replace_mode = "append")
 
 remove_html_td_class(st, class, row_id = NULL, col_id = NULL)
 
-set_html_pre_process(
+add_html_stylesheet(
   st,
-  fn,
-  row_id = NULL,
-  col_id = NULL,
-  replace_mode = "append"
+  file_path,
+  name = "additional_stylesheets",
+  version = "0"
 )
-
-add_html_stylesheet(st, file_path, name = random_name(), version = "0.0.0")
 
 add_html_dependency(st, dep)
 
@@ -81,10 +77,6 @@ which should be added to the specific dom element}
 
 \item{id}{A character vector holding one or more \strong{html ids} which should be
 assigend to the specific dom element.}
-
-\item{fn}{A function, which takes a single argument (\code{function(x) {...}}).
-If \code{\link[=create_html]{create_html()}} is called, then this function will be applied to the
-value of each cell which is included in \code{col_id} and \code{row_id}.}
 
 \item{file_path}{The path to the \strong{css} file holding the table styling.}
 

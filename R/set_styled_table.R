@@ -700,3 +700,27 @@ setMethod(
         set_specific_style(st, value, "excel_pre_process", "closure", row_id, col_id, condition, condition_text, append_mode)
     }
 )
+
+#' Set pre processing of cell content for html table generation
+#' @name set_html_pre_process
+#' @rdname set_html_pre_process-methods
+#' @exportMethod set_html_pre_process
+#' @param ... Various arguments
+setGeneric("set_html_pre_process", function(st, value, ...) standardGeneric("set_html_pre_process"))
+
+#' @rdname  set_html_pre_process-methods
+#' @aliases set_html_pre_process,StyledTable,ANY-method
+#' @inheritParams set_specific_style
+#' @param value The function that should be used for pre processing
+#' @return The modified [StyledTable] object
+#' @family styledtable setters
+setMethod(
+  "set_html_pre_process",
+  signature(st = "StyledTable", value = "ANY"),
+  function(st, value, row_id = NULL, col_id = NULL, condition = NULL, condition_text = NULL, append_mode = "replace") {
+    condition <- substitute(condition)
+    row_id <- substitute(row_id)
+    col_id <- substitute(col_id)
+    set_specific_style(st, value, "html_pre_process", "closure", row_id, col_id, condition, condition_text, append_mode)
+  }
+)

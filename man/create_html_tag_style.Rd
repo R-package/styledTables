@@ -4,11 +4,13 @@
 \alias{create_html_tag_style}
 \title{Create a string defining the style property of an html tag}
 \usage{
-create_html_tag_style(values = NULL)
+create_html_tag_style(styles, values = NULL)
 }
 \arguments{
-\item{values}{An optional named list or named character vector holding a set
-of styling informations for an html dom element.}
+\item{styles}{An character vector holding the names of the style properties for an html dom element.}
+
+\item{values}{A vector of same length as \code{styles} holding the corresponding
+values.}
 }
 \value{
 A string holding the text for the html tag styling property

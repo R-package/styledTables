@@ -50,7 +50,6 @@ NULL
 #' @param after A string, which will automatically be added right after
 #'   each text part.
 #' @return A list object holding the function `add_text()` and `get_text()`
-#' @export
 init_text_builder <- function(
     sep = "\n",
     indent = "\t",

@@ -322,7 +322,7 @@ setMethod("initialize", signature(.Object = "StyledCell"),
         if (!missing(excel_pre_process)) {
             .Object@excel_pre_process <- excel_pre_process
         } else {
-            .Object@excel_pre_process <- funky::restrict_fn_env(
+            .Object@excel_pre_process <- restrict_fn_env(
               function(x) x,
               parent_env = "styledTables"
             )
@@ -335,7 +335,7 @@ setMethod("initialize", signature(.Object = "StyledCell"),
         if (!missing(html_pre_process)) {
           .Object@html_pre_process <- html_pre_process
         } else {
-          .Object@html_pre_process <- funky::restrict_fn_env(
+          .Object@html_pre_process <- restrict_fn_env(
             function(x) x,
             parent_env = "styledTables"
           )

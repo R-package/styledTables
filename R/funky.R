@@ -1,4 +1,4 @@
-#' @include utils.R
+#' @include utilities.R
 NULL
 
 #' Restrict function environment
@@ -42,7 +42,6 @@ NULL
 #'     restricted function as well as the **global environment**.
 #' @return A new function with a small scope containing the variables given 
 #'   in `vars`.
-#' @export
 restrict_fn_env <- function(fn, vars = NULL, lookup_env = environment(fn), parent_env = .GlobalEnv) {
   err_h <- function(msg)
     stop(paste("Error while calling `restrict_fn_env()`:", msg), call. = FALSE)
@@ -156,7 +155,6 @@ restrict_fn_env <- function(fn, vars = NULL, lookup_env = environment(fn), paren
 #'     `MY_PKG` are available inside of your
 #'     closure as well as the **global environment**.
 #' @inheritParams restrict_fn_env
-#' @export
 eval_closure <- function(
   expr,
   vars = NULL,

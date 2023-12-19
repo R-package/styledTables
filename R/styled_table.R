@@ -22,6 +22,8 @@ setClass(
         styles = "list",
         excel_row_height = "list",
         excel_col_width = "list",
+        html_row_height = "list",
+        html_col_width = "list",
         html = "list",
         html_dependencies = "list",
         latex_padding_top = "list",
@@ -286,6 +288,18 @@ setMethod("initialize", signature(.Object = "StyledTable"), function(.Object, ..
     } else {
         .Object@latex_col_width <- list(col_id = numeric(0), width = numeric(0))
     }
+    if ("html_col_width" %in% names(args)) {
+      # assign html_col_width
+      .Object@html_col_width <- args$html_col_width
+    } else {
+      .Object@html_col_width <- list(col_id = numeric(0), width = numeric(0))
+    }
+    if ("html_row_height" %in% names(args)) {
+      # assign html_row_height
+      .Object@html_row_height <- args$html_row_height
+    } else {
+      .Object@html_row_height <- list(row_id = numeric(0), height = numeric(0))
+    }
     ######### read excel_row_height ###########
     if ("html" %in% names(args)) {
         # TODO: Implement validation
@@ -441,6 +455,13 @@ setMethod(
                         st@html$table_id <<- unique(c(st@html$table_id, x@html$table_id))
                         st@html$tr_class$row_id <<- c(st@html$tr_class$row_id, x@html$tr_class$row_id + nRow)
                         st@html$tr_class$row_class <<- c(st@html$tr_class$row_class, x@html$tr_class$row_class)
+                        # Concat row height
+                        st@html_row_height$row_id <<- c(st@html_row_height$row_id, x@html_row_height$row_id + nRow)
+                        st@html_row_height$height <<- c(st@html_row_height$height, x@html_row_height$height)
+                        # Concat col width
+                        colIds <- st@html_col_width$col_id %in% x@html_col_width$col_id
+                        st@html_col_width$col_id <<- c(st@html_col_width$col_id[!colIds], x@html_col_width$col_id)
+                        st@html_col_width$width <<- c(st@html_col_width$width[!colIds], x@html_col_width$width)
                         # Append html_dependencies
                         st@html_dependencies <- append(st@html_dependencies, x@html_dependencies)
                         st@html_dependencies <- st@html_dependencies[!duplicated(st@html_dependencies)]
@@ -534,6 +555,13 @@ setMethod(
                         row_id <- st@html$tr_class$row_id %in% x@html$tr_class$row_id
                         st@html$tr_class$row_id <<- c(st@html$tr_class$row_id[!row_id], x@html$tr_class$row_id)
                         st@html$tr_class$row_class <<- c(st@html$tr_class$row_class[!row_id], x@html$tr_class$row_class)
+                        # Concat html col width
+                        st@html_col_width$col_id <<- c(st@html_col_width$col_id, x@html_col_width$col_id + nCol)
+                        st@html_col_width$width <<- c(st@html_col_width$width, x@html_col_width$width)
+                        # Concat html row height
+                        rowIds <- st@html_row_height$row_id %in% x@html_row_height$row_id
+                        st@html_row_height$row_id <<- c(st@html_row_height$row_id[!rowIds], x@html_row_height$row_id)
+                        st@html_row_height$height <<- c(st@html_row_height$height[!rowIds], x@html_row_height$height)
                         # concat html_dependencies
                         st@html_dependencies <- append(st@html_dependencies, x@html_dependencies)
                         st@html_dependencies <- st@html_dependencies[!duplicated(st@html_dependencies)]
@@ -585,7 +613,7 @@ setMethod(
                         v2 <- v1
                         v1 <- value
                     }
-                    if (style_name %in% c("latex_pre_process", "excel_pre_process")) {
+                    if (style_name %in% c("latex_pre_process", "excel_pre_process", "html_pre_process")) {
                         currValue <- concat_functions(v1, v2)
                     } else if (style_name == "excel_data_format") {
                         currValue <- paste0(v1, v2)

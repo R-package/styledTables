@@ -36,7 +36,20 @@ set_height_width <- function(st, slot_name, id, value) {
             typeVal <- "width"
             maxInd <- count_cols(st)
             fnName <- "set_latex_col_width"
-        })
+        },
+        html_row_height = {
+          typeInd <- "row_id"
+          typeVal <- "height"
+          maxInd <- count_rows(st)
+          fnName <- "set_html_row_height"
+        },
+        html_col_width = {
+          typeInd <- "col_id"
+          typeVal <- "width"
+          maxInd <- count_cols(st)
+          fnName <- "set_html_col_width"
+        }
+      )
     # Error handling
     errHandler <- function(description) {
         stop(paste0(
@@ -88,7 +101,7 @@ set_height_width <- function(st, slot_name, id, value) {
 setGeneric("set_excel_row_height", function(st, value, ...) standardGeneric("set_excel_row_height"))
 
 #' @rdname set_excel_row_height-methods
-#' @aliases setRowHeiths,StyledTable,numeric-method
+#' @aliases setRowHeigths,StyledTable,numeric-method
 #' @param st A [StyledTable] object
 #' @param value A numeric vector (length 1 or same lengt as \code{row_id}) holding the row heights
 #' @param row_id A vector of row numbers (N is substituted as \code{count_rows(st)})
@@ -204,4 +217,55 @@ setMethod(
     function(st, value, col_id = NULL) {
         set_height_width(st, "latex_col_width", col_id, value)
     }
+)
+
+#' Method set_html_row_height.
+#'
+#' @name set_html_row_height
+#' @rdname set_html_row_height-methods
+#' @exportMethod set_html_row_height
+#' @param ... Various arguments
+#' @include styled_table.R
+setGeneric("set_html_row_height", function(st, value, ...) standardGeneric("set_html_row_height"))
+
+#' @rdname set_html_row_height-methods
+#' @aliases setHtmlRowHeigths,StyledTable,numeric-method
+#' @param st A [StyledTable] object
+#' @param value A numeric vector (length 1 or same lengt as \code{row_id}) holding the row heights
+#' @param row_id A vector of row numbers (N is substituted as \code{count_rows(st)})
+#' @return The modified [StyledTable] object
+setMethod(
+  "set_html_row_height",
+  signature(
+    st = "StyledTable",
+    value = "character"
+  ),
+  function(st, value, row_id = NULL) {
+    set_height_width(st, "html_row_height", row_id, value)
+  }
+)
+
+#' Method set_html_col_width.
+#'
+#' @name set_html_col_width
+#' @rdname set_html_col_width-methods
+#' @exportMethod set_html_col_width
+#' @param ... Various arguments
+setGeneric("set_html_col_width", function(st, value, ...) standardGeneric("set_html_col_width"))
+
+#' @rdname set_html_col_width-methods
+#' @aliases set_html_col_width,StyledTable,numeric-method
+#' @param st A [StyledTable] object
+#' @param value A numeric vector (length 1 or same lengt as \code{col_id}) holding the column widths
+#' @param col_id A vector of column numbers (N is substituted as \code{count_cols(st)})
+#' @return The modified [StyledTable] object
+setMethod(
+  "set_html_col_width",
+  signature(
+    st = "StyledTable",
+    value = "character"
+  ),
+  function(st, value, col_id = NULL) {
+    set_height_width(st, "html_col_width", col_id, value)
+  }
 )

@@ -1,25 +1,39 @@
 
-styledtable <img src="man/figures/logo.png" align="right" alt="" width=140 height=162 />
-========================================================================================
+# styledTables <img src="man/figures/logo.png" align="right" alt="" width=140 height=162 />
 
 <!-- badges: start -->
-[![cran release](https://www.r-pkg.org/badges/version-last-release/styledtable)](https://www.r-pkg.org/badges/version-last-release/styledtable) [![Travis build status](https://travis-ci.org/R-package/styledtable.svg?branch=master)](https://travis-ci.org/R-package/styledtable) [![GitHub last commit](https://img.shields.io/github/last-commit/R-package/styledtable.svg?logo=github)](https://github.com/R-package/styledtable/commits/master) [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/R-package/styledtable.svg?logo=github)](https://github.com/R-package/styledtable) <!-- badges: end -->
 
-`styledtable` is an **R** package that makes it possible to export a `data.frame` as beautifully styled **Excel** and **LaTeX** table
-and export accessible **HTML**.
+[![Travis build
+status](https://travis-ci.org/R-package/styledTables.svg?branch=master)](https://travis-ci.org/R-package/styledTables)
+[![GitHub last
+commit](https://img.shields.io/github/last-commit/R-package/styledTables.svg?logo=github)](https://github.com/R-package/styledTables/commits/master)
+[![GitHub code size in
+bytes](https://img.shields.io/github/languages/code-size/R-package/styledTables.svg?logo=github)](https://github.com/R-package/styledTables)
+
+`styledTables` is an **R** package that makes it possible to export a
+`data.frame` as beautifully styled **Excel** and **LaTeX** table.
 
 > Produce tables, which you want to look at.
 
-Have a look at the [get started vignette](https://R-package.github.io/styledtable/articles/styledTables.html) to see `styledtable` in action.
+Have a look at the \[get started vignette\] to see `styledTables` in
+action.
 
-Caution
--------
+## Caution
 
-`styledtable` is currently under heavy development. Unfortunately, the current version is not fully stable.
+The `styledTables` package is deprecated and will soon be relaunched
+under the package name `styledtable`. This package will have its main
+focus on HTML based reports (see <https://pagedown.rbind.io/>), which
+are fully accessible to assistive reading devices and come along with
+all the nice bookbinding features that LaTeX offers. Unfortunately,
+there won’t be any more support for this legacy package.
 
-If you want to use `styledtable`, we recommend installing the **last stable version**, which came under the **old package name** `styledTables`:
+If you still want to use the deprecated `styledTables` package:
 
 ``` r
 # Install last stable version from GitHub
-devtools::install_github('R-package/styledtable', ref = "v0.2.0", build_opts = NULL)
+devtools::install_github('R-package/styledTables', build_opts = NULL)
 ```
+
+## License
+
+\[GPL-3\]
