@@ -21,11 +21,10 @@ action.
 ## Caution
 
 The `styledTables` package is deprecated and will soon be relaunched
-under the package name `styledtable`. This package will have its main
-focus on HTML based reports (see <https://pagedown.rbind.io/>), which
-are fully accessible to assistive reading devices and come along with
-all the nice bookbinding features that LaTeX offers. Unfortunately,
-there won’t be any more support for this legacy package.
+under the package name `styledtable`. 
+This package will have its main focus on HTML based reports
+(based on [https://pagedown.rbind.io/](https://pagedown.rbind.io/)), which will be
+fully accessible to assistive reading devices.
 
 If you still want to use the deprecated `styledTables` package:
 
